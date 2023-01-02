@@ -12,11 +12,6 @@ public class KnifeToggle : MonoBehaviour
     [SerializeField] Transform RightHolder;
     public bool isKnife = false;
 
-    void Start()
-    {
-        isKnife = GetComponent<Animator>().GetBool("IsKnife");
-    }
-
     void TakeUpKnife()
     {
         isKnife = true;
