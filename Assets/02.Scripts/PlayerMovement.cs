@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
-{
-    public float PlayerSpeed;
-    protected Animator myAnim;
+public class PlayerMovement : BattleSystem
+{    
     float Run;
     float x;
     float y;
@@ -64,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
                     Vector3 pos = Vector3.forward;
                     pos.x = x;
                     pos.z = y;
-                    float delta = runing ? PlayerSpeed * 1.5f * Time.deltaTime : PlayerSpeed * Time.deltaTime;
+                    float delta = runing ? myStat.MoveSpeed * 1.5f * Time.deltaTime : myStat.MoveSpeed * Time.deltaTime;
                     pos.Normalize();
                     transform.Translate(pos * delta);
 
@@ -84,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 dir = new Vector3(x, 0, 1);
         while (true)
         {
-            float delta = PlayerSpeed * 3.0f * Time.deltaTime;
+            float delta = myStat.MoveSpeed * 3.0f * Time.deltaTime;
             transform.Translate(dir * delta);
             yield return null;
         }

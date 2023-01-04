@@ -5,10 +5,11 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class Player : PlayerMovement
-{    
+{
+    
     void Start()
-    {
-        myAnim = GetComponent<Animator>();
+    {        
+        
     }
     void Update()
     {
@@ -20,5 +21,18 @@ public class Player : PlayerMovement
         }
         
     }
+    public override void OnDamage(float dmg)
+    {
+        myStat.HP -= dmg;
+        if (Mathf.Approximately(myStat.HP, 0.0f))
+        {
+            //»ç¸Á
+        }
+        else
+        {
+            myAnim.SetTrigger("Damage");
+        }
+    }
     
+
 }
