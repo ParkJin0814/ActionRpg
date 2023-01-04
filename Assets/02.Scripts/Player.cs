@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class Player : PlayerMovement
-{
+{    
     void Start()
     {
         myAnim = GetComponent<Animator>();
@@ -13,9 +13,12 @@ public class Player : PlayerMovement
     void Update()
     {
         Movement();
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)&&!myAnim.GetBool("IsRolling")&&!myAnim.GetBool("IsAttacking"))
         {
-            Debug.Log("a");
+            if(!myAnim.GetBool("IsKnife")) Weapon();
+            else myAnim.SetTrigger("AttackA");
         }
+        
     }
+    
 }

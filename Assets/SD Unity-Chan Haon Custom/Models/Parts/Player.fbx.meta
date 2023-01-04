@@ -490,7 +490,7 @@ ModelImporter:
     - name: Upper_Arm_L
       parentName: Clavicle_L
       position: {x: -0.049059782, y: 0.0000000047683715, z: -0.000000038146972}
-      rotation: {x: -0.0064961636, y: -0.26510772, z: -0.0031264615, w: 0.96419185}
+      rotation: {x: -0.006635681, y: 0.045523617, z: 0.00019312161, w: 0.99894124}
       scale: {x: 1, y: 1, z: 1}
     - name: Lower_Arm_L
       parentName: Upper_Arm_L
@@ -510,7 +510,7 @@ ModelImporter:
     - name: Finger_L_Index_Proximal
       parentName: Hand_L
       position: {x: -0.05038921, y: -0.0023040771, z: -0.022166524}
-      rotation: {x: 0.17016916, y: -0.101454996, z: -0.14908165, w: 0.9687745}
+      rotation: {x: 0.16078638, y: -0.0790314, z: -0.0013053637, w: 0.9838192}
       scale: {x: 1, y: 1, z: 1}
     - name: Finger_L_Index_Intermediate
       parentName: Finger_L_Index_Proximal
@@ -520,7 +520,7 @@ ModelImporter:
     - name: Finger_L_Middle_Proximal
       parentName: Hand_L
       position: {x: -0.054832116, y: -0.006897125, z: -0.008639717}
-      rotation: {x: 0.05356596, y: -0.03724544, z: -0.15577628, w: 0.98563546}
+      rotation: {x: 0.044643678, y: -0.06265583, z: -0.009611868, w: 0.99698985}
       scale: {x: 1, y: 1, z: 1}
     - name: Finger_L_Middle_Intermediate
       parentName: Finger_L_Middle_Proximal
@@ -530,7 +530,7 @@ ModelImporter:
     - name: Finger_L_Pinky_Proximal
       parentName: Hand_L
       position: {x: -0.04561401, y: -0.008175506, z: 0.017836684}
-      rotation: {x: -0.2687792, y: 0.13589834, z: -0.18645611, w: 0.9351596}
+      rotation: {x: -0.2853773, y: -0.041697334, z: -0.01297405, w: 0.9574199}
       scale: {x: 1.000001, y: 1, z: 1}
     - name: Finger_L_Pinky_Intermediate
       parentName: Finger_L_Pinky_Proximal
@@ -540,7 +540,7 @@ ModelImporter:
     - name: Finger_L_Ring_Proximal
       parentName: Hand_L
       position: {x: -0.053629894, y: -0.0077135847, z: 0.0052197287}
-      rotation: {x: -0.07006044, y: 0.03679147, z: -0.16676109, w: 0.9828167}
+      rotation: {x: -0.07944413, y: -0.047661338, z: -0.010193043, w: 0.9956471}
       scale: {x: 1, y: 1, z: 1}
     - name: Finger_L_Ring_Intermediate
       parentName: Finger_L_Ring_Proximal
@@ -550,12 +550,12 @@ ModelImporter:
     - name: Finger_L_Thumb_Proximal
       parentName: Hand_L
       position: {x: -0.018289624, y: 0.014528389, z: -0.019548692}
-      rotation: {x: 0.77025545, y: -0.24974939, z: 0.0052535757, w: 0.5867744}
+      rotation: {x: 0.6791804, y: -0.27957058, z: 0.29503945, w: 0.61115146}
       scale: {x: 1, y: 1, z: 1}
     - name: Finger_L_Thumb_Intermediate
       parentName: Finger_L_Thumb_Proximal
       position: {x: -0.019820213, y: 0, z: 0}
-      rotation: {x: -0.0026860964, y: -0.03745886, z: -0.09613863, w: 0.99465925}
+      rotation: {x: -0.0026981824, y: -0.013961386, z: -0.035824336, w: 0.99925697}
       scale: {x: 1, y: 1, z: 1}
     - name: Finger_L_Thumb_Distal
       parentName: Finger_L_Thumb_Intermediate
@@ -585,7 +585,7 @@ ModelImporter:
     - name: Upper_Arm_R
       parentName: Clavicle_R
       position: {x: -0.049059782, y: 0.0000000047683715, z: 0.000000038146972}
-      rotation: {x: 0.0064961636, y: 0.26510772, z: -0.0031264615, w: 0.96419185}
+      rotation: {x: 0.0066357125, y: -0.045521993, z: 0.00019318794, w: 0.9989413}
       scale: {x: 1, y: 1, z: 1}
     - name: Lower_Arm_R
       parentName: Upper_Arm_R
@@ -605,7 +605,7 @@ ModelImporter:
     - name: Finger_R_Index_Proximal
       parentName: Hand_R
       position: {x: -0.050389193, y: -0.0023041153, z: 0.022166524}
-      rotation: {x: -0.17016916, y: 0.101454996, z: -0.14908165, w: 0.9687745}
+      rotation: {x: -0.16078644, y: 0.07903216, z: -0.0013031807, w: 0.98381907}
       scale: {x: 1, y: 1, z: 1}
     - name: Finger_R_Index_Intermediate
       parentName: Finger_R_Index_Proximal
@@ -615,7 +615,7 @@ ModelImporter:
     - name: Finger_R_Middle_Proximal
       parentName: Hand_R
       position: {x: -0.054832116, y: -0.006897163, z: 0.008639717}
-      rotation: {x: -0.053565957, y: 0.03724544, z: -0.15577628, w: 0.98563546}
+      rotation: {x: -0.044643797, y: 0.06265579, z: -0.0096113, w: 0.99698985}
       scale: {x: 1, y: 1, z: 1}
     - name: Finger_R_Middle_Intermediate
       parentName: Finger_R_Middle_Proximal
@@ -625,7 +625,7 @@ ModelImporter:
     - name: Finger_R_Pinky_Proximal
       parentName: Hand_R
       position: {x: -0.045614053, y: -0.008175468, z: -0.017836684}
-      rotation: {x: 0.2687792, y: -0.13589837, z: -0.18645613, w: 0.9351596}
+      rotation: {x: 0.28537703, y: 0.0416972, z: -0.0129751265, w: 0.95741993}
       scale: {x: 1.000001, y: 1.000001, z: 1}
     - name: Finger_R_Pinky_Intermediate
       parentName: Finger_R_Pinky_Proximal
@@ -635,7 +635,7 @@ ModelImporter:
     - name: Finger_R_Ring_Proximal
       parentName: Hand_R
       position: {x: -0.053629912, y: -0.0077135847, z: -0.0052197287}
-      rotation: {x: 0.07006043, y: -0.036791474, z: -0.16676112, w: 0.9828167}
+      rotation: {x: 0.07944376, y: 0.0476624, z: -0.010194215, w: 0.9956471}
       scale: {x: 1, y: 1, z: 1}
     - name: Finger_R_Ring_Intermediate
       parentName: Finger_R_Ring_Proximal
@@ -645,12 +645,12 @@ ModelImporter:
     - name: Finger_R_Thumb_Proximal
       parentName: Hand_R
       position: {x: -0.018289624, y: 0.014528389, z: 0.01954869}
-      rotation: {x: -0.77025545, y: 0.2497494, z: 0.0052535725, w: 0.5867744}
+      rotation: {x: -0.67917943, y: 0.2795701, z: 0.29504126, w: 0.6111519}
       scale: {x: 1, y: 1, z: 1}
     - name: Finger_R_Thumb_Intermediate
       parentName: Finger_R_Thumb_Proximal
       position: {x: -0.019820232, y: -0.0000000047683715, z: 0}
-      rotation: {x: 0.0026861092, y: 0.03745883, z: -0.09613864, w: 0.99465925}
+      rotation: {x: 0.0026983314, y: 0.013964113, z: -0.03582277, w: 0.999257}
       scale: {x: 1, y: 1, z: 1}
     - name: Finger_R_Thumb_Distal
       parentName: Finger_R_Thumb_Intermediate

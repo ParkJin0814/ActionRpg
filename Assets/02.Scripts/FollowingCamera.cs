@@ -29,14 +29,16 @@ public class FollowingCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (!GetComponentInParent<Animator>().GetBool("IsRolling"))
+        if (Input.GetMouseButton(1))
         {
-            curRot.x -= Input.GetAxisRaw("Mouse Y") * LookupSpeed;
-            curRot.x = Mathf.Clamp(curRot.x, LookupRange.x, LookupRange.y);
-            curRot.y += Input.GetAxisRaw("Mouse X") * LookupSpeed;
-            transform.localRotation = Quaternion.Euler(curRot.x, 0, 0);
-            transform.parent.localRotation = Quaternion.Euler(0, curRot.y, 0);
+            if (!GetComponentInParent<Animator>().GetBool("IsRolling"))
+            {
+                curRot.x -= Input.GetAxisRaw("Mouse Y") * LookupSpeed;
+                curRot.x = Mathf.Clamp(curRot.x, LookupRange.x, LookupRange.y);
+                curRot.y += Input.GetAxisRaw("Mouse X") * LookupSpeed;
+                transform.localRotation = Quaternion.Euler(curRot.x, 0, 0);
+                transform.parent.localRotation = Quaternion.Euler(0, curRot.y, 0);
+            }
         }
 
         desireDistance += Input.GetAxisRaw("Mouse ScrollWheel") * ZoomSpeed;

@@ -41,12 +41,7 @@ public class PlayerMovement : MonoBehaviour
                 myAnim.SetTrigger("Rolling");
             }
             //¹«±âÅ»ºÎÂø
-            if (Input.GetKeyDown(KeyCode.X) && !myAnim.GetBool("KnifeToggle"))
-            {
-                myAnim.SetTrigger("Knife");
-                myAnim.SetBool("IsKnife", !myAnim.GetBool("IsKnife"));
-            }
-
+            if (Input.GetKeyDown(KeyCode.X)) Weapon();
             //ÀÌµ¿
             if (!x.Equals(0.0f) || !y.Equals(0.0f)) myAnim.SetBool("Move", true);            
             else myAnim.SetBool("Move", false);
@@ -76,6 +71,12 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+    }
+    protected void Weapon()
+    {
+        if (myAnim.GetBool("KnifeToggle")) return;
+        myAnim.SetTrigger("Knife");
+        myAnim.SetBool("IsKnife", !myAnim.GetBool("IsKnife"));
     }
     IEnumerator Rollings()
     {
