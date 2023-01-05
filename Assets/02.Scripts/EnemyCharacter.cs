@@ -64,7 +64,8 @@ public class EnemyCharacter : BattleSystem
             case STATE.LostTarget:
                 EnemyTarget();
                 break;
-            case STATE.Battle:               
+            case STATE.Battle:
+                LostTarget();
                 break;
             case STATE.Dead:
                 break;
@@ -80,17 +81,19 @@ public class EnemyCharacter : BattleSystem
     void Update()
     {
         StateProcess();
+    }
+    void LostTarget()
+    {
         if (myTarget != null)
         {
             Vector3 pos = myTarget.position - transform.position;
             float dist = pos.magnitude;
-            if(dist>5.0f)
+            if (dist > 5.0f)
             {
-                myTarget = null;                
+                myTarget = null;
                 ChangeState(STATE.LostTarget);
             }
         }
-        
     }
     public void EnemyTarget()
     {
