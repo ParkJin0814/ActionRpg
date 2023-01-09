@@ -37,6 +37,7 @@ public class Player : PlayerMovement
             case STATE.Idle:
                 AttackA();
                 Movement();
+                DropItem();
                 break;
             case STATE.Dead:
                 break;

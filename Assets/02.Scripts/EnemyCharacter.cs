@@ -103,8 +103,7 @@ public class EnemyCharacter : BattleSystem
     }
     public void EnemyTarget()
     {
-        Collider[] list = Physics.OverlapSphere(transform.position, 5.0f, myEnemyMask);
-        Transform tf=null;
+        Collider[] list = Physics.OverlapSphere(transform.position, 5.0f, myEnemyMask);        
         foreach (Collider col in list)
         {
             if(col.gameObject.GetComponent<IBattle>().OnLive())
