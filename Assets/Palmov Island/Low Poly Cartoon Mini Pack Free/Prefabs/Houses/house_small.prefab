@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 8050649239332228722}
   - component: {fileID: 6347398445093192151}
   - component: {fileID: 9219583156656895261}
-  - component: {fileID: -4882160280400269714}
+  - component: {fileID: 6791323577239333301}
   m_Layer: 0
   m_Name: house_small
   m_TagString: Untagged
@@ -281,8 +281,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &-4882160280400269714
-BoxCollider:
+--- !u!64 &6791323577239333301
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -291,9 +291,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5.3989944, y: 4.7461233, z: 5.3482265}
-  m_Center: {x: 0.00000047683716, y: 2.3730617, z: 0.02472508}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6058067849530524658, guid: e3221a030c87c48a19a6d00f6a8997ad, type: 3}
 --- !u!1 &8128244753601477530
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1985860520478105061}
   - component: {fileID: 3179798667584262720}
   - component: {fileID: 847834806079071882}
-  - component: {fileID: 945313890609398360}
+  - component: {fileID: 2108750458719974794}
   m_Layer: 0
   m_Name: supermarket
   m_TagString: Untagged
@@ -89,7 +89,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &945313890609398360
+--- !u!64 &2108750458719974794
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

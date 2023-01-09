@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Events;
 using static UnityEngine.GraphicsBuffer;
@@ -86,8 +87,7 @@ public class EnemyCharacter : BattleSystem
         if (!myTarget.GetComponent<IBattle>().OnLive())
         {
             myTarget = null;
-            ChangeState(STATE.LostTarget);
-            return;
+            ChangeState(STATE.LostTarget);            
         }
         if (myTarget != null)
         {
@@ -102,13 +102,15 @@ public class EnemyCharacter : BattleSystem
         }
     }
     public void EnemyTarget()
-    {
-        Collider[] list = Physics.OverlapSphere(transform.position, 5.0f, myEnemyMask);        
-        foreach (Collider col in list)
+    {        
+        Collider[] list = Physics.OverlapSphere(transform.position, 5.0f, myEnemyMask);
+        foreach(Collider c in list)
         {
-            if(col.gameObject.GetComponent<IBattle>().OnLive())
-            myTarget=col.GetComponent<Transform>();
-        }        
+            if(c.GetComponent<IBattle>().OnLive())
+            {
+                myTarget=c.transform;
+            }
+        }
         if (myTarget!=null)
         {            
             ChangeState(STATE.Battle);
@@ -162,20 +164,11 @@ public class EnemyCharacter : BattleSystem
         Vector3 dir = pos - transform.position;
         float dist = dir.magnitude;
         dir.Normalize();
-
         //달리기 시작
         myAnim.SetBool("Run", false);
         myAnim.SetBool("Walk", true);
         while (dist > 0.0f)
-        {
-
-            if (myAnim.GetBool("IsAttacking"))
-            {
-                myAnim.SetBool("Walk", false);
-                yield break;
-            }
-
-
+        {   
             if (!myAnim.GetBool("IsAttacking"))
             {
                 float delta = myStat.MoveSpeed * Time.deltaTime;
@@ -267,7 +260,6 @@ public class EnemyCharacter : BattleSystem
                 delta = Angle;
             }
             transform.Rotate(Vector3.up * delta * rotDir, Space.World);
-
             yield return null;
         }
         myAnim.SetBool("Run", false);

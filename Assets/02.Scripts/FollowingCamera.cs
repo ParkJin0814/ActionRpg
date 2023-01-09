@@ -15,9 +15,11 @@ public class FollowingCamera : MonoBehaviour
 
     Vector3 camPos = Vector3.zero;
     float desireDistance = 0.0f;
+    Player myPlayer;
     // Start is called before the first frame update
     void Start()
     {
+        myPlayer= GetComponentInParent<Player>();
         curRot.x = transform.localRotation.eulerAngles.x;
         curRot.y = transform.parent.localRotation.eulerAngles.y;
 
@@ -29,7 +31,7 @@ public class FollowingCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1)&&myPlayer.OnLive())
         {
             if (!GetComponentInParent<Animator>().GetBool("IsRolling"))
             {
