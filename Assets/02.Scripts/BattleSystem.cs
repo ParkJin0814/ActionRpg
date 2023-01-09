@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IBattle
 {
     void OnDamage(float dmg);
-      
+    bool OnLive();
     
 }
 
@@ -17,6 +17,10 @@ public class BattleSystem : CharacterProperty, IBattle
     public virtual void OnDamage(float dmg)
     {
         
+    }
+    public virtual bool OnLive()
+    {
+        return true;
     }
     public void LeftAttackTarget()
     {

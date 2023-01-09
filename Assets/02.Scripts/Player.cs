@@ -48,7 +48,7 @@ public class Player : PlayerMovement
     }
     void Update()
     {
-
+        StateProcess();
     }
     void AttackA()
     {
@@ -71,6 +71,10 @@ public class Player : PlayerMovement
             myAnim.SetTrigger("Damage");
         }
     }
-    
+    public override bool OnLive()
+    {
+        if (myState != STATE.Dead) return true;
+        return false;
+    }
 
 }

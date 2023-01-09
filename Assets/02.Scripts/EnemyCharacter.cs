@@ -7,11 +7,11 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyCharacter : BattleSystem
 {
-    Transform myTarget;
+    [SerializeField] Transform myTarget;
     Coroutine moveCo = null;
     Coroutine rotCo = null;
     Coroutine attackCo = null;
-    Vector3 startPos = Vector3.zero;
+    Vector3 startPos;
     public enum STATE
     {
         Create, Idle, Roaming, Battle, LostTarget,Dead
@@ -22,7 +22,7 @@ public class EnemyCharacter : BattleSystem
     {
         if (myState == s) return;
         myState = s;
-        switch (myState)
+        switch (s)
         {
             case STATE.Create:
                 break;
@@ -61,8 +61,7 @@ public class EnemyCharacter : BattleSystem
             case STATE.Roaming:
                 EnemyTarget();
                 break;
-            case STATE.LostTarget:
-                EnemyTarget();
+            case STATE.LostTarget:                
                 break;
             case STATE.Battle:
                 LostTarget();
@@ -84,27 +83,36 @@ public class EnemyCharacter : BattleSystem
     }
     void LostTarget()
     {
+        if (!myTarget.GetComponent<IBattle>().OnLive())
+        {
+            myTarget = null;
+            ChangeState(STATE.LostTarget);
+            return;
+        }
         if (myTarget != null)
         {
             Vector3 pos = myTarget.position - transform.position;
             float dist = pos.magnitude;
+            
             if (dist > 5.0f)
             {
-                myTarget = null;
+                myTarget = null;                
                 ChangeState(STATE.LostTarget);
             }
         }
     }
     public void EnemyTarget()
     {
-        Collider[] list = Physics.OverlapSphere(transform.position, 5.0f, myEnemyMask);        
+        Collider[] list = Physics.OverlapSphere(transform.position, 5.0f, myEnemyMask);
+        Transform tf=null;
         foreach (Collider col in list)
         {
+            if(col.gameObject.GetComponent<IBattle>().OnLive())
             myTarget=col.GetComponent<Transform>();
-        }
-        if (myTarget != null)
-        {
-            ChangeState(STATE.Battle);            
+        }        
+        if (myTarget!=null)
+        {            
+            ChangeState(STATE.Battle);
         }        
     }
     public override void OnDamage(float dmg)
@@ -137,7 +145,7 @@ public class EnemyCharacter : BattleSystem
             StopCoroutine(moveCo);
             moveCo = null;
         }
-        moveCo = StartCoroutine(MovingToPostion(pos, done));
+        
 
         if (Rot)
         {
@@ -148,6 +156,7 @@ public class EnemyCharacter : BattleSystem
             }
             rotCo = StartCoroutine(RotatingToPosition(pos));
         }
+        moveCo = StartCoroutine(MovingToPostion(pos, done));
     }
     IEnumerator MovingToPostion(Vector3 pos, UnityAction done)
     {
@@ -214,7 +223,7 @@ public class EnemyCharacter : BattleSystem
         StopAllCoroutines();
         attackCo = StartCoroutine(AttckingTarget(myStat.AttackRange, myStat.AttackDelay));
     }
-    IEnumerator AttckingTarget( float AttackRange, float AttackDelay)
+    IEnumerator AttckingTarget(float AttackRange, float AttackDelay)
     {
         float playTime = 0.0f;
         float delta = 0.0f;
@@ -280,5 +289,10 @@ public class EnemyCharacter : BattleSystem
             yield return null;
         }
         Destroy(gameObject);
+    }
+    public override bool OnLive()
+    {
+        if (myState != STATE.Dead) return true;
+        return false;
     }
 }

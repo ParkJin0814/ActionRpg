@@ -851,6 +851,10 @@ PrefabInstance:
       value: Player2
       objectReference: {fileID: 0}
     - target: {fileID: 8922705139063201014, guid: ca5bf9a9a263fd6498f1ac76b08379d2, type: 3}
+      propertyPath: myState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8922705139063201014, guid: ca5bf9a9a263fd6498f1ac76b08379d2, type: 3}
       propertyPath: myEnemyMask.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -5036,6 +5040,7 @@ MonoBehaviour:
     m_Bits: 128
   LeftAttackPoint: {fileID: 1530147302}
   RightAttackPoint: {fileID: 895836000}
+  myTarget: {fileID: 0}
   myState: 0
 --- !u!1 &7180285017663905887
 GameObject:
