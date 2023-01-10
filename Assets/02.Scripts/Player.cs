@@ -35,8 +35,11 @@ public class Player : PlayerMovement
             case STATE.Create:
                 break;
             case STATE.Idle:
-                AttackA();
-                Movement();                
+                if (!Inventory.invectoryActivated)
+                {
+                    AttackA();                    
+                }
+                Movement();
                 break;
             case STATE.Dead:
                 break;
@@ -44,15 +47,20 @@ public class Player : PlayerMovement
     }
     void Start()
     {
+        Application.targetFrameRate= 60;
         ChangeState(STATE.Idle);
     }
-    void Update()
+    private void FixedUpdate()
     {
         StateProcess();
     }
+    void Update()
+    {
+        
+    }
     void AttackA()
     {
-        if (Input.GetMouseButtonDown(0) && !myAnim.GetBool("IsRolling") && !myAnim.GetBool("IsAttacking"))
+        if (Input.GetMouseButtonDown(0) && !myAnim.GetBool("IsRolling") && !myAnim.GetBool("IsAttacking") )
         {
             if (!myAnim.GetBool("IsKnife")) Weapon();
             else myAnim.SetTrigger("AttackA");

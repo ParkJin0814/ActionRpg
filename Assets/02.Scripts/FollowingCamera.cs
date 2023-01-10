@@ -31,7 +31,7 @@ public class FollowingCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(1)&&myPlayer.OnLive())
+        if (Input.GetMouseButton(1)&&myPlayer.OnLive()&& !Inventory.invectoryActivated)
         {
             if (!GetComponentInParent<Animator>().GetBool("IsRolling"))
             {

@@ -12,8 +12,7 @@ public class ItemManager : MonoBehaviour
     private RaycastHit hitInfo;  // 충돌체 정보 저장
     [SerializeField] LayerMask ItemLayerMask;
     [SerializeField] TMP_Text dropText;
-    [SerializeField] Inventory myInventory;
-
+    [SerializeField] Inventory myInventory;    
 
     private void Update()
     {
@@ -35,7 +34,9 @@ public class ItemManager : MonoBehaviour
 
     private void CheckItem()
     {
-        if (Physics.SphereCast(transform.position, 0.0f, transform.forward, out hitInfo, itemRange, ItemLayerMask))
+        Vector3 pos = transform.position;
+        pos.y += 1.0f;
+        if (Physics.SphereCast(pos, 0.15f, transform.forward, out hitInfo, itemRange, ItemLayerMask))
         {
             if (hitInfo.transform.tag == "Item")
             {

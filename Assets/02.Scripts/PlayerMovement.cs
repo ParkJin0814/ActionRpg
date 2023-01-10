@@ -85,9 +85,10 @@ public class PlayerMovement : BattleSystem
         Vector3 dir = new Vector3(x, 0, 1);
         while (true)
         {
+            
             float delta = myStat.MoveSpeed * 3.0f * Time.deltaTime;
             transform.Translate(dir * delta);
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
     }
     
