@@ -11,9 +11,14 @@ public class ItemManager : MonoBehaviour
     bool pickupItme; //아이템 습득가능시 불값
     private RaycastHit hitInfo;  // 충돌체 정보 저장
     [SerializeField] LayerMask ItemLayerMask;
-    [SerializeField] TMP_Text dropText;
-    [SerializeField] Inventory myInventory;    
+    TMP_Text dropText;
+    Inventory myInventory;
 
+    private void Start()
+    {
+        dropText = GameManager.Inst.dropText;
+        myInventory= GameManager.Inst.myInventory;
+    }
     private void Update()
     {
         DropItem();

@@ -15,7 +15,7 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-        slots = go_SlotsParent.GetComponentsInChildren<Slot>();
+        slots = go_SlotsParent.GetComponentsInChildren<Slot>();        
     }
 
     void Update()

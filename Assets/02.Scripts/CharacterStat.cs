@@ -7,12 +7,16 @@ public struct CharacterStat
 {
     [SerializeField] float hp;
     [SerializeField] float maxHp;
+    [SerializeField] float sp;
+    [SerializeField] float maxSp;
     [SerializeField] float moveSpeed;
     [SerializeField] float ap;
     [SerializeField] float attackRange;
     [SerializeField] float attackDelay;
 
+    public float spCool;
     public UnityAction<float> changeHp;
+    public UnityAction<float> changeSp;
     public float HP
     {
         get => hp;
@@ -20,6 +24,19 @@ public struct CharacterStat
         {
             hp = Mathf.Clamp(value, 0.0f, maxHp);
             changeHp?.Invoke(hp / maxHp);
+        }
+    }
+    public float SP
+    {
+        get => sp;
+        set
+        {
+            sp = Mathf.Clamp(value, 0.0f, maxSp);
+            if(sp.Equals(0.0f))
+            {
+                spCool= 2.0f;
+            }
+            changeSp?.Invoke(sp / maxSp);
         }
     }
     public float MoveSpeed

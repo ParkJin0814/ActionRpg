@@ -49,6 +49,19 @@ public class Player : PlayerMovement
     {
         Application.targetFrameRate= 60;
         ChangeState(STATE.Idle);
+        ChangeStat();
+        InputNumber.myPlayer = this;
+    }
+    void ChangeStat()
+    {
+        myStat.changeHp = (float a) =>
+        {
+            GameManager.Inst.myHp.value = a;
+        };
+        myStat.changeSp = (float a) =>
+        {
+            GameManager.Inst.mySp.value = a;
+        };
     }
     private void FixedUpdate()
     {
@@ -62,7 +75,11 @@ public class Player : PlayerMovement
     {
         if (Input.GetMouseButtonDown(0) && !myAnim.GetBool("IsRolling") && !myAnim.GetBool("IsAttacking") )
         {
-            if (!myAnim.GetBool("IsKnife")) Weapon();
+            if (!myAnim.GetBool("IsKnife"))
+            {
+                Weapon();
+                return;
+            }
             else myAnim.SetTrigger("AttackA");
         }
     }

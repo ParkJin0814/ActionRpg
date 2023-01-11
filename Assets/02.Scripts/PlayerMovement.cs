@@ -11,7 +11,7 @@ public class PlayerMovement : BattleSystem
     float Run;
     float x;
     float y;
-    bool runing = false;
+    bool runing = false;    
     Coroutine myRoll;
     
     protected void RollingStart()
@@ -38,9 +38,9 @@ public class PlayerMovement : BattleSystem
             myAnim.SetFloat("x", x);
             myAnim.SetFloat("y", y);
             //구르기
-            if (Input.GetKeyDown(KeyCode.Space) && !myAnim.GetBool("IsRolling"))
+            if (Input.GetKeyDown(KeyCode.Space) && !myAnim.GetBool("IsRolling")&&myStat.SP>=20.0f)
             {
-                myAnim.SetTrigger("Rolling");
+                myAnim.SetTrigger("Rolling");                
             }
             //무기탈부착
             if (Input.GetKeyDown(KeyCode.X)) Weapon();
@@ -48,16 +48,26 @@ public class PlayerMovement : BattleSystem
             if (!x.Equals(0.0f) || !y.Equals(0.0f)) myAnim.SetBool("Move", true);            
             else myAnim.SetBool("Move", false);
             //달리기
-            if (Input.GetKey(KeyCode.LeftShift) && y > 0.0f)
+            if (Input.GetKey(KeyCode.LeftShift) && y > 0.0f &&myStat.SP>0.0f)
             {
                 Run = Mathf.Lerp(0, 1, Run + 0.2f);
-                runing = true;
+                myStat.SP -= Time.deltaTime * 10.0f;
+                runing = true;                
             }
             else
             {
-                Run = Mathf.Lerp(0, 1, Run - 0.2f);
+                Run = Mathf.Lerp(0, 1, Run - 0.2f);                
                 runing = false;
+                
+                if (myStat.spCool > 0.0f)
+                {
+                    myStat.spCool -= Time.deltaTime;
+                    if (myStat.spCool < 0.0f) myStat.spCool = 0.0f;
+                }
+                else myStat.SP += Time.deltaTime * 20.0f;
             }
+            
+            
             myAnim.SetFloat("Run", Run);
             if (myAnim.GetBool("Move"))
             {
@@ -77,12 +87,12 @@ public class PlayerMovement : BattleSystem
     protected void Weapon()
     {
         if (myAnim.GetBool("KnifeToggle")) return;
-        myAnim.SetTrigger("Knife");
-        myAnim.SetBool("IsKnife", !myAnim.GetBool("IsKnife"));
+        myAnim.SetTrigger("Knife");        
     }
     IEnumerator Rollings()
     {
         Vector3 dir = new Vector3(x, 0, 1);
+        myStat.SP -= 20.0f;
         while (true)
         {
             

@@ -10,17 +10,15 @@ public class KnifeToggle : MonoBehaviour
     [SerializeField] Transform RightHand;
     [SerializeField] Transform LeftHolder;
     [SerializeField] Transform RightHolder;
-    public bool isKnife = false;
+    
 
     void TakeUpKnife()
-    {
-        isKnife = true;
+    {        
         RightKnife.SetParent(RightHand, false);
         LeftKnife.SetParent(LeftHand, false);
     }
     void HolderKnife()
-    {
-        isKnife = false;
+    {        
         RightKnife.SetParent(RightHolder, false);
         LeftKnife.SetParent(LeftHolder, false);
     }   

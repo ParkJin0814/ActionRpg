@@ -10,10 +10,16 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
     public Item item;
     public int itemCount;
     public Image itemImage;
-
+    Rect inventoryRect;
+    InputNumber myInputNumber;
     [SerializeField] TMP_Text text_Count;
     [SerializeField] GameObject go_CountImage;
 
+    private void Start()
+    {
+        inventoryRect= transform.parent.parent.GetComponent<RectTransform>().rect;
+        myInputNumber=FindObjectOfType<InputNumber>();
+    }
     //투명도 조절
     void SetColor(float alpha)
     {
@@ -99,8 +105,18 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        DragSlot.Inst.SetColor(0);
-        DragSlot.Inst.dragSlot=null;
+        if (DragSlot.Inst.transform.localPosition.x < inventoryRect.xMin ||
+            DragSlot.Inst.transform.localPosition.x > inventoryRect.xMax ||
+            DragSlot.Inst.transform.localPosition.y < inventoryRect.yMin ||
+            DragSlot.Inst.transform.localPosition.y > inventoryRect.yMax)
+        {
+            if (DragSlot.Inst.dragSlot != null) myInputNumber.Call();
+        }
+        else
+        {
+            DragSlot.Inst.SetColor(0);
+            DragSlot.Inst.dragSlot = null;
+        }
     }
 
     public void OnDrop(PointerEventData eventData)
