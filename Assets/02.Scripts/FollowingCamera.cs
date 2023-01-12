@@ -26,12 +26,15 @@ public class FollowingCamera : MonoBehaviour
         camPos = myCam.localPosition;
 
         desireDistance = camPos.z;
+        Cursor.visible = false;
+        Cursor.lockState= CursorLockMode.Locked;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(1)&&myPlayer.OnLive()&& !Inventory.invectoryActivated)
+        if (myPlayer.OnLive()&& !Inventory.invectoryActivated)
         {
             if (!GetComponentInParent<Animator>().GetBool("IsRolling"))
             {

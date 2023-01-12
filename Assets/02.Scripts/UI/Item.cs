@@ -17,4 +17,5 @@ public class Item : ScriptableObject
     public Sprite itemImage; // 인벤토리 이미지
     public GameObject itemPrefab;  // 아이템의 프리팹 (아이템 생성시 프리팹으로 찍어냄)
     public string weaponType;  // 무기 유형
+    [TextArea] public string itemDesc;
 }

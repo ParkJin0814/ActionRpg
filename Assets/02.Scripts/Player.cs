@@ -75,7 +75,7 @@ public class Player : PlayerMovement
     {
         if (Input.GetMouseButtonDown(0) && !myAnim.GetBool("IsRolling") && !myAnim.GetBool("IsAttacking") )
         {
-            if (!myAnim.GetBool("IsKnife"))
+            if (myAnim.GetBool("IsKnife"))
             {
                 Weapon();
                 return;

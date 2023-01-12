@@ -5,20 +5,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragHandler,IEndDragHandler,IDropHandler
+public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragHandler,IEndDragHandler,IDropHandler,
+    IPointerEnterHandler,IPointerExitHandler
 {
     public Item item;
     public int itemCount;
     public Image itemImage;
-    Rect inventoryRect;
+    [SerializeField] RectTransform inventoryRect;
+    [SerializeField] RectTransform quickSlotBaseRect;
     InputNumber myInputNumber;
+    ItemEffectDatabase myItemEffectDatabase;
     [SerializeField] TMP_Text text_Count;
     [SerializeField] GameObject go_CountImage;
-
+    [SerializeField] bool isQuickSlot;  // 해당 슬롯이 퀵슬롯인지 여부 판단
+    [SerializeField] int quickSlotNumber;  // 퀵슬롯 넘버
     private void Start()
-    {
-        inventoryRect= transform.parent.parent.GetComponent<RectTransform>().rect;
+    {        
         myInputNumber=FindObjectOfType<InputNumber>();
+        myItemEffectDatabase= FindObjectOfType<ItemEffectDatabase>();        
     }
     //투명도 조절
     void SetColor(float alpha)
@@ -56,7 +60,9 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
         text_Count.text = itemCount.ToString();
 
         if (itemCount <= 0)
+        {
             ClearSlot();
+        }
     }
 
     // 해당 슬롯 하나 삭제
@@ -77,10 +83,10 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
         {
             if (item != null)
             {
+                myItemEffectDatabase.UseItem(item);
                 //소비템이라면
                 if (item.itemType == Item.ItemType.Used) 
-                {
-                    Debug.Log(item.itemName + " 을 사용했습니다.");
+                {                    
                     SetSlotCount(-1);
                 }
             }
@@ -104,11 +110,8 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
     }
 
     public void OnEndDrag(PointerEventData eventData)
-    {
-        if (DragSlot.Inst.transform.localPosition.x < inventoryRect.xMin ||
-            DragSlot.Inst.transform.localPosition.x > inventoryRect.xMax ||
-            DragSlot.Inst.transform.localPosition.y < inventoryRect.yMin ||
-            DragSlot.Inst.transform.localPosition.y > inventoryRect.yMax)
+    {      
+        if (InventoryRectCheck())
         {
             if (DragSlot.Inst.dragSlot != null) myInputNumber.Call();
         }
@@ -118,10 +121,25 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
             DragSlot.Inst.dragSlot = null;
         }
     }
+    bool InventoryRectCheck()
+    {
+        return (!((DragSlot.Inst.transform.localPosition.x > inventoryRect.rect.xMin
+            && DragSlot.Inst.transform.localPosition.x < inventoryRect.rect.xMax
+            && DragSlot.Inst.transform.localPosition.y > inventoryRect.rect.yMin
+            && DragSlot.Inst.transform.localPosition.y < inventoryRect.rect.yMax)
+            ||
+            (DragSlot.Inst.transform.localPosition.x + inventoryRect.localPosition.x > quickSlotBaseRect.rect.xMin
+            && DragSlot.Inst.transform.localPosition.x + inventoryRect.localPosition.x < quickSlotBaseRect.rect.xMax
+            && DragSlot.Inst.transform.localPosition.y + inventoryRect.transform.localPosition.y > quickSlotBaseRect.rect.yMin + quickSlotBaseRect.transform.localPosition.y
+            && DragSlot.Inst.transform.localPosition.y + inventoryRect.transform.localPosition.y < quickSlotBaseRect.rect.yMax + quickSlotBaseRect.transform.localPosition.y)));
+    }
 
     public void OnDrop(PointerEventData eventData)
     {
-        if(DragSlot.Inst.dragSlot !=null)ChangeSlot();
+        if (DragSlot.Inst.dragSlot != null)
+        {
+            ChangeSlot();            
+        }
     }
     void ChangeSlot()
     {
@@ -130,5 +148,19 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
         AddItem(DragSlot.Inst.dragSlot.item,DragSlot.Inst.dragSlot.itemCount);
         if(tempItem!=null) DragSlot.Inst.dragSlot.AddItem(tempItem,tempItemCount);
         else DragSlot.Inst.dragSlot.ClearSlot();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (item != null) myItemEffectDatabase.ShowToolTip(item,transform.position);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        myItemEffectDatabase.HideToolTip();
+    }
+    public int GetQuickSlotNumber()
+    {
+        return quickSlotNumber;
     }
 }

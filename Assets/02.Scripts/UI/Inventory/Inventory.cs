@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -36,11 +37,16 @@ public class Inventory : MonoBehaviour
     private void OpenInventory()
     {
         go_InventoryBase.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     private void CloseInventory()
     {
         go_InventoryBase.SetActive(false);
+        GameManager.Inst.GetComponent<ItemEffectDatabase>().HideToolTip();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void AcquireItem(Item _item, int _count = 1)
