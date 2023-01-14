@@ -31,7 +31,7 @@ public class Inventory : MonoBehaviour
             invectoryActivated = !invectoryActivated;
             if (invectoryActivated) OpenInventory();
             else CloseInventory();
-        }
+        }        
     }
 
     private void OpenInventory()

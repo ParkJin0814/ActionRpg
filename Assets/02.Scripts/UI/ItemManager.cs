@@ -54,7 +54,7 @@ public class ItemManager : MonoBehaviour
     {
         pickupItme = true;
         dropText.gameObject.SetActive(true);
-        dropText.text = hitInfo.transform.GetComponent<ItemPickUp>().item.itemName + " Drop " + "<color=yellow>" + "(E)" + "</color>";
+        dropText.text = hitInfo.transform.GetComponent<ItemPickUp>().item.itemName +"\n" +"<color=yellow>" + "(E)" + "</color>";
     }
     private void ItemInfoDisappear()
     {

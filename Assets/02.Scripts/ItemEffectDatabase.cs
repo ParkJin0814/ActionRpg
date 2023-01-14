@@ -56,6 +56,10 @@ public class ItemEffectDatabase : MonoBehaviour
             Debug.Log("itemEffectDatabase에 일치하는 itemName이 없습니다.");
         }
     }
+    public void EatItem()
+    {
+        myQuickSlotController.EatItem();
+    }
     
     public void ShowToolTip(Item _item, Vector3 _pos)
     {

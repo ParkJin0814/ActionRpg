@@ -9,7 +9,7 @@ public class QuickSlotController : MonoBehaviour
 
     int selectedSlot;  // º±≈√µ» ƒ¸ΩΩ∑‘¿« ¿Œµ¶Ω∫ (0~7)
     [SerializeField] GameObject go_SelectedImage;  // º±≈√µ» ƒ¸ΩΩ∑‘ ¿ÃπÃ¡ˆ
-    [SerializeField] ItemEffectDatabase myItemEffectDatabase;
+    [SerializeField] ItemEffectDatabase myItemEffectDatabase;     
 
 
 
@@ -50,6 +50,7 @@ public class QuickSlotController : MonoBehaviour
     }
     public void EatItem()
     {
+        if (quickSlots[selectedSlot].item == null) return;
         myItemEffectDatabase.UseItem(quickSlots[selectedSlot].item);
         quickSlots[selectedSlot].SetSlotCount(-1);
 

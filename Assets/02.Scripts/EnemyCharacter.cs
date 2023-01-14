@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class EnemyCharacter : BattleSystem
@@ -77,10 +78,13 @@ public class EnemyCharacter : BattleSystem
         ChangeState(STATE.Idle);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         StateProcess();
+    }
+    void Update()
+    {
+        
     }
     void LostTarget()
     {
@@ -164,8 +168,7 @@ public class EnemyCharacter : BattleSystem
         Vector3 dir = pos - transform.position;
         float dist = dir.magnitude;
         dir.Normalize();
-        //달리기 시작
-        myAnim.SetBool("Run", false);
+        //달리기 시작        
         myAnim.SetBool("Walk", true);
         while (dist > 0.0f)
         {   
@@ -179,7 +182,7 @@ public class EnemyCharacter : BattleSystem
                 dist -= delta;
                 transform.Translate(dir * delta, Space.World);
             }
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
         //달리기 끝 - 도착
         myAnim.SetBool("Walk", false);
@@ -207,7 +210,7 @@ public class EnemyCharacter : BattleSystem
                 Angle -= delta;
                 transform.Rotate(Vector3.up * rotDir * delta, Space.World);
             }
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
     }
     protected void AttackTarget()
@@ -227,9 +230,8 @@ public class EnemyCharacter : BattleSystem
             float dist = dir.magnitude;
             dir.Normalize();
             if (dist > AttackRange)
-            {
-                myAnim.SetBool("Walk", false);
-                myAnim.SetBool("Run", true);
+            {                
+                myAnim.SetBool("Walk", true);
                 delta = myStat.MoveSpeed*1.5f * Time.deltaTime;
                 if (delta > dist)
                 {
@@ -239,30 +241,31 @@ public class EnemyCharacter : BattleSystem
             }
             else
             {
-                myAnim.SetBool("Run", false);
+                myAnim.SetBool("Walk", false);
                 if (playTime >= AttackDelay)
                 {
                     //공격
                     playTime = 0.0f;
-                    myAnim.SetTrigger("AttackA");
+                    myAnim.SetTrigger("Attack");
                 }
             }
             //회전
-            delta = 180.0f * Time.deltaTime;
-            float Angle = Vector3.Angle(dir, transform.forward);
-            float rotDir = 1.0f;
-            if (Vector3.Dot(transform.right, dir) < 0.0f)
+            float Angle = Vector3.Angle(transform.forward, dir);
+            Debug.Log(transform.forward);
+            Debug.Log(dir);
+            float rotDir = 1.0f;            
+            if (Angle>5f)
             {
-                rotDir = -rotDir;
-            }
-            if (delta > Angle)
-            {
-                delta = Angle;
-            }
-            transform.Rotate(Vector3.up * delta * rotDir, Space.World);
-            yield return null;
+                delta = 180.0f * Time.deltaTime;
+                if (Vector3.Dot(transform.right, dir) < 0.0f) 
+                    rotDir = -rotDir;                
+                if (delta > Angle) delta = Angle;
+                Angle -= delta;                
+                transform.Rotate(Vector3.up * delta * rotDir, Space.World);                
+            }            
+            yield return new WaitForFixedUpdate();
         }
-        myAnim.SetBool("Run", false);
+        myAnim.SetBool("Walk", false);
     }
     IEnumerator DisApearing(float d, float t)
     {

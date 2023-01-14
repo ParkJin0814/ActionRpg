@@ -40,6 +40,10 @@ public class Player : PlayerMovement
                     AttackA();                    
                 }
                 Movement();
+                if (Input.GetMouseButtonDown(1))
+                {
+                    GameManager.Inst.GetComponent<ItemEffectDatabase>().EatItem();
+                }
                 break;
             case STATE.Dead:
                 break;
@@ -81,7 +85,7 @@ public class Player : PlayerMovement
                 return;
             }
             else myAnim.SetTrigger("AttackA");
-        }
+        }        
     }
     public override void OnDamage(float dmg)
     {
