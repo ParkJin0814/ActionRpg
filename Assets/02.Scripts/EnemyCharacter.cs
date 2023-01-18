@@ -4,16 +4,19 @@ using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.AI;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class EnemyCharacter : BattleSystem
 {
     [SerializeField] Transform myTarget;
-    Coroutine moveCo = null;
-    Coroutine rotCo = null;
+    [SerializeField] float viewAngle;
+    [SerializeField] float viewDistance;
+    Coroutine moveCo = null;    
     Coroutine attackCo = null;
     Vector3 startPos;
+    NavMeshAgent nav;
     public enum STATE
     {
         Create, Idle, Roaming, Battle, LostTarget,Dead
@@ -74,6 +77,7 @@ public class EnemyCharacter : BattleSystem
     }
     void Start()
     {
+        nav = GetComponent<NavMeshAgent>();
         startPos = transform.position;
         ChangeState(STATE.Idle);
     }
@@ -81,6 +85,14 @@ public class EnemyCharacter : BattleSystem
     private void FixedUpdate()
     {
         StateProcess();
+        if(nav.remainingDistance.Equals(0.0f))
+        {
+            myAnim.SetBool("Walk", false);
+        }
+        else
+        {
+            myAnim.SetBool("Walk", true);
+        }
     }
     void Update()
     {
@@ -94,25 +106,47 @@ public class EnemyCharacter : BattleSystem
             ChangeState(STATE.LostTarget);            
         }
         if (myTarget != null)
-        {
-            Vector3 pos = myTarget.position - transform.position;
-            float dist = pos.magnitude;
-            
-            if (dist > 5.0f)
+        {            
+            if (nav.remainingDistance!=Mathf.Infinity&&nav.remainingDistance > 10.0f)
             {
                 myTarget = null;                
                 ChangeState(STATE.LostTarget);
             }
         }
     }
+    private Vector3 BoundaryAngle(float _angle)
+    {
+        _angle += transform.eulerAngles.y;
+        return new Vector3(Mathf.Sin(_angle * Mathf.Deg2Rad), 0f, Mathf.Cos(_angle * Mathf.Deg2Rad));
+    }
     public void EnemyTarget()
-    {        
-        Collider[] list = Physics.OverlapSphere(transform.position, 5.0f, myEnemyMask);
-        foreach(Collider c in list)
+    {
+        
+        Vector3 _leftBoundary = BoundaryAngle(-viewAngle * 0.5f);  // z 축 기준으로 시야 각도의 절반 각도만큼 왼쪽으로 회전한 방향 (시야각의 왼쪽 경계선)
+        Vector3 _rightBoundary = BoundaryAngle(viewAngle * 0.5f);  // z 축 기준으로 시야 각도의 절반 각도만큼 오른쪽으로 회전한 방향 (시야각의 오른쪽 경계선)
+
+        Debug.DrawRay(transform.position + transform.up, _leftBoundary, Color.red);
+        Debug.DrawRay(transform.position + transform.up, _rightBoundary, Color.red);
+
+        Collider[] _target = Physics.OverlapSphere(transform.position, viewDistance, myEnemyMask);
+        for (int i = 0; i < _target.Length; i++)
         {
-            if(c.GetComponent<IBattle>().OnLive())
+            Transform _targetTf = _target[i].transform;
+            if (_targetTf.name == "Player")
             {
-                myTarget=c.transform;
+                Vector3 _direction = (_targetTf.position - transform.position).normalized;
+                float _angle = Vector3.Angle(_direction, transform.forward);
+                if (_angle < viewAngle * 0.5f)
+                {
+                    RaycastHit _hit;
+                    if (Physics.Raycast(transform.position + transform.up, _direction, out _hit, viewDistance))
+                    {
+                        if (_hit.transform.name == "Player" &&_hit.transform.GetComponent<IBattle>().OnLive())
+                        {
+                            myTarget = _hit.transform;                            
+                        }
+                    }
+                }
             }
         }
         if (myTarget!=null)
@@ -150,69 +184,22 @@ public class EnemyCharacter : BattleSystem
             StopCoroutine(moveCo);
             moveCo = null;
         }
-        
-
-        if (Rot)
-        {
-            if (rotCo != null)
-            {
-                StopCoroutine(rotCo);
-                rotCo = null;
-            }
-            rotCo = StartCoroutine(RotatingToPosition(pos));
-        }
+        nav.ResetPath();        
         moveCo = StartCoroutine(MovingToPostion(pos, done));
     }
     IEnumerator MovingToPostion(Vector3 pos, UnityAction done)
     {
-        Vector3 dir = pos - transform.position;
-        float dist = dir.magnitude;
-        dir.Normalize();
-        //달리기 시작        
-        myAnim.SetBool("Walk", true);
-        while (dist > 0.0f)
-        {   
-            if (!myAnim.GetBool("IsAttacking"))
-            {
-                float delta = myStat.MoveSpeed * Time.deltaTime;
-                if (delta > dist)
-                {
-                    delta = dist;
-                }
-                dist -= delta;
-                transform.Translate(dir * delta, Space.World);
-            }
+        
+        nav.SetDestination(pos);
+        while(nav.remainingDistance>0.0f)
+        {
             yield return new WaitForFixedUpdate();
         }
-        //달리기 끝 - 도착
-        myAnim.SetBool("Walk", false);
+        //달리기 끝 - 도착        
+        yield return new WaitForSeconds(1.0f);
         done?.Invoke();
-    }
-    IEnumerator RotatingToPosition(Vector3 pos)
-    {
-        Vector3 dir = (pos - transform.position).normalized;
-        float Angle = Vector3.Angle(transform.forward, dir);
-        float rotDir = 1.0f;
-        if (Vector3.Dot(transform.right, dir) < 0.0f)
-        {
-            rotDir = -rotDir;
-        }
-
-        while (Angle > 0.0f)
-        {
-            if (!myAnim.GetBool("IsAttacking"))
-            {
-                float delta = 180.0f * Time.deltaTime;
-                if (delta > Angle)
-                {
-                    delta = Angle;
-                }
-                Angle -= delta;
-                transform.Rotate(Vector3.up * rotDir * delta, Space.World);
-            }
-            yield return new WaitForFixedUpdate();
-        }
-    }
+        
+    }    
     protected void AttackTarget()
     {
         StopAllCoroutines();
@@ -221,7 +208,7 @@ public class EnemyCharacter : BattleSystem
     IEnumerator AttckingTarget(float AttackRange, float AttackDelay)
     {
         float playTime = 0.0f;
-        float delta = 0.0f;
+        nav.ResetPath();
         while (myTarget != null)
         {
             if (!myAnim.GetBool("IsAttacking")) playTime += Time.deltaTime;
@@ -231,13 +218,7 @@ public class EnemyCharacter : BattleSystem
             dir.Normalize();
             if (dist > AttackRange)
             {                
-                myAnim.SetBool("Walk", true);
-                delta = myStat.MoveSpeed*1.5f * Time.deltaTime;
-                if (delta > dist)
-                {
-                    delta = dist;
-                }
-                transform.Translate(dir * delta, Space.World);
+                nav.SetDestination(myTarget.position);
             }
             else
             {
@@ -248,21 +229,26 @@ public class EnemyCharacter : BattleSystem
                     playTime = 0.0f;
                     myAnim.SetTrigger("Attack");
                 }
-            }
-            //회전
-            float Angle = Vector3.Angle(transform.forward, dir);
-            Debug.Log(transform.forward);
-            Debug.Log(dir);
-            float rotDir = 1.0f;            
-            if (Angle>5f)
-            {
-                delta = 180.0f * Time.deltaTime;
-                if (Vector3.Dot(transform.right, dir) < 0.0f) 
-                    rotDir = -rotDir;                
-                if (delta > Angle) delta = Angle;
-                Angle -= delta;                
-                transform.Rotate(Vector3.up * delta * rotDir, Space.World);                
-            }            
+                float Angle = Vector3.Angle(transform.forward, dir);
+                float rotDir = 1.0f;
+                if (Vector3.Dot(transform.right, dir) < 0.0f)
+                {
+                    rotDir = -rotDir;
+                }
+                if (Angle > 5f && nav.remainingDistance.Equals(0.0f))
+                {
+                    if (!myAnim.GetBool("IsAttacking"))
+                    {
+                        float delta = 180.0f * Time.deltaTime;
+                        if (delta > Angle)
+                        {
+                            delta = Angle;
+                        }
+                        Angle -= delta;
+                        transform.Rotate(Vector3.up * rotDir * delta, Space.World);
+                    }                    
+                }
+            }               
             yield return new WaitForFixedUpdate();
         }
         myAnim.SetBool("Walk", false);
