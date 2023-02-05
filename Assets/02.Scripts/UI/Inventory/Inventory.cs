@@ -27,26 +27,29 @@ public class Inventory : MonoBehaviour
     private void TryOpenInventory()
     {
         if (Input.GetKeyDown(KeyCode.I))
-        {
-            invectoryActivated = !invectoryActivated;
-            if (invectoryActivated) OpenInventory();
+        {            
+            if (!invectoryActivated) OpenInventory();
             else CloseInventory();
-        }        
+        }
+        if (invectoryActivated && Input.GetKeyDown(KeyCode.Escape))
+        {            
+            CloseInventory();
+        }   
     }
 
-    private void OpenInventory()
+    public void OpenInventory()
     {
+        invectoryActivated = true;
         go_InventoryBase.SetActive(true);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        GameManager.Inst.MouseCussorCheck();
     }
 
-    private void CloseInventory()
+    public void CloseInventory()
     {
+        invectoryActivated = false;
         go_InventoryBase.SetActive(false);
         GameManager.Inst.GetComponent<ItemEffectDatabase>().HideToolTip();
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        GameManager.Inst.MouseCussorCheck();
     }
 
     public void AcquireItem(Item _item, int _count = 1)

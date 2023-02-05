@@ -14,6 +14,7 @@ public struct CharacterStat
     [SerializeField] float attackRange;
     [SerializeField] float attackDelay;
 
+    public bool RecoverySp;
     public float spCool;
     public UnityAction<float> changeHp;
     public UnityAction<float> changeSp;
@@ -26,6 +27,7 @@ public struct CharacterStat
             changeHp?.Invoke(hp / maxHp);
         }
     }
+    
     public float SP
     {
         get => sp;
@@ -35,6 +37,11 @@ public struct CharacterStat
             if(sp.Equals(0.0f))
             {
                 spCool= 2.0f;
+                RecoverySp = false;
+            }
+            if(sp==maxSp)
+            {
+                RecoverySp = true;
             }
             changeSp?.Invoke(sp / maxSp);
         }

@@ -113,7 +113,11 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
     {      
         if (InventoryRectCheck())
         {
-            if (DragSlot.Inst.dragSlot != null) myInputNumber.Call();
+            if (DragSlot.Inst.dragSlot != null)
+            {
+                myInputNumber.transform.position = eventData.position;
+                myInputNumber.Call();
+            }
         }
         else
         {

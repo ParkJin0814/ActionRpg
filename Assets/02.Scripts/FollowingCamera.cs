@@ -34,8 +34,9 @@ public class FollowingCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (myPlayer.OnLive()&& !Inventory.invectoryActivated)
+        if (myPlayer.OnLive()&& GameManager.Inst.MousePointCheck())
         {
+            
             if (!GetComponentInParent<Animator>().GetBool("IsRolling"))
             {
                 curRot.x -= Input.GetAxisRaw("Mouse Y") * LookupSpeed;
@@ -45,6 +46,7 @@ public class FollowingCamera : MonoBehaviour
                 transform.parent.localRotation = Quaternion.Euler(0, curRot.y, 0);
             }
         }
+        
 
         desireDistance += Input.GetAxisRaw("Mouse ScrollWheel") * ZoomSpeed;
         desireDistance = Mathf.Clamp(desireDistance, ZoomRange.x, ZoomRange.y);
@@ -59,4 +61,5 @@ public class FollowingCamera : MonoBehaviour
         }
         myCam.localPosition = camPos;
     }
+    
 }

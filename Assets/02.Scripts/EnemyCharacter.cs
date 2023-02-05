@@ -31,7 +31,8 @@ public class EnemyCharacter : BattleSystem
         {
             case STATE.Create:
                 break;
-            case STATE.Idle:                
+            case STATE.Idle:
+                myAnim.SetBool("Walk", false);
                 StartCoroutine(DelayRoaming(2.0f));
                 break;
             case STATE.Roaming:
@@ -113,21 +114,11 @@ public class EnemyCharacter : BattleSystem
                 ChangeState(STATE.LostTarget);
             }
         }
-    }
-    private Vector3 BoundaryAngle(float _angle)
-    {
-        _angle += transform.eulerAngles.y;
-        return new Vector3(Mathf.Sin(_angle * Mathf.Deg2Rad), 0f, Mathf.Cos(_angle * Mathf.Deg2Rad));
-    }
+    }    
     public void EnemyTarget()
     {
         
-        Vector3 _leftBoundary = BoundaryAngle(-viewAngle * 0.5f);  // z 축 기준으로 시야 각도의 절반 각도만큼 왼쪽으로 회전한 방향 (시야각의 왼쪽 경계선)
-        Vector3 _rightBoundary = BoundaryAngle(viewAngle * 0.5f);  // z 축 기준으로 시야 각도의 절반 각도만큼 오른쪽으로 회전한 방향 (시야각의 오른쪽 경계선)
-
-        Debug.DrawRay(transform.position + transform.up, _leftBoundary, Color.red);
-        Debug.DrawRay(transform.position + transform.up, _rightBoundary, Color.red);
-
+       
         Collider[] _target = Physics.OverlapSphere(transform.position, viewDistance, myEnemyMask);
         for (int i = 0; i < _target.Length; i++)
         {
@@ -184,19 +175,14 @@ public class EnemyCharacter : BattleSystem
             StopCoroutine(moveCo);
             moveCo = null;
         }
-        nav.ResetPath();        
+                
         moveCo = StartCoroutine(MovingToPostion(pos, done));
     }
     IEnumerator MovingToPostion(Vector3 pos, UnityAction done)
     {
-        
-        nav.SetDestination(pos);
-        while(nav.remainingDistance>0.0f)
-        {
-            yield return new WaitForFixedUpdate();
-        }
-        //달리기 끝 - 도착        
-        yield return new WaitForSeconds(1.0f);
+        nav.ResetPath();
+        nav.SetDestination(pos);        
+        yield return new WaitForSeconds(3.0f);        
         done?.Invoke();
         
     }    
@@ -222,6 +208,7 @@ public class EnemyCharacter : BattleSystem
             }
             else
             {
+                nav.ResetPath();
                 myAnim.SetBool("Walk", false);
                 if (playTime >= AttackDelay)
                 {
@@ -235,7 +222,7 @@ public class EnemyCharacter : BattleSystem
                 {
                     rotDir = -rotDir;
                 }
-                if (Angle > 5f && nav.remainingDistance.Equals(0.0f))
+                if (Angle > 10f && nav.remainingDistance.Equals(0.0f))
                 {
                     if (!myAnim.GetBool("IsAttacking"))
                     {

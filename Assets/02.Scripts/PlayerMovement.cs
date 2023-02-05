@@ -48,17 +48,17 @@ public class PlayerMovement : BattleSystem
             if (!x.Equals(0.0f) || !y.Equals(0.0f)) myAnim.SetBool("Move", true);            
             else myAnim.SetBool("Move", false);
             //´Þ¸®±â
-            if (Input.GetKey(KeyCode.LeftShift) && y > 0.0f &&myStat.SP>0.0f)
+            if (Input.GetKey(KeyCode.LeftShift) && y > 0.0f && myStat.SP > 0.0f && myStat.RecoverySp)
             {
                 Run = Mathf.Lerp(0, 1, Run + 0.2f);
                 myStat.SP -= Time.deltaTime * 10.0f;
-                runing = true;                
+                runing = true;
             }
             else
             {
-                Run = Mathf.Lerp(0, 1, Run - 0.2f);                
+                Run = Mathf.Lerp(0, 1, Run - 0.2f);
                 runing = false;
-                
+
                 if (myStat.spCool > 0.0f)
                 {
                     myStat.spCool -= Time.deltaTime;

@@ -19,8 +19,13 @@ public class InputNumber : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return)) OK();
             else if (Input.GetKeyDown(KeyCode.Escape)) Cancel();
+            if (int.Parse(if_text.text) > DragSlot.Inst.dragSlot.itemCount)
+            {
+                if_text.text = DragSlot.Inst.dragSlot.itemCount.ToString();
+            }
         }
         backGround.SetActive(activated);
+        
     }
 
     public void Call()
