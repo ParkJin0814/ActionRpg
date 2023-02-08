@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor.PackageManager;
+using UnityEditor.UIElements;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -10,8 +11,9 @@ public class ItemManager : MonoBehaviour
     //아이템 드랍처리
     [SerializeField] float itemRange; //아이템 습득거리
     bool pickupItme; //아이템 습득가능시 불값
+    bool shopCheck; //상점열기가능시 불값
     private RaycastHit hitInfo;  // 충돌체 정보 저장
-    [SerializeField] LayerMask ItemLayerMask;
+    [SerializeField] LayerMask InteractionLayerMask;    
     [SerializeField] float viewAngle;
     TMP_Text dropText;
     Inventory myInventory;
@@ -41,32 +43,32 @@ public class ItemManager : MonoBehaviour
 
     private void CheckItem()
     {
-        Collider[] _target = Physics.OverlapSphere(transform.position, itemRange, ItemLayerMask);
-        for (int i = 0; i < _target.Length; i++)
+        Collider[] _target = Physics.OverlapSphere(transform.position, itemRange, InteractionLayerMask);
+        if (_target.Length == 0)
         {
-            Transform _targetTf = _target[i].transform;
-            if (_targetTf.tag == "Item")
+            if(dropText.gameObject.activeSelf) ItemInfoDisappear();
+            return;
+        }
+        foreach(Collider collider in _target)
+        {
+            Vector3 _direction = (collider.transform.position - transform.position).normalized;
+            float _angle = Vector3.Angle(_direction, transform.forward);
+            if (_angle < viewAngle * 0.5f)
             {
-                Vector3 _direction = (_targetTf.position - transform.position).normalized;
-                float _angle = Vector3.Angle(_direction, transform.forward);
-                if (_angle < viewAngle * 0.5f)
+                if (Physics.Raycast(transform.position + transform.up, _direction, out hitInfo, itemRange))
                 {                    
-                    if (Physics.Raycast(transform.position + transform.up, _direction,out hitInfo, itemRange))
+                    if (hitInfo.transform.tag == "Item")
                     {
-                        if (hitInfo.transform.tag == "Item")
-                        {
-                            ItemInfoAppear();
-                        }                        
+                        ItemInfoAppear();
+                    }
+                    else if (hitInfo.transform.tag=="Shop")
+                    {
+                        ShopInfoApperar();
                     }
                 }
-                else
-                {
-                    ItemInfoDisappear();
-                }
-            }            
+            }
+            else if (dropText.gameObject.activeSelf) ItemInfoDisappear();
         }
-        if(_target.Length ==0) ItemInfoDisappear();
-
     }
     private void ItemInfoAppear()
     {
@@ -74,9 +76,16 @@ public class ItemManager : MonoBehaviour
         dropText.gameObject.SetActive(true);
         dropText.text = hitInfo.transform.GetComponent<ItemPickUp>().item.itemName +"\n" +"<color=yellow>" + "(E)" + "</color>";
     }
+    private void ShopInfoApperar()
+    {
+        shopCheck= true;
+        dropText.gameObject.SetActive(true);
+        dropText.text = "Shop" + "\n" + "<color=yellow>" + "(E)" + "</color>";
+    }
     private void ItemInfoDisappear()
     {
         pickupItme = false;
+        shopCheck = false;
         dropText.gameObject.SetActive(false);
     }
     
@@ -91,6 +100,11 @@ public class ItemManager : MonoBehaviour
                 Destroy(hitInfo.transform.gameObject);
                 ItemInfoDisappear();
             }
+        }
+        else if(shopCheck)
+        {
+            GameManager.Inst.myShop.OpenShop();
+            ItemInfoDisappear();
         }
     }
 }

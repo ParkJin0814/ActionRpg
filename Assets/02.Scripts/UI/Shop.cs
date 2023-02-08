@@ -20,12 +20,6 @@ public class Shop : MonoBehaviour
             obj.GetComponent<ShopSlot>().myshop = this;
         }
     }
-
-    
-    void Update()
-    {
-        
-    }
     public void OpenShop()
     {
         shopActivated = true;

@@ -69,7 +69,7 @@ public class Player : PlayerMovement
     }
     private void FixedUpdate()
     {
-        StateProcess();
+        if(GameManager.Inst.MousePointCheck())StateProcess();
     }
     void Update()
     {

@@ -23,9 +23,11 @@ public class BuyInputNumber : MonoBehaviour
     {
         if (activated)
         {
+            
             if (Input.GetKeyDown(KeyCode.Return)) Ok();
             else if (Input.GetKeyDown(KeyCode.Escape)) Cancel();
-            if (item != null && GameManager.Inst.Gold / item.Price < int.Parse(if_text.text))
+            int a = int.Parse(if_text.text);
+            if (item != null && GameManager.Inst.Gold / item.Price < a)
             {
                 if_text.text = (GameManager.Inst.Gold / item.Price).ToString();
             }
