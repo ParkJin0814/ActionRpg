@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public Transform Status;
     public TMP_Text dropText;
     public Inventory myInventory;
+    public Equipment myEquipment;
     public Shop myShop;
 
     public Slider myHp;
@@ -32,29 +33,5 @@ public class GameManager : MonoBehaviour
         {
             item.text = $"{Gold}";
         }
-    }
-
-    public bool MousePointCheck()
-    {
-
-        if (Inventory.invectoryActivated ||
-            Shop.shopActivated)
-        {
-            return false;
-        }
-        return true;
-    }
-    public void MouseCussorCheck()
-    {
-        if (MousePointCheck())
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        else
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-    }
+    }    
 }

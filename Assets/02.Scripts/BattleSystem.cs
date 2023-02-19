@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 
 public interface IBattle
 {
@@ -12,8 +11,10 @@ public interface IBattle
 public class BattleSystem : CharacterProperty, IBattle
 {
     public LayerMask myEnemyMask;
-    public Transform LeftAttackPoint;
-    public Transform RightAttackPoint;
+    public Transform[] AttackPoint;
+    public float AttackPointRange;
+
+    
     public virtual void OnDamage(float dmg)
     {
         
@@ -22,23 +23,25 @@ public class BattleSystem : CharacterProperty, IBattle
     {
         return true;
     }
-    public void LeftAttackTarget()
+    public void OnAttack(int a=0)
     {
-        Collider[] list = Physics.OverlapSphere(LeftAttackPoint.position, 0.2f, myEnemyMask);
+        Collider[] list = Physics.OverlapSphere(AttackPoint[a].position, AttackPointRange, myEnemyMask);
 
         foreach (Collider col in list)
         {
-            col.GetComponent<IBattle>()?.OnDamage(30.0f);
+            col.GetComponent<IBattle>()?.OnDamage(myDamage());
         }
     }
-    public void RightAttackTarget()
-    {
-        Collider[] list = Physics.OverlapSphere(RightAttackPoint.position, 0.2f, myEnemyMask);
-
-        foreach (Collider col in list)
+    public virtual float myDamage()
+    {        
+        switch(Random.Range(0, 10))
         {
-            col.GetComponent<IBattle>()?.OnDamage(30.0f);
+            case 0:
+                return myStat.AP * 1.2f;                
+            default:
+                break;
         }
+        return myStat.AP;
     }
 
 }

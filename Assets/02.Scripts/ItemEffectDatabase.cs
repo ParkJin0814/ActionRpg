@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using static UnityEditor.Progress;
 
 [System.Serializable]
 public class ItemEffect
@@ -20,13 +22,29 @@ public class ItemEffectDatabase : MonoBehaviour
     [SerializeField] Player myPlayer;
     [SerializeField] SlotToolTip mySlotToolTip;
     [SerializeField] QuickSlotController myQuickSlotController;
+    [SerializeField] Equipment myEquipment;
 
-
-    public void UseItem(Item _item)
+    public void UseItem(Item _item,UnityAction done=null)
     {
         if (_item.itemType == Item.ItemType.Equipment)
         {
-            // 장비장착            
+            for(int i=0;i<myEquipment.slots.Length;++i)
+            {
+                if(myEquipment.slots[i].equipmentType==_item.equipmentType)
+                {
+                    if(myEquipment.slots[i].item == null)
+                    {
+                        myEquipment.slots[i].AddItem(_item);
+                        done();
+                    }
+                    else if(myEquipment.slots[i].item != null)
+                    {
+                        GameManager.Inst.myInventory.AcquireItem(myEquipment.slots[i].item);
+                        myEquipment.slots[i].AddItem(_item);
+                        done();
+                    }
+                }
+            }
         }
         if (_item.itemType == Item.ItemType.Used)
         {
@@ -55,11 +73,7 @@ public class ItemEffectDatabase : MonoBehaviour
             }
             Debug.Log("itemEffectDatabase에 일치하는 itemName이 없습니다.");
         }
-    }
-    public void EatItem()
-    {
-        myQuickSlotController.EatItem();
-    }
+    }    
     
     public void ShowToolTip(Item _item, Vector3 _pos)
     {

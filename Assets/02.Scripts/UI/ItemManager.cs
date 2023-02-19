@@ -15,6 +15,7 @@ public class ItemManager : MonoBehaviour
     private RaycastHit hitInfo;  // Ãæµ¹Ã¼ Á¤º¸ ÀúÀå
     [SerializeField] LayerMask InteractionLayerMask;    
     [SerializeField] float viewAngle;
+    [SerializeField] GameObject DropButton; //µå¶øÅÛ È¹µæ¹öÆ°
     TMP_Text dropText;
     Inventory myInventory;
 
@@ -46,7 +47,7 @@ public class ItemManager : MonoBehaviour
         Collider[] _target = Physics.OverlapSphere(transform.position, itemRange, InteractionLayerMask);
         if (_target.Length == 0)
         {
-            if(dropText.gameObject.activeSelf) ItemInfoDisappear();
+            if(DropButton.activeSelf) ItemInfoDisappear();
             return;
         }
         foreach(Collider collider in _target)
@@ -67,29 +68,29 @@ public class ItemManager : MonoBehaviour
                     }
                 }
             }
-            else if (dropText.gameObject.activeSelf) ItemInfoDisappear();
+            else if (DropButton.activeSelf) ItemInfoDisappear();
         }
     }
     private void ItemInfoAppear()
     {
         pickupItme = true;
-        dropText.gameObject.SetActive(true);
-        dropText.text = hitInfo.transform.GetComponent<ItemPickUp>().item.itemName +"\n" +"<color=yellow>" + "(E)" + "</color>";
+        DropButton.SetActive(true);
+        dropText.text = hitInfo.transform.GetComponent<ItemPickUp>().item.itemName /*+"\n" +"<color=yellow>" + "(È¹µæ)" + "</color>"*/;
     }
     private void ShopInfoApperar()
     {
         shopCheck= true;
-        dropText.gameObject.SetActive(true);
-        dropText.text = "Shop" + "\n" + "<color=yellow>" + "(E)" + "</color>";
+        DropButton.SetActive(true);
+        dropText.text = "Shop" /*+ "\n" + "<color=yellow>" + "(¿­±â)" + "</color>"*/;
     }
     private void ItemInfoDisappear()
     {
         pickupItme = false;
         shopCheck = false;
-        dropText.gameObject.SetActive(false);
+        DropButton.SetActive(false);
     }
     
-    private void CanPickUp()
+    public void CanPickUp()
     {
         if (pickupItme)
         {

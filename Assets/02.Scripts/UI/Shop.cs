@@ -23,13 +23,12 @@ public class Shop : MonoBehaviour
     public void OpenShop()
     {
         shopActivated = true;
-        myShopbase.SetActive(true);
-        GameManager.Inst.MouseCussorCheck();
+        myShopbase.SetActive(true);        
     }
     public void CloseShop()
     {
         shopActivated = false;
         myShopbase.SetActive(false);
-        GameManager.Inst.MouseCussorCheck();
+        
     }
 }

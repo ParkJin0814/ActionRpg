@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class QuickSlotController : MonoBehaviour
 {
-    [SerializeField] Slot[] quickSlots;  // Äü½½·Ôµé (8°³)
-    [SerializeField] Transform tf_parent;  // Äü½½·ÔµéÀÇ ºÎ¸ð ¿ÀºêÁ§Æ®
-
-    int selectedSlot;  // ¼±ÅÃµÈ Äü½½·ÔÀÇ ÀÎµ¦½º (0~7)
-    [SerializeField] GameObject go_SelectedImage;  // ¼±ÅÃµÈ Äü½½·Ô ÀÌ¹ÌÁö
+    [SerializeField] Slot[] quickSlots;  // Äü½½·Ô
+    [SerializeField] Transform tf_parent;  // Äü½½·ÔµéÀÇ ºÎ¸ð ¿ÀºêÁ§Æ®   
+    
     [SerializeField] ItemEffectDatabase myItemEffectDatabase;     
 
 
 
     void Start()
     {
-        quickSlots = tf_parent.GetComponentsInChildren<Slot>();
-        selectedSlot = 0;
+        quickSlots = tf_parent.GetComponentsInChildren<Slot>();        
     }
 
     void Update()
@@ -27,42 +24,27 @@ public class QuickSlotController : MonoBehaviour
     private void TryInputNumber()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            ChangeSlot(0);
+            EatItem(0);
         else if (Input.GetKeyDown(KeyCode.Alpha2))
-            ChangeSlot(1);
+            EatItem(1);
         else if (Input.GetKeyDown(KeyCode.Alpha3))
-            ChangeSlot(2);
+            EatItem(2);
         else if (Input.GetKeyDown(KeyCode.Alpha4))
-            ChangeSlot(3);
+            EatItem(3);
         else if (Input.GetKeyDown(KeyCode.Alpha5))
-            ChangeSlot(4);
+            EatItem(4);
         else if (Input.GetKeyDown(KeyCode.Alpha6))
-            ChangeSlot(5);
+            EatItem(5);
         else if (Input.GetKeyDown(KeyCode.Alpha7))
-            ChangeSlot(6);
+            EatItem(6);
         else if (Input.GetKeyDown(KeyCode.Alpha8))
-            ChangeSlot(7);
-    }
-
-    private void ChangeSlot(int _num)
+            EatItem(7);
+    }    
+    public void EatItem(int _num)
     {
-        SelectedSlot(_num);        
-    }
-    public void EatItem()
-    {
-        if (quickSlots[selectedSlot].item == null) return;
-        myItemEffectDatabase.UseItem(quickSlots[selectedSlot].item);
-        quickSlots[selectedSlot].SetSlotCount(-1);
-
-        //if (quickSlots[selectedSlot].itemCount <= 0) Destroy(go_HandItem);
-    }
-    private void SelectedSlot(int _num)
-    {
-        // ¼±ÅÃµÈ ½½·Ô
-        selectedSlot = _num;
-
-        // ¼±ÅÃµÈ ½½·ÔÀ¸·Î ÀÌ¹ÌÁö ÀÌµ¿
-        go_SelectedImage.transform.position = quickSlots[selectedSlot].transform.position;
-    }
+        if (quickSlots[_num].item == null) return;
+        myItemEffectDatabase.UseItem(quickSlots[_num].item);
+        quickSlots[_num].SetSlotCount(-1);
+    }  
     
 }

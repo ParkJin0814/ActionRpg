@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Player : PlayerMovement
 {
@@ -34,16 +30,8 @@ public class Player : PlayerMovement
         {
             case STATE.Create:
                 break;
-            case STATE.Idle:
-                if (!Inventory.invectoryActivated)
-                {
-                    AttackA();                    
-                }
-                Movement();
-                if (Input.GetMouseButtonDown(1))
-                {
-                    GameManager.Inst.GetComponent<ItemEffectDatabase>().EatItem();
-                }
+            case STATE.Idle:                
+                Movement();                
                 break;
             case STATE.Dead:
                 break;
@@ -54,7 +42,7 @@ public class Player : PlayerMovement
         Application.targetFrameRate= 60;
         ChangeState(STATE.Idle);
         ChangeStat();
-        InputNumber.myPlayer = this;
+        InputNumber.myPlayer = this;        
     }
     void ChangeStat()
     {
@@ -69,23 +57,23 @@ public class Player : PlayerMovement
     }
     private void FixedUpdate()
     {
-        if(GameManager.Inst.MousePointCheck())StateProcess();
+        StateProcess();
     }
-    void Update()
+    
+    public void AttackA()
     {
-        
-    }
-    void AttackA()
-    {
-        if (Input.GetMouseButtonDown(0) && !myAnim.GetBool("IsRolling") && !myAnim.GetBool("IsAttacking") )
+        if (myState==STATE.Idle&&!myAnim.GetBool("IsRolling") && !myAnim.GetBool("IsAttacking") )
         {
-            if (myAnim.GetBool("IsKnife"))
-            {
-                Weapon();
-                return;
-            }
-            else myAnim.SetTrigger("AttackA");
+             myAnim.SetTrigger("AttackA");
         }        
+    }
+    public void RollinButton()
+    {
+        if (myState == STATE.Idle && !myAnim.GetBool("IsRolling") &&
+            !myAnim.GetBool("IsRolling") && myStat.SP >= 20.0f && myStat.RecoverySp)
+        {
+            myAnim.SetTrigger("Rolling");
+        }
     }
     public override void OnDamage(float dmg)
     {
@@ -104,6 +92,6 @@ public class Player : PlayerMovement
     {
         if (myState != STATE.Dead) return true;
         return false;
-    }
+    }   
 
 }

@@ -7,16 +7,28 @@ public class Item : ScriptableObject
 {
     public enum ItemType
     {
-        Equipment, //장비
-        Used, //사용품
-        Ingredient, // 재료
-        ETC //기타
+        Equipment,  //장비
+        Used,       //사용품
+        Ingredient, //재료
+        ETC         //기타
+    }
+    public enum EquipmentType
+    {
+        None,
+        Weapon, //무기
+        Gloves, //장갑
+        Shoes,  //신발
+        Socks,  //양말
+        Ring,   //반지
+        Helmet  //투구
     }
     public string itemName; 
-    public ItemType itemType; 
+    public ItemType itemType;
+    public EquipmentType equipmentType;
     public Sprite itemImage; // 인벤토리 이미지
     public GameObject itemPrefab;  // 아이템의 프리팹 (아이템 생성시 프리팹으로 찍어냄)
-    public string weaponType;  // 무기 유형
+    public GameObject[] weaponPrefab; //무기전용 프리팹 0 왼손 1 오른손
+    public string weaponType;  // 무기 유형    
     public int Price;
     [TextArea] public string itemDesc;
 }

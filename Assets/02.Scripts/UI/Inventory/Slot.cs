@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEditor.PackageManager;
 
 public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragHandler,IEndDragHandler,IDropHandler,
     IPointerEnterHandler,IPointerExitHandler
@@ -13,12 +14,16 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
     public Image itemImage;
     [SerializeField] RectTransform inventoryRect;
     [SerializeField] RectTransform quickSlotBaseRect;
+    [SerializeField] RectTransform equipmentRect;
     InputNumber myInputNumber;
     ItemEffectDatabase myItemEffectDatabase;
     [SerializeField] TMP_Text text_Count;
     [SerializeField] GameObject go_CountImage;
     [SerializeField] bool isQuickSlot;  // 해당 슬롯이 퀵슬롯인지 여부 판단
     [SerializeField] int quickSlotNumber;  // 퀵슬롯 넘버
+    [SerializeField] bool isEquipmentSlot; // 해당 슬롯이 장비슬롯인지 판단
+    public Item.EquipmentType equipmentType;
+    
     private void Start()
     {        
         myInputNumber=FindObjectOfType<InputNumber>();
@@ -83,11 +88,24 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
         {
             if (item != null)
             {
-                myItemEffectDatabase.UseItem(item);
+                
                 //소비템이라면
                 if (item.itemType == Item.ItemType.Used) 
-                {                    
+                {
+                    myItemEffectDatabase.UseItem(item);
                     SetSlotCount(-1);
+                }
+                else if (item.itemType == Item.ItemType.Equipment)
+                {
+                    if (!isEquipmentSlot)
+                    {
+                        myItemEffectDatabase.UseItem(item,()=> SetSlotCount(-1));                        
+                    }
+                    else
+                    {                        
+                        GameManager.Inst.myInventory.AcquireItem(item);
+                        SetSlotCount(-1);
+                    }
                 }
             }
         }
@@ -108,7 +126,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
     {
         if(item!= null) DragSlot.Inst.transform.position=eventData.position;
     }
-
+    //드래그를 놓았을때
     public void OnEndDrag(PointerEventData eventData)
     {      
         if (InventoryRectCheck())
@@ -135,14 +153,24 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
             (DragSlot.Inst.transform.localPosition.x + inventoryRect.localPosition.x > quickSlotBaseRect.rect.xMin + quickSlotBaseRect.transform.localPosition.x
             && DragSlot.Inst.transform.localPosition.x + inventoryRect.localPosition.x < quickSlotBaseRect.rect.xMax + quickSlotBaseRect.transform.localPosition.x
             && DragSlot.Inst.transform.localPosition.y + inventoryRect.transform.localPosition.y > quickSlotBaseRect.rect.yMin + quickSlotBaseRect.transform.localPosition.y
-            && DragSlot.Inst.transform.localPosition.y + inventoryRect.transform.localPosition.y < quickSlotBaseRect.rect.yMax + quickSlotBaseRect.transform.localPosition.y)));
+            && DragSlot.Inst.transform.localPosition.y + inventoryRect.transform.localPosition.y < quickSlotBaseRect.rect.yMax + quickSlotBaseRect.transform.localPosition.y)
+            ||
+            (DragSlot.Inst.transform.localPosition.x + inventoryRect.localPosition.x > equipmentRect.rect.xMin + equipmentRect.transform.localPosition.x
+            && DragSlot.Inst.transform.localPosition.x + inventoryRect.localPosition.x < equipmentRect.rect.xMax + equipmentRect.transform.localPosition.x
+            && DragSlot.Inst.transform.localPosition.y + inventoryRect.transform.localPosition.y > equipmentRect.rect.yMin + equipmentRect.transform.localPosition.y
+            && DragSlot.Inst.transform.localPosition.y + inventoryRect.transform.localPosition.y < equipmentRect.rect.yMax + equipmentRect.transform.localPosition.y)
+            ));
     }
-
+    //드래그하여 슬롯에 놓을때
     public void OnDrop(PointerEventData eventData)
     {
         if (DragSlot.Inst.dragSlot != null)
         {
-            ChangeSlot();            
+            if(!isEquipmentSlot) ChangeSlot();
+            else if (DragSlot.Inst.dragSlot.item.equipmentType == equipmentType)
+            {
+                ChangeSlot();
+            }
         }
     }
     void ChangeSlot()

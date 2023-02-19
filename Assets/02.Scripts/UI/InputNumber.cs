@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Item;
 
 public class InputNumber : MonoBehaviour
 {
@@ -19,9 +20,12 @@ public class InputNumber : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return)) OK();
             else if (Input.GetKeyDown(KeyCode.Escape)) Cancel();
-            if (int.Parse(if_text.text) > DragSlot.Inst.dragSlot.itemCount)
+            if(if_text.text!="")
             {
-                if_text.text = DragSlot.Inst.dragSlot.itemCount.ToString();
+                if(int.Parse(if_text.text)>DragSlot.Inst.dragSlot.itemCount)
+                {
+                    if_text.text = DragSlot.Inst.dragSlot.itemCount.ToString();
+                }
             }
         }
         backGround.SetActive(activated);

@@ -13,6 +13,8 @@ public class PlayerMovement : BattleSystem
     float y;
     bool runing = false;    
     Coroutine myRoll;
+    [SerializeField] VariableJoystick joy;
+    bool runButton = false;
     
     protected void RollingStart()
     {
@@ -33,22 +35,15 @@ public class PlayerMovement : BattleSystem
     {
         if (!myAnim.GetBool("IsRolling"))
         {
-            x = Input.GetAxis("Horizontal");
-            y = Input.GetAxis("Vertical");
+            x = joy.Horizontal;
+            y = joy.Vertical;
             myAnim.SetFloat("x", x);
-            myAnim.SetFloat("y", y);
-            //구르기
-            if (Input.GetKeyDown(KeyCode.Space) && !myAnim.GetBool("IsRolling")&&myStat.SP>=20.0f)
-            {
-                myAnim.SetTrigger("Rolling");                
-            }
-            //무기탈부착
-            if (Input.GetKeyDown(KeyCode.X)) Weapon();
+            myAnim.SetFloat("y", y);             
             //이동
             if (!x.Equals(0.0f) || !y.Equals(0.0f)) myAnim.SetBool("Move", true);            
             else myAnim.SetBool("Move", false);
             //달리기
-            if (Input.GetKey(KeyCode.LeftShift) && y > 0.0f && myStat.SP > 0.0f && myStat.RecoverySp)
+            if (runButton && y > 0.0f && myStat.SP > 0.0f && myStat.RecoverySp)
             {
                 Run = Mathf.Lerp(0, 1, Run + 0.2f);
                 myStat.SP -= Time.deltaTime * 10.0f;
@@ -84,11 +79,8 @@ public class PlayerMovement : BattleSystem
             }
         }
     }
-    protected void Weapon()
-    {
-        if (myAnim.GetBool("KnifeToggle")) return;
-        myAnim.SetTrigger("Knife");        
-    }
+    
+   
     IEnumerator Rollings()
     {
         Vector3 dir = new Vector3(x, 0, 1);
@@ -101,5 +93,13 @@ public class PlayerMovement : BattleSystem
             yield return new WaitForFixedUpdate();
         }
     }
-    
+    public void RunButtonDown()
+    {
+        runButton = true;
+    }
+    public void RunButtonUp()
+    {
+        runButton = false;
+    }
+
 }

@@ -41,15 +41,13 @@ public class Inventory : MonoBehaviour
     {
         invectoryActivated = true;
         go_InventoryBase.SetActive(true);
-        GameManager.Inst.MouseCussorCheck();
     }
 
     public void CloseInventory()
     {
         invectoryActivated = false;
         go_InventoryBase.SetActive(false);
-        GameManager.Inst.GetComponent<ItemEffectDatabase>().HideToolTip();
-        GameManager.Inst.MouseCussorCheck();
+        GameManager.Inst.GetComponent<ItemEffectDatabase>().HideToolTip();        
     }
 
     public void AcquireItem(Item _item, int _count = 1)

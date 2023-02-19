@@ -1,12 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public class EnemyCharacter : BattleSystem
 {
@@ -117,8 +112,6 @@ public class EnemyCharacter : BattleSystem
     }    
     public void EnemyTarget()
     {
-        
-       
         Collider[] _target = Physics.OverlapSphere(transform.position, viewDistance, myEnemyMask);
         for (int i = 0; i < _target.Length; i++)
         {
@@ -156,6 +149,17 @@ public class EnemyCharacter : BattleSystem
         else
         {
             myAnim.SetTrigger("Damage");
+            if(myTarget==null)
+            {
+                Collider[] _target = Physics.OverlapSphere(transform.position, viewDistance, myEnemyMask);
+                foreach(Collider collider in _target)
+                {
+                    if(collider.tag=="Player")
+                    {
+                        myTarget = collider.transform;
+                    }
+                }
+            }
         }
     }
     IEnumerator DelayRoaming(float t)
@@ -202,10 +206,8 @@ public class EnemyCharacter : BattleSystem
             Vector3 dir = myTarget.position - transform.position;
             float dist = dir.magnitude;
             dir.Normalize();
-            if (dist > AttackRange)
-            {                
-                nav.SetDestination(myTarget.position);
-            }
+            if (dist > AttackRange)            
+                nav.SetDestination(myTarget.position);            
             else
             {
                 nav.ResetPath();
@@ -262,4 +264,5 @@ public class EnemyCharacter : BattleSystem
         if (myState != STATE.Dead) return true;
         return false;
     }
+
 }
