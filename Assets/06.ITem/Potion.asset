@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Potion
   itemType: 1
+  equipmentType: 0
   itemImage: {fileID: 21300000, guid: e9aedbc80026a9946b60b227de9bdb41, type: 3}
   itemPrefab: {fileID: 3510115980642347757, guid: 96d78b63830736b4fafeff51abe2092a, type: 3}
-  weaponType: 
+  weaponPrefab: []
+  Value: 30
   Price: 3
   itemDesc: 'HP + 30
 
-    SP + 50 '
+    SP + 30 '

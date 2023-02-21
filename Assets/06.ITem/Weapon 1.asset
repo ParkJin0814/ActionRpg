@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1d399894dab78344b321083c812ac75, type: 3}
   m_Name: Weapon 1
   m_EditorClassIdentifier: 
-  itemName: Weapon
+  itemName: "\uB2E8\uAC80"
   itemType: 0
   equipmentType: 1
   itemImage: {fileID: 21300000, guid: 490de5b67a54a914088038c8d2c8282f, type: 3}
@@ -20,8 +20,8 @@ MonoBehaviour:
   weaponPrefab:
   - {fileID: 271475451801734593, guid: 084c94ad86c9e8642be85e608f91609e, type: 3}
   - {fileID: 7769310473582601926, guid: 5077a3543055b0c4d96d4780b9effa25, type: 3}
-  weaponType: 
-  Price: 20
-  itemDesc: 'weapon
+  Value: 10
+  Price: 40
+  itemDesc: 'AP+10
 
 '

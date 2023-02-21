@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Item;
 
 public class Equipment : MonoBehaviour
 {
@@ -45,7 +46,17 @@ public class Equipment : MonoBehaviour
     {
         equipmentActivated = false;
         go_EquipmentBase.SetActive(false);
-        GameManager.Inst.GetComponent<ItemEffectDatabase>().HideToolTip();
-        
+        GameManager.Inst.GetComponent<ItemEffectDatabase>().HideToolTip();        
+    }
+    public int EquipmentSlotValue(EquipmentType E)
+    {
+        for(int i=0;i<slots.Length;++i)
+        {
+            if (slots[i].item!=null && slots[i].equipmentType==E)
+            {
+                return slots[i].item.Value;
+            }
+        }
+        return 0;
     }
 }

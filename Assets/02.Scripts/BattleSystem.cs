@@ -12,7 +12,7 @@ public class BattleSystem : CharacterProperty, IBattle
 {
     public LayerMask myEnemyMask;
     public Transform[] AttackPoint;
-    public float AttackPointRange;
+    public float[] AttackPointRange;
 
     
     public virtual void OnDamage(float dmg)
@@ -23,10 +23,9 @@ public class BattleSystem : CharacterProperty, IBattle
     {
         return true;
     }
-    public void OnAttack(int a=0)
+    public virtual void OnAttack(int a)
     {
-        Collider[] list = Physics.OverlapSphere(AttackPoint[a].position, AttackPointRange, myEnemyMask);
-
+        Collider[] list = Physics.OverlapSphere(AttackPoint[a].position, AttackPointRange[0], myEnemyMask);
         foreach (Collider col in list)
         {
             col.GetComponent<IBattle>()?.OnDamage(myDamage());

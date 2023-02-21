@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+using TMPro;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -12,11 +10,23 @@ public class Inventory : MonoBehaviour
     // Slot들의 부모인 Grid Setting 
     [SerializeField] private GameObject go_SlotsParent;
     // 슬롯들 배열
-    private Slot[] slots;  
+    private Slot[] slots;
+    public ItemInspector myItemInspector;
+    public TMP_Text PotionCount;
 
     void Start()
     {
-        slots = go_SlotsParent.GetComponentsInChildren<Slot>();        
+        slots = go_SlotsParent.GetComponentsInChildren<Slot>();
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].item != null)
+            {
+                if (slots[i].item.itemName == "Potion")
+                {
+                    PotionCount.text = slots[i].itemCount.ToString();
+                }
+            }
+        }
     }
 
     void Update()
@@ -61,6 +71,10 @@ public class Inventory : MonoBehaviour
                     if (slots[i].item.itemName == _item.itemName)
                     {
                         slots[i].SetSlotCount(_count);
+                        if (_item.name == "Potion")
+                        {
+                            PotionCount.text=slots[i].itemCount.ToString();
+                        }
                         return;
                     }
                 }
@@ -72,7 +86,34 @@ public class Inventory : MonoBehaviour
             if (slots[i].item == null)
             {
                 slots[i].AddItem(_item, _count);
+                if (_item.name == "Potion")
+                {
+                    PotionCount.text = slots[i].itemCount.ToString();
+                }
                 return;
+            }
+        }
+        
+    }    
+
+    public void UsePotion()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].item != null)  
+            {
+                if (slots[i].item.itemName == "Potion")
+                {
+                    
+                    if (slots[i].itemCount > 0)
+                    {
+                        GameManager.Inst.myItemEffectDatabase.UseItem(slots[i].item);
+                        slots[i].SetSlotCount(-1);
+                        PotionCount.text = slots[i].itemCount.ToString();
+                    }
+                    else PotionCount.text = "0";
+                    return;
+                }
             }
         }
     }

@@ -36,8 +36,9 @@ public class InputNumber : MonoBehaviour
     {
         go_Base.SetActive(true);
         activated = true;        
-        if_text.text = "";
+        
         text_Preview.text = DragSlot.Inst.dragSlot.itemCount.ToString();
+        if_text.text = text_Preview.text;
     }
 
     public void Cancel()
@@ -96,5 +97,17 @@ public class InputNumber : MonoBehaviour
             isNumber = false;
         }
         return isNumber;
+    }
+    public void PlusMinusButton(bool v)
+    {
+        if (v)
+        {
+            if_text.text = (int.Parse(if_text.text) + 1).ToString();
+        }
+        else
+        {
+            if ((int.Parse(if_text.text) - 1) >= 0)
+                if_text.text = (int.Parse(if_text.text) - 1).ToString();
+        }
     }
 }

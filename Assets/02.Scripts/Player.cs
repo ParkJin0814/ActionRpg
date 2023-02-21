@@ -60,11 +60,20 @@ public class Player : PlayerMovement
         StateProcess();
     }
     
-    public void AttackA()
+    public void AttackA(int a)
     {
-        if (myState==STATE.Idle&&!myAnim.GetBool("IsRolling") && !myAnim.GetBool("IsAttacking") )
+        if (myState == STATE.Idle && !myAnim.GetBool("IsRolling") && !myAnim.GetBool("IsAttacking"))
         {
-             myAnim.SetTrigger("AttackA");
+            switch (a)
+            {
+                case 0:
+                    myAnim.SetTrigger("AttackA");
+                    break;
+                case 1:
+                    myAnim.SetTrigger("AttackB");
+                    break;
+            }
+        
         }        
     }
     public void RollinButton()
@@ -76,22 +85,61 @@ public class Player : PlayerMovement
         }
     }
     public override void OnDamage(float dmg)
-    {
-         
+    {         
         myStat.HP -= dmg;
-        if (Mathf.Approximately(myStat.HP, 0.0f))
-        {            
-            ChangeState(STATE.Dead);
-        }
-        else
-        {
-            myAnim.SetTrigger("Damage");
-        }
+        if (Mathf.Approximately(myStat.HP, 0.0f)) ChangeState(STATE.Dead);        
+        else myAnim.SetTrigger("Damage");        
     }
     public override bool OnLive()
     {
         if (myState != STATE.Dead) return true;
         return false;
-    }   
+    }
+    public override void OnAttack(int a)
+    {
+        //공격별 공격포인트 지정을위한b 공격체크반지름d 와 스킬데미지를위한c
+        int b=0;
+        int d = 0;
+        float c=1.0f;        
+        switch(a)
+        {
+            case 0:
+                b = a;
+                break;
+            case 1:
+                b = a;
+                break;
+            case 2:
+                d = 1;
+                b = a;
+                c = 1.1f;
+                break;
+            case 3:
+                b = 0;
+                c = 1.3f;
+                break;
+        }
+        Collider[] list = Physics.OverlapSphere(AttackPoint[b].position, AttackPointRange[d], myEnemyMask);
+        foreach (Collider col in list)
+        {
+            col.GetComponent<IBattle>()?.OnDamage(myDamage()*c);
+        }
 
+    }
+    public void OnPotion()
+    {
+        GameManager.Inst.myInventory.UsePotion();
+    }
+    public override float myDamage()
+    {
+        float dmg = myStat.AP+GameManager.Inst.myEquipment.EquipmentSlotValue(Item.EquipmentType.Weapon);
+        switch (Random.Range(0, 10))
+        {
+            case 0:
+                return dmg * 1.2f;
+            default:
+                break;
+        }
+        return dmg;
+    }
 }

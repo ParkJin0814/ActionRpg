@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEditor.PackageManager;
+using UnityEngine.UI;
+using static UnityEditor.Progress;
 
-public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragHandler,IEndDragHandler,IDropHandler,
-    IPointerEnterHandler,IPointerExitHandler
+public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragHandler,IEndDragHandler,IDropHandler
 {
     public Item item;
     public int itemCount;
@@ -21,13 +18,15 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
     [SerializeField] GameObject go_CountImage;
     [SerializeField] bool isQuickSlot;  // 해당 슬롯이 퀵슬롯인지 여부 판단
     [SerializeField] int quickSlotNumber;  // 퀵슬롯 넘버
-    [SerializeField] bool isEquipmentSlot; // 해당 슬롯이 장비슬롯인지 판단
+    public bool isEquipmentSlot; // 해당 슬롯이 장비슬롯인지 판단
     public Item.EquipmentType equipmentType;
+    ItemInspector myItemInspector;
     
     private void Start()
     {        
         myInputNumber=FindObjectOfType<InputNumber>();
-        myItemEffectDatabase= FindObjectOfType<ItemEffectDatabase>();        
+        myItemInspector = GameManager.Inst.myInventory.myItemInspector;
+        myItemEffectDatabase = FindObjectOfType<ItemEffectDatabase>();        
     }
     //투명도 조절
     void SetColor(float alpha)
@@ -63,10 +62,14 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
     {
         itemCount += _count;
         text_Count.text = itemCount.ToString();
-
+        if (item.name == "Potion")
+        {
+            GameManager.Inst.myInventory.PotionCount.text = itemCount.ToString();
+        }        
         if (itemCount <= 0)
         {
-            ClearSlot();
+            if(myItemInspector.gameObject.activeSelf)myItemInspector.Close();
+            ClearSlot();            
         }
     }
 
@@ -86,31 +89,48 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            if (item != null)
-            {
-                
-                //소비템이라면
-                if (item.itemType == Item.ItemType.Used) 
-                {
-                    myItemEffectDatabase.UseItem(item);
-                    SetSlotCount(-1);
-                }
-                else if (item.itemType == Item.ItemType.Equipment)
-                {
-                    if (!isEquipmentSlot)
-                    {
-                        myItemEffectDatabase.UseItem(item,()=> SetSlotCount(-1));                        
-                    }
-                    else
-                    {                        
-                        GameManager.Inst.myInventory.AcquireItem(item);
-                        SetSlotCount(-1);
-                    }
-                }
-            }
+            UseItem();
+        }
+        if(item!= null)
+        {
+            myItemInspector.item = item;
+            myItemInspector.mySlot = this;
+            myItemInspector.Call();
         }
     }
-    
+    public void UseItem()
+    {
+        if (item != null)
+        {
+            //소비템이라면
+            if (item.itemType == Item.ItemType.Used)
+            {
+                myItemEffectDatabase.UseItem(item);
+                SetSlotCount(-1);
+                
+            }
+            else if (item.itemType == Item.ItemType.Equipment)
+            {
+                if (!isEquipmentSlot)
+                {
+                    myItemEffectDatabase.UseItem(item, () => SetSlotCount(-1));
+                }
+                else
+                {
+                    GameManager.Inst.myInventory.AcquireItem(item);
+                    SetSlotCount(-1);                    
+                }
+            }
+        }        
+    }
+    public void DropItem()
+    {
+        if (item != null)
+        {
+            DragSlot.Inst.dragSlot = this;
+            myInputNumber.Call();
+        }
+    }
     //드래그시작
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -128,39 +148,11 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
     }
     //드래그를 놓았을때
     public void OnEndDrag(PointerEventData eventData)
-    {      
-        if (InventoryRectCheck())
-        {
-            if (DragSlot.Inst.dragSlot != null)
-            {
-                myInputNumber.transform.position = eventData.position;
-                myInputNumber.Call();
-            }
-        }
-        else
-        {
-            DragSlot.Inst.SetColor(0);
-            DragSlot.Inst.dragSlot = null;
-        }
+    {   
+        DragSlot.Inst.SetColor(0);
+        DragSlot.Inst.dragSlot = null;
     }
-    bool InventoryRectCheck()
-    {
-        return (!((DragSlot.Inst.transform.localPosition.x > inventoryRect.rect.xMin
-            && DragSlot.Inst.transform.localPosition.x < inventoryRect.rect.xMax
-            && DragSlot.Inst.transform.localPosition.y > inventoryRect.rect.yMin
-            && DragSlot.Inst.transform.localPosition.y < inventoryRect.rect.yMax)
-            ||
-            (DragSlot.Inst.transform.localPosition.x + inventoryRect.localPosition.x > quickSlotBaseRect.rect.xMin + quickSlotBaseRect.transform.localPosition.x
-            && DragSlot.Inst.transform.localPosition.x + inventoryRect.localPosition.x < quickSlotBaseRect.rect.xMax + quickSlotBaseRect.transform.localPosition.x
-            && DragSlot.Inst.transform.localPosition.y + inventoryRect.transform.localPosition.y > quickSlotBaseRect.rect.yMin + quickSlotBaseRect.transform.localPosition.y
-            && DragSlot.Inst.transform.localPosition.y + inventoryRect.transform.localPosition.y < quickSlotBaseRect.rect.yMax + quickSlotBaseRect.transform.localPosition.y)
-            ||
-            (DragSlot.Inst.transform.localPosition.x + inventoryRect.localPosition.x > equipmentRect.rect.xMin + equipmentRect.transform.localPosition.x
-            && DragSlot.Inst.transform.localPosition.x + inventoryRect.localPosition.x < equipmentRect.rect.xMax + equipmentRect.transform.localPosition.x
-            && DragSlot.Inst.transform.localPosition.y + inventoryRect.transform.localPosition.y > equipmentRect.rect.yMin + equipmentRect.transform.localPosition.y
-            && DragSlot.Inst.transform.localPosition.y + inventoryRect.transform.localPosition.y < equipmentRect.rect.yMax + equipmentRect.transform.localPosition.y)
-            ));
-    }
+    
     //드래그하여 슬롯에 놓을때
     public void OnDrop(PointerEventData eventData)
     {
@@ -180,16 +172,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
         AddItem(DragSlot.Inst.dragSlot.item,DragSlot.Inst.dragSlot.itemCount);
         if(tempItem!=null) DragSlot.Inst.dragSlot.AddItem(tempItem,tempItemCount);
         else DragSlot.Inst.dragSlot.ClearSlot();
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (item != null) myItemEffectDatabase.ShowToolTip(item,transform.position);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        myItemEffectDatabase.HideToolTip();
     }
     public int GetQuickSlotNumber()
     {

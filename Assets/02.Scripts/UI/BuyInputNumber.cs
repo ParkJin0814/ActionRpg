@@ -29,7 +29,7 @@ public class BuyInputNumber : MonoBehaviour
             int a = int.Parse(if_text.text);
             if (item != null && GameManager.Inst.Gold / item.Price < a)
             {
-                if_text.text = (GameManager.Inst.Gold / item.Price).ToString();
+                if_text.text = (GameManager.Inst.Gold / item.Price).ToString();                
             }
         }
         
@@ -54,5 +54,17 @@ public class BuyInputNumber : MonoBehaviour
             GameManager.Inst.GoldChange(-(int.Parse(if_text.text) * item.Price));
         }
         Cancel();
+    }
+    public void PlusMinusButton(bool v)
+    {
+        if (v)
+        {
+            if_text.text = (int.Parse(if_text.text) + 1).ToString();         
+        }
+        else
+        {
+            if ((int.Parse(if_text.text) - 1) >= 0)
+                if_text.text = (int.Parse(if_text.text) - 1).ToString();
+        }
     }
 }
