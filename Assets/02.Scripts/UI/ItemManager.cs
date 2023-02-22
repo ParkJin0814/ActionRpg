@@ -4,6 +4,7 @@ using TMPro;
 using UnityEditor.PackageManager;
 using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
 public class ItemManager : MonoBehaviour
@@ -11,7 +12,7 @@ public class ItemManager : MonoBehaviour
     //아이템 드랍처리
     [SerializeField] float itemRange; //아이템 습득거리
     bool pickupItme; //아이템 습득가능시 불값
-    bool shopCheck; //상점열기가능시 불값
+    bool NpcCheck; //상점열기가능시 불값
     private RaycastHit hitInfo;  // 충돌체 정보 저장
     [SerializeField] LayerMask InteractionLayerMask;    
     [SerializeField] float viewAngle;
@@ -21,8 +22,8 @@ public class ItemManager : MonoBehaviour
 
     private void Start()
     {
-        dropText = GameManager.Inst.dropText;
-        myInventory= GameManager.Inst.myInventory;
+        dropText = SceneData.Inst.dropText;
+        myInventory= SceneData.Inst.myInventory;
     }
     private void Update()
     {
@@ -62,9 +63,9 @@ public class ItemManager : MonoBehaviour
                     {
                         ItemInfoAppear();
                     }
-                    else if (hitInfo.transform.tag=="Shop")
+                    else if (hitInfo.transform.tag=="Npc")
                     {
-                        ShopInfoApperar();
+                        NpcInfoApperar();
                     }
                 }
             }
@@ -77,16 +78,16 @@ public class ItemManager : MonoBehaviour
         DropButton.SetActive(true);
         dropText.text = hitInfo.transform.GetComponent<ItemPickUp>().item.itemName /*+"\n" +"<color=yellow>" + "(획득)" + "</color>"*/;
     }
-    private void ShopInfoApperar()
+    private void NpcInfoApperar()
     {
-        shopCheck= true;
+        NpcCheck= true;
         DropButton.SetActive(true);
-        dropText.text = "Shop" /*+ "\n" + "<color=yellow>" + "(열기)" + "</color>"*/;
+        dropText.text = "대화" /*+ "\n" + "<color=yellow>" + "(열기)" + "</color>"*/;
     }
     private void ItemInfoDisappear()
     {
         pickupItme = false;
-        shopCheck = false;
+        NpcCheck = false;
         DropButton.SetActive(false);
     }
     
@@ -102,9 +103,12 @@ public class ItemManager : MonoBehaviour
                 ItemInfoDisappear();
             }
         }
-        else if(shopCheck)
+        else if(NpcCheck)
         {
-            GameManager.Inst.myShop.OpenShop();
+            GameManager.Inst.Action(hitInfo.transform.gameObject);
+            GameManager.Inst.talkPanel.GetComponent<Button>().onClick.RemoveAllListeners();
+            GameManager.Inst.talkPanel.GetComponent<Button>().onClick.AddListener(()=>GameManager.Inst.Action(hitInfo.transform.gameObject));
+            //GameManager.Inst.myShop.OpenShop();
             ItemInfoDisappear();
         }
     }

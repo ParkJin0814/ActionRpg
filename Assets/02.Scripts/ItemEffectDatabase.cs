@@ -16,8 +16,7 @@ public class ItemEffectDatabase : MonoBehaviour
 
     private const string HP = "HP", SP = "SP";
 
-    [SerializeField] Player myPlayer;
-    [SerializeField] SlotToolTip mySlotToolTip;
+    [SerializeField] Player myPlayer;   
     [SerializeField] QuickSlotController myQuickSlotController;
     [SerializeField] Equipment myEquipment;
 
@@ -36,7 +35,7 @@ public class ItemEffectDatabase : MonoBehaviour
                     }
                     else if(myEquipment.slots[i].item != null)
                     {
-                        GameManager.Inst.myInventory.AcquireItem(myEquipment.slots[i].item);
+                        SceneData.Inst.myInventory.AcquireItem(myEquipment.slots[i].item);
                         myEquipment.slots[i].AddItem(_item);
                         done();
                     }
@@ -70,14 +69,5 @@ public class ItemEffectDatabase : MonoBehaviour
             }
             Debug.Log("itemEffectDatabase에 일치하는 itemName이 없습니다.");
         }
-    }    
-    
-    public void ShowToolTip(Item _item, Vector3 _pos)
-    {
-        mySlotToolTip.ShowToolTip(_item, _pos);
-    }
-    public void HideToolTip()
-    {
-        mySlotToolTip.HideToolTip();
     }
 }

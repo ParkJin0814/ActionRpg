@@ -4,26 +4,19 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    static public GameManager Inst=null;
-    public Transform Status;
-    public TMP_Text dropText;
-    public Inventory myInventory;
-    public Equipment myEquipment;
-    public ItemEffectDatabase myItemEffectDatabase;
-    public Shop myShop;
-    public Slider myHp;
-    public Slider mySp;
+    static public GameManager Inst=null;    
     [SerializeField] TMP_Text[] myGoldText;
     public int Gold;
-    [Header("Quest")]
-    public Text talkText;
-    public TalkManager talkManager;
-    public GameObject TalkImage;
+    [Header("Talk")]
+    public GameObject talkPanel;
+    public TMP_Text talkText;
     public GameObject scanObject;
-    public Image portraitImage;
-    public bool isMove;
+    public TalkManager talkManager;
+    public Image portraitImag;
+    public bool isAction;    
     public int talkIndex;
-    
+    [Header("Quest")]
+    public QuestManager questManager;
     private void Awake()
     {
         Inst = this;
@@ -32,41 +25,44 @@ public class GameManager : MonoBehaviour
     {
         GoldChange();
     }
-    public void ShowText(GameObject scanObj)
+    public void Action(GameObject scanObj)
     {
+
         scanObject = scanObj;
-        ObjectData objectData = scanObject.GetComponent<ObjectData>();
-        OnTalk(objectData.id, objectData.isNpc);
+        ObjData objData = scanObject.GetComponent<ObjData>();
+        Talk(objData.id, objData.isNPC);
 
-        TalkImage.SetActive(isMove);
+        talkPanel.SetActive(isAction);
     }
-    void OnTalk(int id, bool isNpc)
+    void Talk(int id,bool isNpc)
     {
-        string talkData = talkManager.GetTalk(id, talkIndex);
+        int questTalkIndex=questManager.GetQuestTalkIndex(id);
+        string talkData= talkManager.GetTalk(id+ questTalkIndex, talkIndex);
 
-        if (talkData == null)
+        //다음대화가 없다면
+        if(talkData==null)
         {
-            isMove = false;
-            talkIndex = 0;
+            isAction= false;
+            talkIndex=0;            
+            Debug.Log(questManager.CheckQuest(id));
+            OpenNpc(id, questTalkIndex);
             return;
         }
-
-        if (isNpc)
+        //다음대화
+        if(isNpc)
         {
             talkText.text = talkData;
-            portraitImage.sprite = talkManager.GetSprite(id);
-            portraitImage.color = new Color(1, 1, 1, 1);
+
+            portraitImag.sprite = talkManager.GetPortrait(id,0);
+            portraitImag.color = new Color(1, 1, 1, 1);
         }
         else
         {
             talkText.text = talkData;
-            portraitImage.color = new Color(1, 1, 1, 0);
         }
-
-        isMove = true;
+        isAction= true;
         talkIndex++;
     }
-
     public void GoldChange(int a=0)
     {
         Gold += a;
@@ -74,5 +70,16 @@ public class GameManager : MonoBehaviour
         {
             item.text = $"{Gold}";
         }
-    }    
+    }
+    void OpenNpc(int id,int questTalkIndex)
+    {
+        if(id==1000)
+        {
+            SceneData.Inst.myShop.OpenShop();
+        }
+        else if (id+ questTalkIndex == 2010)
+        {
+            SceneData.Inst.myQuest.OpenQuest();
+        }
+    }
 }

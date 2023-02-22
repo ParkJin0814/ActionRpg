@@ -48,11 +48,11 @@ public class Player : PlayerMovement
     {
         myStat.changeHp = (float a) =>
         {
-            GameManager.Inst.myHp.value = a;
+            SceneData.Inst.myHp.value = a;
         };
         myStat.changeSp = (float a) =>
         {
-            GameManager.Inst.mySp.value = a;
+            SceneData.Inst.mySp.value = a;
         };
     }
     private void FixedUpdate()
@@ -128,11 +128,11 @@ public class Player : PlayerMovement
     }
     public void OnPotion()
     {
-        GameManager.Inst.myInventory.UsePotion();
+        SceneData.Inst.myInventory.UsePotion();
     }
     public override float myDamage()
     {
-        float dmg = myStat.AP+GameManager.Inst.myEquipment.EquipmentSlotValue(Item.EquipmentType.Weapon);
+        float dmg = myStat.AP+SceneData.Inst.myEquipment.EquipmentSlotValue(Item.EquipmentType.Weapon);
         switch (Random.Range(0, 10))
         {
             case 0:

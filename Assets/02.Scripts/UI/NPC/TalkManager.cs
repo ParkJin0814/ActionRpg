@@ -4,39 +4,46 @@ using UnityEngine;
 
 public class TalkManager : MonoBehaviour
 {
-    //대화에 관련된 정보를 저장할변수
     Dictionary<int, string[]> talkData;
-    //대화하고 있는 npc에 사진저장
-    Dictionary<int, Sprite> portraitDate;
-    //portraitData를 초기화 해줄 Sprite를 저장할 변수
-    public Sprite[] portraitSprite;
-    void Start()
-    {
-        talkData = new Dictionary<int, string[]>();
-        portraitDate = new Dictionary<int, Sprite>();
-        MakeData();
-    }
-    void MakeData()
-    {
-        talkData.Add(1000, new string[] { "안녕?", "이 곳에 처음 왔구나" });
-        talkData.Add(2000, new string[] { "처음 보는 얼굴인데", "누구야??" });
+    Dictionary<int, Sprite> portraitData;
 
-        portraitDate.Add(1000, portraitSprite[0]);
-        portraitDate.Add(2000, portraitSprite[1]);
+    public Sprite[] portraitArr;
+    private void Awake()
+    {
+        talkData= new Dictionary<int, string[]>();
+        portraitData=new Dictionary<int, Sprite>();
+        GeneratorData();
+    }
+    void GeneratorData()
+    {
+        //일반대화
+        talkData.Add(1000, new string[] { "안녕?","사고싶은 물건이 있니?"});
+        talkData.Add(2000, new string[] { "반가워"});
+
+        //퀘스트대화
+        talkData.Add(10 + 2000, new string[] { "반가워","혹시 바쁘지않으면 내 부탁좀 들어줄레?","여우좀 잡아줘!"});
+        talkData.Add(20 + 2000, new string[] { "잊어버린거 있는거야?","빨리 여우좀 잡아줘!" });
+        talkData.Add(20+1 + 2000, new string[] {"벌써 잡아온거야?","고마워 이건 내 성의니까 받아줘!","30골드야!"});
+
+        portraitData.Add(1000, portraitArr[0]);
+        portraitData.Add(2000, portraitArr[1]);
     }
     public string GetTalk(int id, int talkIndex)
     {
-        if (talkIndex == talkData[id].Length)
+        if (!talkData.ContainsKey(id))
         {
-            return null;
+            if (!talkData.ContainsKey(id - id % 10))
+                return GetTalk(id - id % 100, talkIndex);
+            else
+                return GetTalk(id - id % 10, talkIndex);
         }
+        if (talkIndex == talkData[id].Length)                        
+            return null;        
         else
             return talkData[id][talkIndex];
     }
-
-    public Sprite GetSprite(int id)
+    public Sprite GetPortrait(int id, int portraitIndex)
     {
-        return portraitDate[id];
+        return portraitData[id + portraitIndex];
     }
 }
-

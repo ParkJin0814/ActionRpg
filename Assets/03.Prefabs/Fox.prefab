@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &255637943815258383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4956615034968378823}
+  m_Layer: 6
+  m_Name: FloatingDamage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4956615034968378823
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255637943815258383}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 7.12, z: 4.24}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6181445542859745728}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &378428531916748642
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,9 +278,15 @@ MonoBehaviour:
   - {fileID: 8579232542999659801}
   AttackPointRange:
   - 5
+  myName: Fox
+  myHeadTop: {fileID: 6181445542859745728}
+  myFloatingDamage: {fileID: 4956615034968378823}
+  floatingDamageText: {fileID: 6965671577948291083, guid: 617923bfe9f4a154e8ffae42f6f55bc4, type: 3}
   myTarget: {fileID: 0}
   viewAngle: 120
   viewDistance: 5
+  myHpbar: {fileID: 0}
+  hpbar: {fileID: 6849526331833382157, guid: 60910ee8f5f32f449be40a1e80351c6e, type: 3}
   myState: 0
 --- !u!65 &1932001951694574842
 BoxCollider:
@@ -1337,6 +1374,7 @@ Transform:
   - {fileID: 3660144245943740835}
   - {fileID: 8470975618086975386}
   - {fileID: 1682482597668882001}
+  - {fileID: 6181445542859745728}
   m_Father: {fileID: 3503267994002086151}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 1.510088, y: 0.13315019, z: -24.598549}
@@ -1575,3 +1613,35 @@ Transform:
   m_Father: {fileID: 8680181037135068672}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -60.000027, y: 90.00002, z: -95.00001}
+--- !u!1 &9216882088686427637
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6181445542859745728}
+  m_Layer: 6
+  m_Name: HpBarPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6181445542859745728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9216882088686427637}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3, y: -6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4956615034968378823}
+  m_Father: {fileID: 8680181037135068672}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -25,7 +25,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
     private void Start()
     {        
         myInputNumber=FindObjectOfType<InputNumber>();
-        myItemInspector = GameManager.Inst.myInventory.myItemInspector;
+        myItemInspector = SceneData.Inst.myInventory.myItemInspector;
         myItemEffectDatabase = FindObjectOfType<ItemEffectDatabase>();        
     }
     //투명도 조절
@@ -64,12 +64,12 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
         text_Count.text = itemCount.ToString();
         if (item.name == "Potion")
         {
-            GameManager.Inst.myInventory.PotionCount.text = itemCount.ToString();
+            SceneData.Inst.myInventory.PotionCount.text = itemCount.ToString();
         }        
         if (itemCount <= 0)
-        {
-            if(myItemInspector.gameObject.activeSelf)myItemInspector.Close();
-            ClearSlot();            
+        {            
+            SceneData.Inst.myInventory.myItemInspector.Close();
+            ClearSlot();
         }
     }
 
@@ -83,6 +83,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
 
         text_Count.text = "0";
         go_CountImage.SetActive(false);
+        
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -117,10 +118,10 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
                 }
                 else
                 {
-                    GameManager.Inst.myInventory.AcquireItem(item);
+                    SceneData.Inst.myInventory.AcquireItem(item);
                     SetSlotCount(-1);                    
                 }
-            }
+            }            
         }        
     }
     public void DropItem()

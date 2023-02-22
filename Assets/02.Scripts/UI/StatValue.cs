@@ -25,7 +25,7 @@ public class StatValue : MonoBehaviour
         valueText[1].text = ((int)myPlayer.myStat.SP).ToString();
         valueText[2].text = myPlayer.myStat.MoveSpeed.ToString();
         valueText[3].text =
-            (myPlayer.myStat.AP + GameManager.Inst.myEquipment.EquipmentSlotValue(Item.EquipmentType.Weapon)).ToString();
+            (myPlayer.myStat.AP + SceneData.Inst.myEquipment.EquipmentSlotValue(Item.EquipmentType.Weapon)).ToString();
     }
     IEnumerator StatCall()
     {

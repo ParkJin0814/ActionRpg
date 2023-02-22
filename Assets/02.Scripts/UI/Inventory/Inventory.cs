@@ -56,8 +56,7 @@ public class Inventory : MonoBehaviour
     public void CloseInventory()
     {
         invectoryActivated = false;
-        go_InventoryBase.SetActive(false);
-        GameManager.Inst.GetComponent<ItemEffectDatabase>().HideToolTip();        
+        go_InventoryBase.SetActive(false);              
     }
 
     public void AcquireItem(Item _item, int _count = 1)
@@ -107,7 +106,7 @@ public class Inventory : MonoBehaviour
                     
                     if (slots[i].itemCount > 0)
                     {
-                        GameManager.Inst.myItemEffectDatabase.UseItem(slots[i].item);
+                        SceneData.Inst.myItemEffectDatabase.UseItem(slots[i].item);   
                         slots[i].SetSlotCount(-1);
                         PotionCount.text = slots[i].itemCount.ToString();
                     }

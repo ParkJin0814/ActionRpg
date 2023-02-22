@@ -2,9 +2,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
+using UnityEngine.UI;
+using Unity.Animations.SpringBones.GameObjectExtensions;
 
 public class EnemyCharacter : BattleSystem
 {
+    public string myName;
+    public Transform myHeadTop;
+    public Transform myFloatingDamage;
+    public GameObject floatingDamageText;
     [SerializeField] Transform myTarget;
     [SerializeField] float viewAngle;
     [SerializeField] float viewDistance;
@@ -12,6 +18,8 @@ public class EnemyCharacter : BattleSystem
     Coroutine attackCo = null;
     Vector3 startPos;
     NavMeshAgent nav;
+    [SerializeField] HpBar myHpbar;
+    [SerializeField] GameObject hpbar;
     public enum STATE
     {
         Create, Idle, Roaming, Battle, LostTarget,Dead
@@ -27,6 +35,14 @@ public class EnemyCharacter : BattleSystem
             case STATE.Create:
                 break;
             case STATE.Idle:
+                if (myHpbar == null)
+                {
+                    GameObject obj = Instantiate(hpbar, SceneData.Inst.Hpbar)as GameObject;
+                    myHpbar= obj.GetComponent<HpBar>();
+                    myHpbar.myTarget = myHeadTop;
+                    myStat.changeHp=(float v)=> myHpbar.myBar.value= v;
+                    myHpbar.gameObject.SetActive(false);
+                }
                 myAnim.SetBool("Walk", false);
                 StartCoroutine(DelayRoaming(2.0f));
                 break;
@@ -37,15 +53,24 @@ public class EnemyCharacter : BattleSystem
                 pos = startPos + pos;
                 MoveToPosition(pos, () => ChangeState(STATE.Idle));
                 break;
-            case STATE.LostTarget:                
+            case STATE.LostTarget:
+                myHpbar.gameObject.SetActive(false);
                 MoveToPosition(startPos, () => ChangeState(STATE.Idle));
                 break;
             case STATE.Battle:
+                if(myHpbar!=null)
+                {
+                    myHpbar.gameObject.SetActive(true);                    
+                }
                 AttackTarget();
                 break;
             case STATE.Dead:
                 StopAllCoroutines();
-                myAnim.SetTrigger("Dead");                
+                myAnim.SetTrigger("Dead");
+                if(myName== GameManager.Inst.questManager.questMobName)
+                {
+                    GameManager.Inst.questManager.QuestCountCheck();
+                }
                 StartCoroutine(DisApearing(2.0f, 4.0f));
                 break;
         }
@@ -64,7 +89,7 @@ public class EnemyCharacter : BattleSystem
                 break;
             case STATE.LostTarget:                
                 break;
-            case STATE.Battle:
+            case STATE.Battle:                
                 LostTarget();
                 break;
             case STATE.Dead:
@@ -89,11 +114,7 @@ public class EnemyCharacter : BattleSystem
         {
             myAnim.SetBool("Walk", true);
         }
-    }
-    void Update()
-    {
-        
-    }
+    }    
     void LostTarget()
     {
         if (!myTarget.GetComponent<IBattle>().OnLive())
@@ -140,7 +161,9 @@ public class EnemyCharacter : BattleSystem
     }
     public override void OnDamage(float dmg)
     {
-        myStat.HP -= dmg;        
+        if (myState == STATE.Dead) return;
+        myStat.HP -= dmg;
+        OnFloatingDamage((int)dmg);
         if (Mathf.Approximately(myStat.HP, 0.0f))
         {
             //»ç¸Á
@@ -149,7 +172,8 @@ public class EnemyCharacter : BattleSystem
         else
         {
             myAnim.SetTrigger("Damage");
-            if(myTarget==null)
+            
+            if (myTarget==null)
             {
                 Collider[] _target = Physics.OverlapSphere(transform.position, viewDistance, myEnemyMask);
                 foreach(Collider collider in _target)
@@ -161,6 +185,12 @@ public class EnemyCharacter : BattleSystem
                 }
             }
         }
+    }
+    void OnFloatingDamage(int dmg,bool v=false)
+    {
+        GameObject obj = Instantiate(floatingDamageText,SceneData.Inst.FloatingDamage);
+        obj.transform.position= Camera.main.WorldToScreenPoint(myFloatingDamage.position);
+        obj.GetComponent<DamageText>().damage = dmg;        
     }
     IEnumerator DelayRoaming(float t)
     {
@@ -244,7 +274,9 @@ public class EnemyCharacter : BattleSystem
     }
     IEnumerator DisApearing(float d, float t)
     {
-        yield return new WaitForSeconds(t);        
+        GetComponent<Collider>().enabled = false;
+        yield return new WaitForSeconds(t);
+        Destroy(myHpbar.gameObject);
         float dist = d;
         while (dist > 0.0f)
         {
@@ -257,6 +289,7 @@ public class EnemyCharacter : BattleSystem
             transform.Translate(Vector3.down * delta, Space.World);
             yield return null;
         }
+        
         Destroy(gameObject);
     }
     public override bool OnLive()
