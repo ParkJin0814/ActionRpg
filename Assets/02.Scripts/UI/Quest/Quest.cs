@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -30,7 +28,7 @@ public class Quest : MonoBehaviour
     }
     void QuestCheck()
     {
-        
+
         switch (questManager.questId)
         {
             case 20:
@@ -40,9 +38,9 @@ public class Quest : MonoBehaviour
                 questDesc.text = "여우들때매 걱정이야 여우좀 잡아줘 \n4마리정도만 \n잡아주면 좋을거같아";
                 break;
             default:
-                go_Quest.SetActive(false);
+                //go_Quest.SetActive(false);
                 break;
         }
     }
-    
+
 }

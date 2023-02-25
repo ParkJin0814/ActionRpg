@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,17 +10,17 @@ public class ShopSlot : MonoBehaviour
     [SerializeField] Image myItemImage;
     [SerializeField] TMP_Text myItemName;
     [SerializeField] TMP_Text myItemPrice;
-    
+
     void Start()
     {
-        if(myItem!=null)
+        if (myItem != null)
         {
             myItemImage.sprite = myItem.itemImage;
-            myItemName.text=myItem.name;
+            myItemName.text = myItem.name;
             myItemPrice.text = myItem.Price.ToString();
-        }        
+        }
     }
-    
+
     //구매버튼 클릭시 함수
     public void BuyItem()
     {

@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HpBar : MonoBehaviour
 {
     public Transform myTarget;
-    public Slider myBar;    
+    public Slider myBar;
     void Update()
     {
         Vector3 pos = Camera.main.WorldToScreenPoint(myTarget.position);

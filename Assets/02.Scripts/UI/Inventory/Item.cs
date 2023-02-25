@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item",menuName ="New Item/item")]
+[CreateAssetMenu(fileName = "New Item", menuName = "New Item/item")]
 public class Item : ScriptableObject
 {
     public enum ItemType
@@ -20,7 +20,7 @@ public class Item : ScriptableObject
         Ring,   //반지
         Helmet  //투구
     }
-    public string itemName; 
+    public string itemName;
     public ItemType itemType;
     public EquipmentType equipmentType;
     public Sprite itemImage; // 인벤토리 이미지

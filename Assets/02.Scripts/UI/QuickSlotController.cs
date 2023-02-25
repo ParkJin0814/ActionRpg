@@ -1,19 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class QuickSlotController : MonoBehaviour
 {
     [SerializeField] Slot[] quickSlots;  // Äü½½·Ô
     [SerializeField] Transform tf_parent;  // Äü½½·ÔµéÀÇ ºÎ¸ð ¿ÀºêÁ§Æ®   
-    
-    [SerializeField] ItemEffectDatabase myItemEffectDatabase;     
+
+    [SerializeField] ItemEffectDatabase myItemEffectDatabase;
 
 
 
     void Start()
     {
-        quickSlots = tf_parent.GetComponentsInChildren<Slot>();        
+        quickSlots = tf_parent.GetComponentsInChildren<Slot>();
     }
 
     void Update()
@@ -39,12 +37,12 @@ public class QuickSlotController : MonoBehaviour
             EatItem(6);
         else if (Input.GetKeyDown(KeyCode.Alpha8))
             EatItem(7);
-    }    
+    }
     public void EatItem(int _num)
     {
         if (quickSlots[_num].item == null) return;
         myItemEffectDatabase.UseItem(quickSlots[_num].item);
         quickSlots[_num].SetSlotCount(-1);
-    }  
-    
+    }
+
 }

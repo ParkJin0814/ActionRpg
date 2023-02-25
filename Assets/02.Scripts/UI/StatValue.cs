@@ -3,8 +3,8 @@ using TMPro;
 using UnityEngine;
 public class StatValue : MonoBehaviour
 {
-    
-    public Player myPlayer;    
+
+    public Player myPlayer;
     [SerializeField] TMP_Text[] valueText;
     Coroutine Stat;
     private void OnEnable()
@@ -29,7 +29,7 @@ public class StatValue : MonoBehaviour
     }
     IEnumerator StatCall()
     {
-        while(gameObject.activeSelf)
+        while (gameObject.activeSelf)
         {
             Call();
             yield return null;

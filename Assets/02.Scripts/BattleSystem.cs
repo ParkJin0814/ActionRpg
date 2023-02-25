@@ -5,7 +5,7 @@ public interface IBattle
 {
     void OnDamage(float dmg);
     bool OnLive();
-    
+
 }
 
 public class BattleSystem : CharacterProperty, IBattle
@@ -14,10 +14,10 @@ public class BattleSystem : CharacterProperty, IBattle
     public Transform[] AttackPoint;
     public float[] AttackPointRange;
 
-    
+
     public virtual void OnDamage(float dmg)
     {
-        
+
     }
     public virtual bool OnLive()
     {
@@ -27,16 +27,14 @@ public class BattleSystem : CharacterProperty, IBattle
     {
         Collider[] list = Physics.OverlapSphere(AttackPoint[a].position, AttackPointRange[0], myEnemyMask);
         foreach (Collider col in list)
-        {
             col.GetComponent<IBattle>()?.OnDamage(myDamage());
-        }
     }
     public virtual float myDamage()
-    {        
-        switch(Random.Range(0, 10))
+    {
+        switch (Random.Range(0, 10))
         {
             case 0:
-                return myStat.AP * 1.2f;                
+                return myStat.AP * 1.2f;
             default:
                 break;
         }

@@ -20,7 +20,7 @@ public class Player : PlayerMovement
                 break;
             case STATE.Dead:
                 StopAllCoroutines();
-                myAnim.SetTrigger("Dead");                
+                myAnim.SetTrigger("Dead");
                 break;
         }
     }
@@ -30,8 +30,8 @@ public class Player : PlayerMovement
         {
             case STATE.Create:
                 break;
-            case STATE.Idle:                
-                Movement();                
+            case STATE.Idle:
+                Movement();
                 break;
             case STATE.Dead:
                 break;
@@ -39,10 +39,10 @@ public class Player : PlayerMovement
     }
     void Start()
     {
-        Application.targetFrameRate= 60;
+        Application.targetFrameRate = 60;
         ChangeState(STATE.Idle);
         ChangeStat();
-        InputNumber.myPlayer = this;        
+        InputNumber.myPlayer = this;
     }
     void ChangeStat()
     {
@@ -59,7 +59,7 @@ public class Player : PlayerMovement
     {
         StateProcess();
     }
-    
+
     public void AttackA(int a)
     {
         if (myState == STATE.Idle && !myAnim.GetBool("IsRolling") && !myAnim.GetBool("IsAttacking"))
@@ -73,8 +73,8 @@ public class Player : PlayerMovement
                     myAnim.SetTrigger("AttackB");
                     break;
             }
-        
-        }        
+
+        }
     }
     public void RollinButton()
     {
@@ -85,10 +85,10 @@ public class Player : PlayerMovement
         }
     }
     public override void OnDamage(float dmg)
-    {         
+    {
         myStat.HP -= dmg;
-        if (Mathf.Approximately(myStat.HP, 0.0f)) ChangeState(STATE.Dead);        
-        else myAnim.SetTrigger("Damage");        
+        if (Mathf.Approximately(myStat.HP, 0.0f)) ChangeState(STATE.Dead);
+        else myAnim.SetTrigger("Damage");
     }
     public override bool OnLive()
     {
@@ -98,10 +98,10 @@ public class Player : PlayerMovement
     public override void OnAttack(int a)
     {
         //공격별 공격포인트 지정을위한b 공격체크반지름d 와 스킬데미지를위한c
-        int b=0;
+        int b = 0;
         int d = 0;
-        float c=1.0f;        
-        switch(a)
+        float c = 1.0f;
+        switch (a)
         {
             case 0:
                 b = a;
@@ -120,9 +120,10 @@ public class Player : PlayerMovement
                 break;
         }
         Collider[] list = Physics.OverlapSphere(AttackPoint[b].position, AttackPointRange[d], myEnemyMask);
+        Debug.Log(1<<LayerMask.NameToLayer("Player"));
         foreach (Collider col in list)
         {
-            col.GetComponent<IBattle>()?.OnDamage(myDamage()*c);
+            col.GetComponent<IBattle>()?.OnDamage(myDamage() * c);
         }
 
     }
@@ -132,7 +133,7 @@ public class Player : PlayerMovement
     }
     public override float myDamage()
     {
-        float dmg = myStat.AP+SceneData.Inst.myEquipment.EquipmentSlotValue(Item.EquipmentType.Weapon);
+        float dmg = myStat.AP + SceneData.Inst.myEquipment.EquipmentSlotValue(Item.EquipmentType.Weapon);
         switch (Random.Range(0, 10))
         {
             case 0:

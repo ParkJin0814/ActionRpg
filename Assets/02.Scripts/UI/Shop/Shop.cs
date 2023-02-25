@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Shop : MonoBehaviour
@@ -13,22 +11,22 @@ public class Shop : MonoBehaviour
 
     void Start()
     {
-        for(int i=0 ; i < BuyItem.Length ; ++i)
+        for (int i = 0; i < BuyItem.Length; ++i)
         {
-            GameObject obj=Instantiate(myShopSlot, itemParent);
-            obj.GetComponent<ShopSlot>().myItem= BuyItem[i];
+            GameObject obj = Instantiate(myShopSlot, itemParent);
+            obj.GetComponent<ShopSlot>().myItem = BuyItem[i];
             obj.GetComponent<ShopSlot>().myshop = this;
         }
     }
     public void OpenShop()
     {
         shopActivated = true;
-        myShopbase.SetActive(true);        
+        myShopbase.SetActive(true);
     }
     public void CloseShop()
     {
         shopActivated = false;
         myShopbase.SetActive(false);
-        
+
     }
 }

@@ -1,6 +1,6 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
-using System;
 
 [Serializable]
 public struct CharacterStat
@@ -27,19 +27,19 @@ public struct CharacterStat
             changeHp?.Invoke(hp / maxHp);
         }
     }
-    
+
     public float SP
     {
         get => sp;
         set
         {
             sp = Mathf.Clamp(value, 0.0f, maxSp);
-            if(sp.Equals(0.0f))
+            if (sp.Equals(0.0f))
             {
-                spCool= 2.0f;
+                spCool = 2.0f;
                 RecoverySp = false;
             }
-            if(sp==maxSp)
+            if (sp == maxSp)
             {
                 RecoverySp = true;
             }
@@ -49,7 +49,7 @@ public struct CharacterStat
     public float MoveSpeed
     {
         get => moveSpeed;
-    }    
+    }
     public float AP
     {
         get => ap;

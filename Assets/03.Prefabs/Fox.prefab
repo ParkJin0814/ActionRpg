@@ -257,7 +257,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1262143851945888189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22b06ada89db36447b3e24bfd4050d49, type: 3}
+  m_Script: {fileID: 11500000, guid: 58d0ae75b9d5d6c4cacf0e446082512b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   myStat:
@@ -283,10 +283,11 @@ MonoBehaviour:
   myFloatingDamage: {fileID: 4956615034968378823}
   floatingDamageText: {fileID: 6965671577948291083, guid: 617923bfe9f4a154e8ffae42f6f55bc4, type: 3}
   myTarget: {fileID: 0}
-  viewAngle: 120
+  viewAngle: 90
   viewDistance: 5
-  myHpbar: {fileID: 0}
   hpbar: {fileID: 6849526331833382157, guid: 60910ee8f5f32f449be40a1e80351c6e, type: 3}
+  romingRage: 3
+  myAttackLength: 1
   myState: 0
 --- !u!65 &1932001951694574842
 BoxCollider:

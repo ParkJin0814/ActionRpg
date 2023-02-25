@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
     public int questId;
-    public int questActionIndex;    
+    public int questActionIndex;
     Dictionary<int, QuestData> questList;
     public bool questCheck = true;
     public string questMobName;
@@ -14,27 +13,27 @@ public class QuestManager : MonoBehaviour
 
     private void Awake()
     {
-        questList= new Dictionary<int, QuestData>();
+        questList = new Dictionary<int, QuestData>();
         GenerateData();
     }
     void GenerateData()
     {
-        questList.Add(10,new QuestData("여우를 잡아줘",new int[] {2000}));
-        questList.Add(20, new QuestData("여우를 잡아줘", new int[] {2000,2000}));
-        questList.Add(30, new QuestData("여우를 잡아줘퀘스트 클리어!", new int[] {0}));
-        
+        questList.Add(10, new QuestData("여우를 잡아줘", new int[] { 2000 }));
+        questList.Add(20, new QuestData("여우를 잡아줘", new int[] { 2000, 2000 }));
+        questList.Add(30, new QuestData("여우를 잡아줘퀘스트 클리어!", new int[] { 0 }));
+
     }
 
     public int GetQuestTalkIndex(int id)
     {
-        return questId+questActionIndex;
+        return questId + questActionIndex;
     }
     public string CheckQuest(int id)
-    {       
+    {
         //다음퀘스트대화
-        if (id == questList[questId].npcId[questActionIndex]&& questCheck)
+        if (id == questList[questId].npcId[questActionIndex] && questCheck)
             questActionIndex++;
-        
+
         //퀘스트 관리
         ControlQuest(id);
 
@@ -60,7 +59,7 @@ public class QuestManager : MonoBehaviour
     }
     void ControlQuest(int id)
     {
-        switch(questId)
+        switch (questId)
         {
             case 10:
                 if (id == questList[questId].npcId[0])
@@ -72,7 +71,7 @@ public class QuestManager : MonoBehaviour
                 }
                 break;
             case 20:
-                if(questActionIndex>0)
+                if (questActionIndex > 0)
                 {
                     GameManager.Inst.GoldChange(+30);
                 }
@@ -83,7 +82,7 @@ public class QuestManager : MonoBehaviour
     {
         if (questValue > questCount)
         {
-            questCount++;            
+            questCount++;
         }
         if (questCount >= questValue)
         {

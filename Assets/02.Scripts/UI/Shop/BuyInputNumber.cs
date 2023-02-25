@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class BuyInputNumber : MonoBehaviour
 {
 
-    
+
     bool activated = false;
     [SerializeField] TMP_Text text_Preview;
     [SerializeField] TMP_InputField if_text;
@@ -15,7 +13,7 @@ public class BuyInputNumber : MonoBehaviour
     Inventory myInventory;
     void Start()
     {
-        myInventory = SceneData.Inst.myInventory;   
+        myInventory = SceneData.Inst.myInventory;
     }
 
     // Update is called once per frame
@@ -23,26 +21,26 @@ public class BuyInputNumber : MonoBehaviour
     {
         if (activated)
         {
-            
+
             if (Input.GetKeyDown(KeyCode.Return)) Ok();
             else if (Input.GetKeyDown(KeyCode.Escape)) Cancel();
             int a = int.Parse(if_text.text);
             if (item != null && GameManager.Inst.Gold / item.Price < a)
             {
-                if_text.text = (GameManager.Inst.Gold / item.Price).ToString();                
+                if_text.text = (GameManager.Inst.Gold / item.Price).ToString();
             }
         }
-        
+
     }
     public void Call()
     {
         go_Base.SetActive(true);
-        activated=true;
+        activated = true;
         if_text.text = "1";
     }
     public void Cancel()
     {
-        activated = false;        
+        activated = false;
         go_Base.SetActive(false);
         item = null;
     }
@@ -59,7 +57,7 @@ public class BuyInputNumber : MonoBehaviour
     {
         if (v)
         {
-            if_text.text = (int.Parse(if_text.text) + 1).ToString();         
+            if_text.text = (int.Parse(if_text.text) + 1).ToString();
         }
         else
         {

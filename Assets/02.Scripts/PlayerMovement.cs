@@ -1,9 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerMovement : BattleSystem
 {
@@ -11,11 +7,11 @@ public class PlayerMovement : BattleSystem
     float Run;
     float x;
     float y;
-    bool runing = false;    
+    bool runing = false;
     Coroutine myRoll;
     [SerializeField] VariableJoystick joy;
     bool runButton = false;
-    
+
     protected void RollingStart()
     {
         if (myRoll == null)
@@ -38,9 +34,9 @@ public class PlayerMovement : BattleSystem
             x = joy.Horizontal;
             y = joy.Vertical;
             myAnim.SetFloat("x", x);
-            myAnim.SetFloat("y", y);             
+            myAnim.SetFloat("y", y);
             //이동
-            if (!x.Equals(0.0f) || !y.Equals(0.0f)) myAnim.SetBool("Move", true);            
+            if (!x.Equals(0.0f) || !y.Equals(0.0f)) myAnim.SetBool("Move", true);
             else myAnim.SetBool("Move", false);
             //달리기
             if (runButton && y > 0.0f && myStat.SP > 0.0f && myStat.RecoverySp)
@@ -61,8 +57,8 @@ public class PlayerMovement : BattleSystem
                 }
                 else myStat.SP += Time.deltaTime * 20.0f;
             }
-            
-            
+
+
             myAnim.SetFloat("Run", Run);
             if (myAnim.GetBool("Move"))
             {
@@ -79,15 +75,15 @@ public class PlayerMovement : BattleSystem
             }
         }
     }
-    
-   
+
+
     IEnumerator Rollings()
     {
         Vector3 dir = new Vector3(x, 0, 1);
         myStat.SP -= 20.0f;
         while (true)
         {
-            
+
             float delta = myStat.MoveSpeed * 3.0f * Time.deltaTime;
             transform.Translate(dir * delta);
             yield return new WaitForFixedUpdate();

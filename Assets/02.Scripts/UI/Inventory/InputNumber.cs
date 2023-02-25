@@ -1,15 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using static Item;
 
 public class InputNumber : MonoBehaviour
 {
     bool activated = false;
     [SerializeField] GameObject backGround;
-    [SerializeField] TMP_Text text_Preview;        
+    [SerializeField] TMP_Text text_Preview;
     [SerializeField] TMP_InputField if_text;
     [SerializeField] GameObject go_Base;
     [SerializeField] public static Player myPlayer;
@@ -20,23 +17,23 @@ public class InputNumber : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return)) OK();
             else if (Input.GetKeyDown(KeyCode.Escape)) Cancel();
-            if(if_text.text!="")
+            if (if_text.text != "")
             {
-                if(int.Parse(if_text.text)>DragSlot.Inst.dragSlot.itemCount)
+                if (int.Parse(if_text.text) > DragSlot.Inst.dragSlot.itemCount)
                 {
                     if_text.text = DragSlot.Inst.dragSlot.itemCount.ToString();
                 }
             }
         }
         backGround.SetActive(activated);
-        
+
     }
 
     public void Call()
     {
         go_Base.SetActive(true);
-        activated = true;        
-        
+        activated = true;
+
         text_Preview.text = DragSlot.Inst.dragSlot.itemCount.ToString();
         if_text.text = text_Preview.text;
     }
@@ -51,30 +48,30 @@ public class InputNumber : MonoBehaviour
 
     public void OK()
     {
-        DragSlot.Inst.SetColor(0);        
-        int num;        
+        DragSlot.Inst.SetColor(0);
+        int num;
         if (if_text.text != "")
         {
             if (CheckNumber(if_text.text))
             {
                 num = int.Parse(if_text.text);
                 if (num > DragSlot.Inst.dragSlot.itemCount)
-                    num = DragSlot.Inst.dragSlot.itemCount;                
+                    num = DragSlot.Inst.dragSlot.itemCount;
             }
             else
-            {                
+            {
                 num = 1;
             }
         }
         else num = int.Parse(text_Preview.text);
-        
+
         StartCoroutine(DropItemCorountine(num));
     }
     IEnumerator DropItemCorountine(int _num)
     {
         for (int i = 0; i < _num; i++)
         {
-            
+
             Instantiate(DragSlot.Inst.dragSlot.item.itemPrefab,
                 myPlayer.transform.position + myPlayer.transform.forward,
                 Quaternion.identity, dropObject);

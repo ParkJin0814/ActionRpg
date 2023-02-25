@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 
 public class FollowingCamera : MonoBehaviour
@@ -18,7 +15,7 @@ public class FollowingCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        myPlayer= GetComponentInParent<Player>();
+        myPlayer = GetComponentInParent<Player>();
         curRot.x = transform.localRotation.eulerAngles.x;
         curRot.y = transform.parent.localRotation.eulerAngles.y;
 
@@ -36,7 +33,7 @@ public class FollowingCamera : MonoBehaviour
             curRot.y += joy.Horizontal * LookupSpeed;
             transform.localRotation = Quaternion.Euler(curRot.x, 0, 0);
             transform.parent.localRotation = Quaternion.Euler(0, curRot.y, 0);
-        }                
+        }
         if (Physics.Raycast(transform.position, -transform.forward, out RaycastHit hit, -camPos.z + Offset + 0.1f, crashMask))
         {
             camPos.z = -hit.distance + Offset;
@@ -47,5 +44,5 @@ public class FollowingCamera : MonoBehaviour
         }
         myCam.localPosition = camPos;
     }
-    
+
 }

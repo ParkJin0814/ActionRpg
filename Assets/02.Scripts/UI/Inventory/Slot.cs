@@ -2,9 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
-public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragHandler,IEndDragHandler,IDropHandler
+public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public Item item;
     public int itemCount;
@@ -21,17 +20,17 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
     public bool isEquipmentSlot; // 해당 슬롯이 장비슬롯인지 판단
     public Item.EquipmentType equipmentType;
     ItemInspector myItemInspector;
-    
+
     private void Start()
-    {        
-        myInputNumber=FindObjectOfType<InputNumber>();
+    {
+        myInputNumber = FindObjectOfType<InputNumber>();
         myItemInspector = SceneData.Inst.myInventory.myItemInspector;
-        myItemEffectDatabase = FindObjectOfType<ItemEffectDatabase>();        
+        myItemEffectDatabase = FindObjectOfType<ItemEffectDatabase>();
     }
     //투명도 조절
     void SetColor(float alpha)
     {
-        Color color= itemImage.color;
+        Color color = itemImage.color;
         color.a = alpha;
         itemImage.color = color;
     }
@@ -65,9 +64,9 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
         if (item.name == "Potion")
         {
             SceneData.Inst.myInventory.PotionCount.text = itemCount.ToString();
-        }        
+        }
         if (itemCount <= 0)
-        {            
+        {
             SceneData.Inst.myInventory.myItemInspector.Close();
             ClearSlot();
         }
@@ -83,7 +82,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
 
         text_Count.text = "0";
         go_CountImage.SetActive(false);
-        
+
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -92,7 +91,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
         {
             UseItem();
         }
-        if(item!= null)
+        if (item != null)
         {
             myItemInspector.item = item;
             myItemInspector.mySlot = this;
@@ -108,7 +107,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
             {
                 myItemEffectDatabase.UseItem(item);
                 SetSlotCount(-1);
-                
+
             }
             else if (item.itemType == Item.ItemType.Equipment)
             {
@@ -119,10 +118,10 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
                 else
                 {
                     SceneData.Inst.myInventory.AcquireItem(item);
-                    SetSlotCount(-1);                    
+                    SetSlotCount(-1);
                 }
-            }            
-        }        
+            }
+        }
     }
     public void DropItem()
     {
@@ -135,31 +134,31 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
     //드래그시작
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(item!= null)
+        if (item != null)
         {
             DragSlot.Inst.dragSlot = this;
             DragSlot.Inst.DragSetImage(itemImage);
-            DragSlot.Inst.transform.position=eventData.position;
+            DragSlot.Inst.transform.position = eventData.position;
         }
     }
     //드래그중
     public void OnDrag(PointerEventData eventData)
     {
-        if(item!= null) DragSlot.Inst.transform.position=eventData.position;
+        if (item != null) DragSlot.Inst.transform.position = eventData.position;
     }
     //드래그를 놓았을때
     public void OnEndDrag(PointerEventData eventData)
-    {   
+    {
         DragSlot.Inst.SetColor(0);
         DragSlot.Inst.dragSlot = null;
     }
-    
+
     //드래그하여 슬롯에 놓을때
     public void OnDrop(PointerEventData eventData)
     {
         if (DragSlot.Inst.dragSlot != null)
         {
-            if(!isEquipmentSlot) ChangeSlot();
+            if (!isEquipmentSlot) ChangeSlot();
             else if (DragSlot.Inst.dragSlot.item.equipmentType == equipmentType)
             {
                 ChangeSlot();
@@ -170,8 +169,8 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IBeginDragHandler,IDragH
     {
         Item tempItem = item;
         int tempItemCount = itemCount;
-        AddItem(DragSlot.Inst.dragSlot.item,DragSlot.Inst.dragSlot.itemCount);
-        if(tempItem!=null) DragSlot.Inst.dragSlot.AddItem(tempItem,tempItemCount);
+        AddItem(DragSlot.Inst.dragSlot.item, DragSlot.Inst.dragSlot.itemCount);
+        if (tempItem != null) DragSlot.Inst.dragSlot.AddItem(tempItem, tempItemCount);
         else DragSlot.Inst.dragSlot.ClearSlot();
     }
     public int GetQuickSlotNumber()

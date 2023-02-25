@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class ItemInspector : MonoBehaviour
 {
@@ -16,10 +14,10 @@ public class ItemInspector : MonoBehaviour
     public void Call()
     {
         ItemInspector_base.SetActive(true);
-        if(item!= null) 
+        if (item != null)
         {
             ItemImage.sprite = item.itemImage;
-            ItemName.text= item.name;
+            ItemName.text = item.name;
             ItemDesc.text = item.itemDesc;
             if (mySlot != null && mySlot.isEquipmentSlot) UseButtonText.text = "해제";
             else UseButtonText.text = "사용";
@@ -30,7 +28,7 @@ public class ItemInspector : MonoBehaviour
     {
         if (ItemInspector_base.activeSelf)
         {
-            SetColor(0);            
+            SetColor(0);
             item = null;
             ItemImage.sprite = null;
             ItemName.text = "";
@@ -47,9 +45,9 @@ public class ItemInspector : MonoBehaviour
     }
     public void UseButton()
     {
-        if(mySlot!=null)
+        if (mySlot != null)
         {
-            if(mySlot.item!=null)
+            if (mySlot.item != null)
             {
                 mySlot.UseItem();
             }
@@ -57,9 +55,9 @@ public class ItemInspector : MonoBehaviour
     }
     public void DropItem()
     {
-        if(mySlot!=null)
+        if (mySlot != null)
         {
-            mySlot.DropItem();            
+            mySlot.DropItem();
         }
     }
 }

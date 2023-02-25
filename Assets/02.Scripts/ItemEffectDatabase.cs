@@ -16,24 +16,24 @@ public class ItemEffectDatabase : MonoBehaviour
 
     private const string HP = "HP", SP = "SP";
 
-    [SerializeField] Player myPlayer;   
+    [SerializeField] Player myPlayer;
     [SerializeField] QuickSlotController myQuickSlotController;
     [SerializeField] Equipment myEquipment;
 
-    public void UseItem(Item _item,UnityAction done=null)
+    public void UseItem(Item _item, UnityAction done = null)
     {
         if (_item.itemType == Item.ItemType.Equipment)
         {
-            for(int i=0;i<myEquipment.slots.Length;++i)
+            for (int i = 0; i < myEquipment.slots.Length; ++i)
             {
-                if(myEquipment.slots[i].equipmentType==_item.equipmentType)
+                if (myEquipment.slots[i].equipmentType == _item.equipmentType)
                 {
-                    if(myEquipment.slots[i].item == null)
+                    if (myEquipment.slots[i].item == null)
                     {
                         myEquipment.slots[i].AddItem(_item);
                         done();
                     }
-                    else if(myEquipment.slots[i].item != null)
+                    else if (myEquipment.slots[i].item != null)
                     {
                         SceneData.Inst.myInventory.AcquireItem(myEquipment.slots[i].item);
                         myEquipment.slots[i].AddItem(_item);
@@ -57,12 +57,11 @@ public class ItemEffectDatabase : MonoBehaviour
                                 break;
                             case SP:
                                 myPlayer.myStat.SP += itemEffects[i].num[j];
-                                break;                            
+                                break;
                             default:
                                 Debug.Log("오류");
                                 break;
-                        }
-                        Debug.Log(_item.itemName + " 을 사용했습니다.");
+                        }                        
                     }
                     return;
                 }
