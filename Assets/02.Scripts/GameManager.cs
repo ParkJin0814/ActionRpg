@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     static public GameManager Inst = null;
+    public GameObject[] GameObj;
     [SerializeField] TMP_Text[] myGoldText;
     public int Gold;
     [Header("Talk")]

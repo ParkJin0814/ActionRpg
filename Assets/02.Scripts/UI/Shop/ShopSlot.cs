@@ -16,7 +16,7 @@ public class ShopSlot : MonoBehaviour
         if (myItem != null)
         {
             myItemImage.sprite = myItem.itemImage;
-            myItemName.text = myItem.name;
+            myItemName.text = myItem.itemName;
             myItemPrice.text = myItem.Price.ToString();
         }
     }

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1d399894dab78344b321083c812ac75, type: 3}
+  m_Name: BossItem
+  m_EditorClassIdentifier: 
+  itemName: "\uC554\uD751\uBB3C\uC9C8"
+  itemType: 3
+  equipmentType: 0
+  itemImage: {fileID: 21300000, guid: ed5c91c32b9b0af4e851c25c03211f16, type: 3}
+  itemPrefab: {fileID: 5587834936026845797, guid: 7ed99a8b6524b4b42bdcebe5a980c1ab, type: 3}
+  weaponPrefab: []
+  Value: 0
+  Price: 0
+  itemDesc: "\uBCF4\uC2A4\uC804\uB9BD\uD488\uC774"

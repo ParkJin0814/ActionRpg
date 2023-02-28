@@ -10,7 +10,7 @@ public class InputNumber : MonoBehaviour
     [SerializeField] TMP_InputField if_text;
     [SerializeField] GameObject go_Base;
     [SerializeField] public static Player myPlayer;
-    [SerializeField] Transform dropObject;
+    
     void Update()
     {
         if (activated)
@@ -74,7 +74,7 @@ public class InputNumber : MonoBehaviour
 
             Instantiate(DragSlot.Inst.dragSlot.item.itemPrefab,
                 myPlayer.transform.position + myPlayer.transform.forward,
-                Quaternion.identity, dropObject);
+                Quaternion.identity, SceneData.Inst.dropObject);
             DragSlot.Inst.dragSlot.SetSlotCount(-1);
             yield return new WaitForSeconds(0.05f);
         }

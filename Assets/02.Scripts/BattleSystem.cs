@@ -10,6 +10,7 @@ public interface IBattle
 
 public class BattleSystem : CharacterProperty, IBattle
 {
+    public CharacterStat myStat;
     public LayerMask myEnemyMask;
     public Transform[] AttackPoint;
     public float[] AttackPointRange;

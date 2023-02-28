@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CharacterProperty : MonoBehaviour
 {
-    public CharacterStat myStat;
+    
     Animator _anim = null;
     protected Animator myAnim
     {

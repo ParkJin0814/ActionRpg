@@ -93,6 +93,10 @@ public class ItemManager : MonoBehaviour
             if (hitInfo.transform != null)
             {                
                 myInventory.AcquireItem(hitInfo.transform.GetComponent<ItemPickUp>().item);
+                if(hitInfo.transform.GetComponent<ItemPickUp>().item.itemName== "¾ÏÈæ¹°Áú")
+                {
+                    GameManager.Inst.questManager.QuestCountCheck();
+                }
                 Destroy(hitInfo.transform.gameObject);
                 ItemInfoDisappear();
             }

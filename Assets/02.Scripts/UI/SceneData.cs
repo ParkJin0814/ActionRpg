@@ -6,6 +6,7 @@ public class SceneData : MonoBehaviour
 {
     public static SceneData Inst = null;
     public Transform Hpbar;
+    public Transform BossHpbar;
     public Transform FloatingDamage;
     public Inventory myInventory;
     public Equipment myEquipment;
@@ -16,6 +17,7 @@ public class SceneData : MonoBehaviour
     public TMP_Text dropText;
     public Slider myHp;
     public Slider mySp;
+    public Transform dropObject;
     private void Awake()
     {
         Inst = this;

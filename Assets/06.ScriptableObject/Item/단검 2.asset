@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1d399894dab78344b321083c812ac75, type: 3}
+  m_Name: "\uB2E8\uAC80 2"
+  m_EditorClassIdentifier: 
+  itemName: "\uCC10\uCC10\uB9C8\uC9C0\uB9C9\uB2E8\uAC80"
+  itemType: 0
+  equipmentType: 1
+  itemImage: {fileID: 21300000, guid: 86add05857f650b42a52e52de2d6dc3b, type: 3}
+  itemPrefab: {fileID: 5694560533298769088, guid: 3b6ca7cab21c72847969fc1fd8c38871, type: 3}
+  weaponPrefab:
+  - {fileID: 271475451801734593, guid: 084c94ad86c9e8642be85e608f91609e, type: 3}
+  - {fileID: 7769310473582601926, guid: 5077a3543055b0c4d96d4780b9effa25, type: 3}
+  Value: 10
+  Price: 20
+  itemDesc: Ap+10

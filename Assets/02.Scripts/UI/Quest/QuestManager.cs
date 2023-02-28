@@ -20,8 +20,9 @@ public class QuestManager : MonoBehaviour
     {
         questList.Add(10, new QuestData("여우를 잡아줘", new int[] { 2000 }));
         questList.Add(20, new QuestData("여우를 잡아줘", new int[] { 2000, 2000 }));
-        questList.Add(30, new QuestData("여우를 잡아줘퀘스트 클리어!", new int[] { 0 }));
-
+        questList.Add(30, new QuestData("공원의 무서운 존재", new int[] { 2000}));
+        questList.Add(40, new QuestData("공원의 무서운 존재", new int[] { 2000,2000 }));
+        questList.Add(50, new QuestData("퀘스트 올 클리어", new int[] { 0 }));
     }
 
     public int GetQuestTalkIndex(int id)
@@ -54,6 +55,7 @@ public class QuestManager : MonoBehaviour
             questId += 10;
             questActionIndex = 0;
             questCount = 0;
+            questValue = 0;
             questMobName = "";
         }
     }
@@ -75,6 +77,17 @@ public class QuestManager : MonoBehaviour
                 {
                     GameManager.Inst.GoldChange(+30);
                 }
+                break;
+            case 30:
+                if (id == questList[questId].npcId[0])
+                {
+                    NextQuest();
+                    questCheck = false;
+                    questValue = 1;
+                    questMobName = "이름없는보스";
+                }
+                break;
+            case 40:
                 break;
         }
     }

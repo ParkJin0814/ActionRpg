@@ -16,8 +16,7 @@ public class ItemEffectDatabase : MonoBehaviour
 
     private const string HP = "HP", SP = "SP";
 
-    [SerializeField] Player myPlayer;
-    [SerializeField] QuickSlotController myQuickSlotController;
+    [SerializeField] Player myPlayer;    
     [SerializeField] Equipment myEquipment;
 
     public void UseItem(Item _item, UnityAction done = null)

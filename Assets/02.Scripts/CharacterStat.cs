@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public struct CharacterStat
 {
     [SerializeField] float hp;
-    [SerializeField] float maxHp;
+    public float maxHp;
     [SerializeField] float sp;
     [SerializeField] float maxSp;
     [SerializeField] float moveSpeed;
