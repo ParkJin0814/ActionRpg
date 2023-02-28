@@ -20,6 +20,6 @@ MonoBehaviour:
   weaponPrefab:
   - {fileID: 271475451801734593, guid: 084c94ad86c9e8642be85e608f91609e, type: 3}
   - {fileID: 7769310473582601926, guid: 5077a3543055b0c4d96d4780b9effa25, type: 3}
-  Value: 10
-  Price: 20
+  Value: 20
+  Price: 40
   itemDesc: Ap+10

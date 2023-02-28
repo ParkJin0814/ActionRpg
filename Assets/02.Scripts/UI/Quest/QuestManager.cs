@@ -84,7 +84,7 @@ public class QuestManager : MonoBehaviour
                     NextQuest();
                     questCheck = false;
                     questValue = 1;
-                    questMobName = "이름없는보스";
+                    questMobName = "노네임";
                 }
                 break;
             case 40:
