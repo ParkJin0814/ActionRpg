@@ -646,6 +646,9 @@ MonoBehaviour:
   - {fileID: 100016, guid: 3f1d919251d33ab45a23dc83a945d1da, type: 3}
   EffectPostion:
   - {fileID: 4312023873119092802}
+  AttackSound:
+  - {fileID: 8300000, guid: 3ff9916708cafd642b794b7f4618fb39, type: 3}
+  - {fileID: 8300000, guid: f5a5b8dea3e183e4d90694d0d73602d0, type: 3}
   enemyCharacter: {fileID: 2361000351459892453}
 --- !u!114 &2361000351459892453
 MonoBehaviour:

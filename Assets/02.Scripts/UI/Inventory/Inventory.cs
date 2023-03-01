@@ -49,12 +49,14 @@ public class Inventory : MonoBehaviour
 
     public void OpenInventory()
     {
+        GameManager.Inst.ButtonClick();
         invectoryActivated = true;
         go_InventoryBase.SetActive(true);
     }
 
     public void CloseInventory()
     {
+        GameManager.Inst.ButtonClick();
         invectoryActivated = false;
         go_InventoryBase.SetActive(false);
     }

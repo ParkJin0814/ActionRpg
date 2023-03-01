@@ -10,7 +10,7 @@ public class InputNumber : MonoBehaviour
     [SerializeField] TMP_InputField if_text;
     [SerializeField] GameObject go_Base;
     [SerializeField] public static Player myPlayer;
-    
+
     void Update()
     {
         if (activated)
@@ -40,6 +40,7 @@ public class InputNumber : MonoBehaviour
 
     public void Cancel()
     {
+        GameManager.Inst.ButtonClick();
         activated = false;
         DragSlot.Inst.SetColor(0);
         go_Base.SetActive(false);
@@ -49,6 +50,7 @@ public class InputNumber : MonoBehaviour
     public void OK()
     {
         DragSlot.Inst.SetColor(0);
+        GameManager.Inst.ButtonClick();
         int num;
         if (if_text.text != "")
         {

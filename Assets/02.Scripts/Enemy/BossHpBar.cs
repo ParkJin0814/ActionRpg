@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,15 +11,15 @@ public class BossHpBar : MonoBehaviour
     private void Start()
     {
         Hpbars = GetComponentsInChildren<Slider>();
-        hpbarLength = Hpbars.Length-1;
+        hpbarLength = Hpbars.Length - 1;
         myName.text = myEC.myName;
     }
 
     public void HpbarValue()
     {
-        
+
         Hpbars[hpbarLength].value = hpbarValue();
-        if (myEC.myStat.HP / ((myEC.myStat.maxHp / Hpbars.Length)) < hpbarLength && hpbarLength>0)
+        if (myEC.myStat.HP / ((myEC.myStat.maxHp / Hpbars.Length)) < hpbarLength && hpbarLength > 0)
         {
             Hpbars[hpbarLength].value = 0;
             hpbarLength--;
@@ -30,9 +28,9 @@ public class BossHpBar : MonoBehaviour
     }
     float hpbarValue()
     {
-        return 
+        return
             myEC.myStat.HP % (myEC.myStat.maxHp / Hpbars.Length) /
-            (myEC.myStat.maxHp / Hpbars.Length) ;
+            (myEC.myStat.maxHp / Hpbars.Length);
     }
 
 }

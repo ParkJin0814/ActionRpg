@@ -16,7 +16,7 @@ public class ItemEffectDatabase : MonoBehaviour
 
     private const string HP = "HP", SP = "SP";
 
-    [SerializeField] Player myPlayer;    
+    [SerializeField] Player myPlayer;
     [SerializeField] Equipment myEquipment;
 
     public void UseItem(Item _item, UnityAction done = null)
@@ -60,7 +60,7 @@ public class ItemEffectDatabase : MonoBehaviour
                             default:
                                 Debug.Log("¿À·ù");
                                 break;
-                        }                        
+                        }
                     }
                     return;
                 }

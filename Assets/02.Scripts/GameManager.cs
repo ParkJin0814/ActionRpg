@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
     public int talkIndex;
     [Header("Quest")]
     public QuestManager questManager;
+    [Header("Sound")]
+    public AudioSource effectSource;
+    public AudioClip effectSound;
+
     private void Awake()
     {
         Inst = this;
@@ -25,6 +29,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         GoldChange();
+    }
+    public void ButtonClick()
+    {
+        SoundManager.Inst.PlayOneShot(effectSource, effectSound);
     }
     public void Action(GameObject scanObj)
     {
@@ -39,7 +47,7 @@ public class GameManager : MonoBehaviour
     {
         int questTalkIndex = questManager.GetQuestTalkIndex(id);
         string talkData = talkManager.GetTalk(id + questTalkIndex, talkIndex);
-        
+
         //다음대화가 없다면
         if (talkData == null)
         {

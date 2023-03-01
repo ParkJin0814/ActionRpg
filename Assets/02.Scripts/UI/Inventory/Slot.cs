@@ -93,6 +93,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         }
         if (item != null)
         {
+            GameManager.Inst.ButtonClick();
             myItemInspector.item = item;
             myItemInspector.mySlot = this;
             myItemInspector.Call();

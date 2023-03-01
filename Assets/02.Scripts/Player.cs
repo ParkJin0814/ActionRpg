@@ -120,7 +120,7 @@ public class Player : PlayerMovement
                 c = 1.5f;
                 break;
         }
-        Collider[] list = Physics.OverlapSphere(AttackPoint[b].position, AttackPointRange[d], myEnemyMask);        
+        Collider[] list = Physics.OverlapSphere(AttackPoint[b].position, AttackPointRange[d], myEnemyMask);
         foreach (Collider col in list)
         {
             col.GetComponent<IBattle>()?.OnDamage(myDamage() * c);

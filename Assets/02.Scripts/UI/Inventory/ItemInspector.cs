@@ -16,8 +16,9 @@ public class ItemInspector : MonoBehaviour
         ItemInspector_base.SetActive(true);
         if (item != null)
         {
+            GameManager.Inst.ButtonClick();
             ItemImage.sprite = item.itemImage;
-            ItemName.text = item.name;
+            ItemName.text = item.itemName;
             ItemDesc.text = item.itemDesc;
             if (mySlot != null && mySlot.isEquipmentSlot) UseButtonText.text = "해제";
             else UseButtonText.text = "사용";
@@ -49,6 +50,7 @@ public class ItemInspector : MonoBehaviour
         {
             if (mySlot.item != null)
             {
+                GameManager.Inst.ButtonClick();
                 mySlot.UseItem();
             }
         }
@@ -57,6 +59,7 @@ public class ItemInspector : MonoBehaviour
     {
         if (mySlot != null)
         {
+            GameManager.Inst.ButtonClick();
             mySlot.DropItem();
         }
     }

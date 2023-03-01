@@ -91,9 +91,9 @@ public class ItemManager : MonoBehaviour
         if (pickupItme)
         {
             if (hitInfo.transform != null)
-            {                
+            {
                 myInventory.AcquireItem(hitInfo.transform.GetComponent<ItemPickUp>().item);
-                if(hitInfo.transform.GetComponent<ItemPickUp>().item.itemName== "¾ÏÈæ¹°Áú")
+                if (hitInfo.transform.GetComponent<ItemPickUp>().item.itemName == "¾ÏÈæ¹°Áú")
                 {
                     GameManager.Inst.questManager.QuestCountCheck();
                 }
@@ -106,7 +106,7 @@ public class ItemManager : MonoBehaviour
             GameManager.Inst.Action(hitInfo.transform.gameObject);
             GameManager.Inst.talkPanel.GetComponent<Button>().onClick.RemoveAllListeners();
             GameManager.Inst.talkPanel.GetComponent<Button>().onClick.AddListener(() => GameManager.Inst.Action(hitInfo.transform.gameObject));
-            //GameManager.Inst.myShop.OpenShop();
+            hitInfo.transform.GetComponent<ObjData>().OnTalk();
             ItemInfoDisappear();
         }
     }

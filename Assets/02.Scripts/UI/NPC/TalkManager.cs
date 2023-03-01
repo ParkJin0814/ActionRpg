@@ -27,7 +27,7 @@ public class TalkManager : MonoBehaviour
         talkData.Add(30 + 2000, new string[] { "안녕~", "이번에도 혹시 내 부탁 좀 들어줄 수 있을까?",
         "공원에서 이상한 소리가 나고 있어" ,"확인 좀 해줄 수 있어?"});
         talkData.Add(40 + 2000, new string[] { "확인해봤어?" });
-        talkData.Add(40 + 1 + 2000, new string[] { "공원에 그런 존재가 있었다니...","넌 우리 마을에 영웅이야 고마워" });
+        talkData.Add(40 + 1 + 2000, new string[] { "공원에 그런 존재가 있었다니...", "넌 우리 마을에 영웅이야 고마워" });
 
         portraitData.Add(1000, portraitArr[0]);
         portraitData.Add(2000, portraitArr[1]);

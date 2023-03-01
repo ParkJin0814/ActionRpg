@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossZone : MonoBehaviour
@@ -8,11 +6,11 @@ public class BossZone : MonoBehaviour
     public GameObject Cinema;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player") && GameManager.Inst.questManager.questId==40)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player") && GameManager.Inst.questManager.questId == 40)
         {
             Cinema.SetActive(true);
             Boss.GetComponent<EnemyCharacter>().myTarget = other.transform;
-        }        
+        }
     }
 
 }

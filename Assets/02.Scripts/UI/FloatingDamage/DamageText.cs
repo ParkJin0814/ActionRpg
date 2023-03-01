@@ -1,9 +1,8 @@
 using TMPro;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class DamageText : MonoBehaviour
-{    
+{
     private float alphaSpeed;
     private float destroyTime;
     TMP_Text text;
@@ -12,7 +11,7 @@ public class DamageText : MonoBehaviour
     public Transform myTarget;
 
     void Start()
-    {        
+    {
         alphaSpeed = 2.0f;
         destroyTime = 2.0f;
 
@@ -24,7 +23,7 @@ public class DamageText : MonoBehaviour
     void Update()
     {
         //transform.Translate(new Vector3(0, moveSpeed * Time.deltaTime, 0)); // 텍스트 위치
-        Vector3 pos= Camera.main.WorldToScreenPoint(myTarget.position);
+        Vector3 pos = Camera.main.WorldToScreenPoint(myTarget.position);
         if (pos.z < 0.0f)
         {
             transform.position = new Vector3(0, 10000, 0);

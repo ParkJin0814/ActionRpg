@@ -15,7 +15,7 @@ public class EnemyCharacter : BattleSystem
     [SerializeField] float viewDistance;
     [SerializeField] GameObject hpbar;
     [SerializeField] float romingRage;
-    [SerializeField] int myAttackLength=1;
+    [SerializeField] int myAttackLength = 1;
     Vector3 startPos;
     NavMeshAgent nav;
     GameObject obj;
@@ -24,7 +24,7 @@ public class EnemyCharacter : BattleSystem
 
     public enum MonsterType
     {
-        Nomal,Boss
+        Nomal, Boss
     }
     public enum STATE
     {
@@ -34,15 +34,15 @@ public class EnemyCharacter : BattleSystem
 
     void ChangeState(STATE s)
     {
-        if (myState == s) return;        
-            myState = s;
+        if (myState == s) return;
+        myState = s;
         switch (s)
         {
             case STATE.Create:
                 break;
             case STATE.Idle:
                 if (obj == null)
-                {   
+                {
                     if (myType == MonsterType.Nomal)
                     {
                         obj = Instantiate(hpbar, SceneData.Inst.Hpbar) as GameObject;
@@ -89,12 +89,12 @@ public class EnemyCharacter : BattleSystem
                             GameManager.Inst.questManager.QuestCountCheck();
                             break;
                         case 40:
-                            GameObject dropItem = Instantiate(GameManager.Inst.GameObj[0],transform.position,
+                            GameObject dropItem = Instantiate(GameManager.Inst.GameObj[0], transform.position,
                                 Quaternion.identity, SceneData.Inst.dropObject);
                             break;
                     }
                 }
-                
+
                 StartCoroutine(DisApearing(2.0f, 4.0f));
                 break;
         }
@@ -129,20 +129,20 @@ public class EnemyCharacter : BattleSystem
     }
 
     private void FixedUpdate()
-    {        
+    {
         StateProcess();
-        if (nav.remainingDistance.Equals(0.0f))        
-            myAnim.SetBool("Walk", false);        
+        if (nav.remainingDistance.Equals(0.0f))
+            myAnim.SetBool("Walk", false);
         else
-            myAnim.SetBool("Walk", true);        
+            myAnim.SetBool("Walk", true);
     }
     void LostTarget()
     {
         if (MonsterType.Boss == myType) return;
         if (!myTarget.GetComponent<IBattle>().OnLive())
             ChangeState(STATE.LostTarget);
-        if (myTarget != null&& nav.remainingDistance != Mathf.Infinity && nav.remainingDistance > 10.0f)
-            ChangeState(STATE.LostTarget);            
+        if (myTarget != null && nav.remainingDistance != Mathf.Infinity && nav.remainingDistance > 10.0f)
+            ChangeState(STATE.LostTarget);
     }
     public void EnemyTarget()
     {
@@ -190,15 +190,15 @@ public class EnemyCharacter : BattleSystem
             if (myTarget == null)
             {
                 Collider[] _target = Physics.OverlapSphere(transform.position, viewDistance, myEnemyMask);
-                foreach (Collider collider in _target)                
-                    if (collider.tag == "Player")                    
+                foreach (Collider collider in _target)
+                    if (collider.tag == "Player")
                         myTarget = collider.transform;
             }
         }
     }
     void OnFloatingDamage(int dmg, bool v = false)
     {
-        GameObject obj = Instantiate(floatingDamageText, SceneData.Inst.FloatingDamage);        
+        GameObject obj = Instantiate(floatingDamageText, SceneData.Inst.FloatingDamage);
         obj.GetComponent<DamageText>().damage = dmg;
         obj.GetComponent<DamageText>().myTarget = myFloatingDamage;
     }
@@ -227,10 +227,10 @@ public class EnemyCharacter : BattleSystem
         nav.ResetPath();
         nav.SetDestination(pos);
         yield return new WaitForSeconds(0.3f);
-        while(nav.remainingDistance != Mathf.Infinity && nav.remainingDistance > 0.0f)
-        {            
+        while (nav.remainingDistance != Mathf.Infinity && nav.remainingDistance > 0.0f)
+        {
             yield return null;
-        }        
+        }
         done?.Invoke();
     }
     protected void AttackTarget()
@@ -264,14 +264,14 @@ public class EnemyCharacter : BattleSystem
                 float Angle = Vector3.Angle(transform.forward, dir);
                 float rotDir = 1.0f;
                 if (Vector3.Dot(transform.right, dir) < 0.0f)
-                    rotDir = -rotDir;                
+                    rotDir = -rotDir;
                 if (Angle > 10f && nav.remainingDistance.Equals(0.0f))
                 {
                     if (!myAnim.GetBool("IsAttacking"))
                     {
                         float delta = 180.0f * Time.deltaTime;
                         if (delta > Angle)
-                            delta = Angle;                        
+                            delta = Angle;
                         Angle -= delta;
                         transform.Rotate(Vector3.up * rotDir * delta, Space.World);
                     }
@@ -307,8 +307,8 @@ public class EnemyCharacter : BattleSystem
     }
     public void OnAttackLength()
     {
-        int a =Random.Range(0, myAttackLength);
-        myAnim.SetTrigger($"Attack{a}");        
+        int a = Random.Range(0, myAttackLength);
+        myAnim.SetTrigger($"Attack{a}");
     }
 
 }
