@@ -8,6 +8,7 @@ public class BossZone : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player") && GameManager.Inst.questManager.questId == 40)
         {
+            SoundManager.Inst.PauseBGM();
             Cinema.SetActive(true);
             Boss.GetComponent<EnemyCharacter>().myTarget = other.transform;
         }

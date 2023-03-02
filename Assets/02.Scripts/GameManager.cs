@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [Header("Sound")]
     public AudioSource effectSource;
     public AudioClip effectSound;
+    public AudioClip bgmSound;
+
 
     private void Awake()
     {
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         GoldChange();
+        SoundManager.Inst.PlayBGM(bgmSound);
     }
     public void ButtonClick()
     {

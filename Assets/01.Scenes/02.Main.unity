@@ -5732,6 +5732,7 @@ MonoBehaviour:
   questManager: {fileID: 2011489340}
   effectSource: {fileID: 1007965693}
   effectSound: {fileID: 8300000, guid: 0929092231077d6458247835840ef69d, type: 3}
+  bgmSound: {fileID: 8300000, guid: df05baddbfafe75438c8e00228e61ca9, type: 3}
 --- !u!4 &480486030
 Transform:
   m_ObjectHideFlags: 0
@@ -6417,6 +6418,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3529134847860460629, guid: e15d01b3b61b947018c7f35118ac7770, type: 3}
   m_PrefabInstance: {fileID: 515389066}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &528969385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 528969387}
+  - component: {fileID: 528969386}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &528969386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528969385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3050c3da26c8f54d9135fc0feac4c73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &528969387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528969385}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -71.93969, y: 14.233583, z: 10.9551325}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &531854458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8660,7 +8705,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -31997,10 +32042,10 @@ PlayableDirector:
     value: {fileID: 245577415}
   - key: {fileID: -758956773289172626, guid: 82f8aafa0b5c880459e0f0abd3123ca4, type: 2}
     value: {fileID: 1586978233}
-  - key: {fileID: -3811411802195055825, guid: 82f8aafa0b5c880459e0f0abd3123ca4, type: 2}
+  - key: {fileID: 2694004061591996319, guid: 82f8aafa0b5c880459e0f0abd3123ca4, type: 2}
     value: {fileID: 0}
-  - key: {fileID: -8948392369619270990, guid: 82f8aafa0b5c880459e0f0abd3123ca4, type: 2}
-    value: {fileID: 0}
+  - key: {fileID: -2221284102109984808, guid: 82f8aafa0b5c880459e0f0abd3123ca4, type: 2}
+    value: {fileID: 528969385}
   m_ExposedReferences:
     m_References:
     - 2c36bc4c69935a542ba807d207a37b11: {fileID: 1739294919}
@@ -32014,6 +32059,7 @@ PlayableDirector:
     - ed83c72bfcc21124fad13e86226e2259: {fileID: 959365242}
     - 4ac73e2485f9dba4386f326fc03c80c1: {fileID: 1969819642}
     - c510572378bea0440a40dda68a3ca0ff: {fileID: 1951351195666029130}
+    - 7406c86d29298484fb68f090543ba61f: {fileID: 528969385}
     - 8d77fc495c74aee45b71b50991b6bfd5: {fileID: 1930333210}
     - 55295660c084b8c4093cd88529c582ee: {fileID: 1204131395}
 --- !u!114 &1930333210
