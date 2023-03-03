@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     {
         GoldChange();
         SoundManager.Inst.PlayBGM(bgmSound);
-    }
+    }    
     public void ButtonClick()
     {
         SoundManager.Inst.PlayOneShot(effectSource, effectSound);

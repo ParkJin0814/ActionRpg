@@ -18,6 +18,10 @@ public class SceneData : MonoBehaviour
     public Slider myHp;
     public Slider mySp;
     public Transform dropObject;
+    public GameObject GameOver;
+    public GameObject NpcImage;
+    public GameObject Foxs;
+    public GameObject fox;
     private void Awake()
     {
         Inst = this;

@@ -70,6 +70,11 @@ public class QuestManager : MonoBehaviour
                     questCheck = false;
                     questMobName = "Fox";
                     questValue = 4;
+                    for(int i=0;i<questValue;i++)
+                    {
+                        GameObject obj=Instantiate(SceneData.Inst.fox, SceneData.Inst.Foxs.transform);
+                        obj.transform.localPosition = new Vector3(i, 0, 0);
+                    }
                 }
                 break;
             case 20:

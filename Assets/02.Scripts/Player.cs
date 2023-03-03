@@ -21,6 +21,7 @@ public class Player : PlayerMovement
             case STATE.Dead:
                 StopAllCoroutines();
                 myAnim.SetTrigger("Dead");
+                SceneData.Inst.GameOver.SetActive(true);
                 break;
         }
     }

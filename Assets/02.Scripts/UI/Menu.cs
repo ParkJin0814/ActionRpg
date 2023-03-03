@@ -26,4 +26,8 @@ public class Menu : MonoBehaviour
             Application.Quit();
 #endif
     }
+    public void GameOver()
+    {
+        SceneLoader.Inst.SceneMove("00.MainTitle");
+    }
 }

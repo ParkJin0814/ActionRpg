@@ -27,15 +27,14 @@ public class ShopSlot : MonoBehaviour
         //아이템에 구매가격 만들기 
         if (GameManager.Inst.Gold >= myItem.Price)
         {
+            myshop.myInputNumber.item = myItem;
             if (myItem.itemType != ItemType.Equipment)
             {
-                myshop.myInputNumber.Call();
-                myshop.myInputNumber.item = myItem;
+                myshop.myInputNumber.Call();                
             }
             else
             {
-                SceneData.Inst.myInventory.AcquireItem(myItem);
-                GameManager.Inst.GoldChange(-myItem.Price);
+                myshop.myInputNumber.EqCall();
             }
         }
         else

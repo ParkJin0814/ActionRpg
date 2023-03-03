@@ -11,6 +11,9 @@ public class BuyInputNumber : MonoBehaviour
     [SerializeField] GameObject go_Base;
     public Item item;
     Inventory myInventory;
+
+    [SerializeField] GameObject eqBase;
+    [SerializeField] TMP_Text eqText;    
     void Start()
     {
         myInventory = SceneData.Inst.myInventory;
@@ -37,6 +40,25 @@ public class BuyInputNumber : MonoBehaviour
         go_Base.SetActive(true);
         activated = true;
         if_text.text = "1";
+    }
+    public void EqCall()
+    {
+        eqBase.SetActive(true);
+        eqText.text = $"{item.itemName} 아이템을 {item.Price}골드에 구매하시겠습니까?";
+    }
+    public void EqCancel()
+    {
+        eqBase.SetActive(false);
+        item = null;
+    }
+    public void EqOk()
+    {
+        if (GameManager.Inst.Gold > item.Price)
+        {
+            myInventory.AcquireItem(item);
+            GameManager.Inst.GoldChange(-item.Price);
+        }
+        EqCancel();
     }
     public void Cancel()
     {
