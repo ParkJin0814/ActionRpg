@@ -2730,7 +2730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a395cb75a776db43807ec557ccd196f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go_InventoryBase: {fileID: 1131674321}
+  base_Window: {fileID: 1131674321}
   go_SlotsParent: {fileID: 794755980}
   myItemInspector: {fileID: 855918220}
   PotionCount: {fileID: 1825699970}
@@ -2746,7 +2746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b39f1986411544c458d7bcbf8fe336f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go_EquipmentBase: {fileID: 510344026}
+  base_Window: {fileID: 510344026}
   slots: []
   parent: {fileID: 1343394187}
 --- !u!1001 &232005509
@@ -4723,9 +4723,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1376476927}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: CloseMenu
-        m_Mode: 1
+        m_TargetAssemblyTypeName: Base_Window, Assembly-CSharp
+        m_MethodName: OpenWindow
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10434,9 +10434,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 231696390}
-        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: CloseInventory
-        m_Mode: 1
+        m_TargetAssemblyTypeName: Base_Window, Assembly-CSharp
+        m_MethodName: OpenWindow
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10446,9 +10446,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 231696391}
-        m_TargetAssemblyTypeName: Equipment, Assembly-CSharp
-        m_MethodName: CloseEquipment
-        m_Mode: 1
+        m_TargetAssemblyTypeName: Base_Window, Assembly-CSharp
+        m_MethodName: OpenWindow
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -16496,7 +16496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ccee0f7df015bf438494be4c7ca118c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go_QuestBase: {fileID: 1832123374}
+  base_Window: {fileID: 1832123374}
   go_Quest: {fileID: 983344339}
   questName: {fileID: 467463849}
   questDesc: {fileID: 337360028}
@@ -20406,7 +20406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37e5b7c96101b749b2dd5f2f8402f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go_menuBase: {fileID: 351991391}
+  base_Window: {fileID: 351991391}
 --- !u!1001 &1384906714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21055,6 +21055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6289a3e4ef202fc47959477f39a69716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  base_Window: {fileID: 95468306}
   BuyItem:
   - {fileID: 11400000, guid: 9dea561c13bdc71469a2d437722819e8, type: 2}
   - {fileID: 11400000, guid: e5448d79ffb54f647be023e159ed7ae4, type: 2}
@@ -21062,7 +21063,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c322b6c730bb43b4992dd5ebcba001a4, type: 2}
   itemParent: {fileID: 1142306561}
   myShopSlot: {fileID: 5565684692811419562, guid: 864789d6a386feb43aa89f8d6f0ee6c4, type: 3}
-  myShopbase: {fileID: 95468306}
   myInputNumber: {fileID: 515224482}
 --- !u!1001 &1405561315
 PrefabInstance:
@@ -21758,7 +21758,7 @@ GameObject:
   - component: {fileID: 1432359390}
   - component: {fileID: 1432359389}
   m_Layer: 5
-  m_Name: Menu
+  m_Name: MenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21829,16 +21829,16 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1376476927}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: OpenMenu
-        m_Mode: 1
+        m_TargetAssemblyTypeName: Base_Window, Assembly-CSharp
+        m_MethodName: OpenWindow
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1432359390
 MonoBehaviour:
@@ -22041,9 +22041,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1405230309}
-        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
-        m_MethodName: CloseShop
-        m_Mode: 1
+        m_TargetAssemblyTypeName: Base_Window, Assembly-CSharp
+        m_MethodName: OpenWindow
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -23684,9 +23684,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1155019318}
-        m_TargetAssemblyTypeName: Quest, Assembly-CSharp
-        m_MethodName: CloseQuest
-        m_Mode: 1
+        m_TargetAssemblyTypeName: Base_Window, Assembly-CSharp
+        m_MethodName: OpenWindow
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -29706,28 +29706,28 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 231696390}
-        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: OpenInventory
-        m_Mode: 1
+        m_TargetAssemblyTypeName: Base_Window, Assembly-CSharp
+        m_MethodName: OpenWindow
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 231696391}
-        m_TargetAssemblyTypeName: Equipment, Assembly-CSharp
-        m_MethodName: OpenEquipment
-        m_Mode: 1
+        m_TargetAssemblyTypeName: Base_Window, Assembly-CSharp
+        m_MethodName: OpenWindow
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1684177384}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -31189,16 +31189,16 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1155019318}
-        m_TargetAssemblyTypeName: Quest, Assembly-CSharp
-        m_MethodName: OpenQuest
-        m_Mode: 1
+        m_TargetAssemblyTypeName: Base_Window, Assembly-CSharp
+        m_MethodName: OpenWindow
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1936537408
 MonoBehaviour:
@@ -44098,8 +44098,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   myCam: {fileID: 5666139486358999859}
-  LookupSpeed: 5
-  ZoomSpeed: 3
+  lookupSpeed: 10
   Offset: 0.5
   joy: {fileID: 3881087802937290679}
 --- !u!4 &5666139487775864978

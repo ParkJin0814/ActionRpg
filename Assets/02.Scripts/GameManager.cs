@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     {
         GoldChange();
         SoundManager.Inst.PlayBGM(bgmSound);
-    }    
+    }
     public void ButtonClick()
     {
         SoundManager.Inst.PlayOneShot(effectSource, effectSound);
@@ -87,11 +87,11 @@ public class GameManager : MonoBehaviour
     {
         if (id == 1000)
         {
-            SceneData.Inst.myShop.OpenShop();
+            SceneData.Inst.myShop.OpenWindow(true);
         }
         else if (id + questTalkIndex == 2010)
         {
-            SceneData.Inst.myQuest.OpenQuest();
+            SceneData.Inst.myQuest.OpenWindow(true);
         }
     }
 }

@@ -9,12 +9,8 @@ public class HpBar : MonoBehaviour
     {
         Vector3 pos = Camera.main.WorldToScreenPoint(myTarget.position);
         if (pos.z < 0.0f)
-        {
             transform.position = new Vector3(0, 10000, 0);
-        }
         else
-        {
             transform.position = pos;
-        }
     }
 }

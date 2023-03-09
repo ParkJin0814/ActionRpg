@@ -1,13 +1,11 @@
 using UnityEngine;
 
-public class Shop : MonoBehaviour
+public class Shop : Base_Window
 {
     [SerializeField] Item[] BuyItem;
     [SerializeField] Transform itemParent;
     [SerializeField] GameObject myShopSlot;
-    [SerializeField] GameObject myShopbase;
     public BuyInputNumber myInputNumber;
-    public static bool shopActivated = false;
 
     void Start()
     {
@@ -17,16 +15,5 @@ public class Shop : MonoBehaviour
             obj.GetComponent<ShopSlot>().myItem = BuyItem[i];
             obj.GetComponent<ShopSlot>().myshop = this;
         }
-    }
-    public void OpenShop()
-    {
-        shopActivated = true;
-        myShopbase.SetActive(true);
-    }
-    public void CloseShop()
-    {
-        shopActivated = false;
-        myShopbase.SetActive(false);
-
     }
 }

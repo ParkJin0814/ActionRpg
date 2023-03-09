@@ -1,10 +1,8 @@
 using TMPro;
 using UnityEngine;
 
-public class Quest : MonoBehaviour
+public class Quest : Base_Window
 {
-    public static bool questActivated = false;
-    [SerializeField] private GameObject go_QuestBase;
     [SerializeField] GameObject go_Quest;
     [SerializeField] TMP_Text questName;
     [SerializeField] TMP_Text questDesc;
@@ -13,20 +11,7 @@ public class Quest : MonoBehaviour
     private void Start()
     {
         questManager = GameManager.Inst.questManager;
-    }
-    public void OpenQuest()
-    {
-        QuestCheck();
-        GameManager.Inst.ButtonClick();
-        questActivated = true;
-        go_QuestBase.SetActive(true);
-    }
-
-    public void CloseQuest()
-    {
-        GameManager.Inst.ButtonClick();
-        questActivated = false;
-        go_QuestBase.SetActive(false);
+        openAction = () => { QuestCheck(); };
     }
     void QuestCheck()
     {

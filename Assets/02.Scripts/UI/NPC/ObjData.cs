@@ -21,20 +21,20 @@ public class ObjData : MonoBehaviour
     {
         if (hi != null)
             SoundManager.Inst.PlayOneShot(mySource, hi);
-        
+
     }
     private void Update()
     {
-        if(image != null)
+        if (image != null)
         {
-            Collider[] list = Physics.OverlapSphere(transform.position,5.0f,1 << LayerMask.NameToLayer("Player"));
+            Collider[] list = Physics.OverlapSphere(transform.position, 5.0f, 1 << LayerMask.NameToLayer("Player"));
             if (list.Length == 0)
             {
                 image.gameObject.SetActive(false);
             }
             else
             {
-                OnImage();                
+                OnImage();
             }
         }
     }
@@ -43,7 +43,7 @@ public class ObjData : MonoBehaviour
         Vector3 myPos = transform.position;
         myPos.y += 1.5f;
         Vector3 pos = Camera.main.WorldToScreenPoint(myPos);
-        
+
         image.gameObject.SetActive(true);
         if (pos.z < 0.0f)
         {

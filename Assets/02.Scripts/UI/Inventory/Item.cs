@@ -22,11 +22,10 @@ public class Item : ScriptableObject
     }
     public string itemName;
     public ItemType itemType;
-    public EquipmentType equipmentType;
+    public EquipmentType equipmentType; //장비라면 장비타입까지설정 아닌경우 None
     public Sprite itemImage; // 인벤토리 이미지
-    public GameObject itemPrefab;  // 아이템의 프리팹 (아이템 생성시 프리팹으로 찍어냄)
-    public GameObject[] weaponPrefab; //무기전용 프리팹 0 왼손 1 오른손
-    public int Value;
-    public int Price;
-    [TextArea] public string itemDesc;
+    public GameObject itemPrefab;  // 아이템의 프리팹 (아이템 생성시 프리팹으로 찍어냄)     
+    public int Value; //능력 무기라면 공격력
+    public int Price; //가격
+    [TextArea] public string itemDesc; //아이템설명
 }

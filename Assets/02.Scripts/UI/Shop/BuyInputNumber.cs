@@ -13,7 +13,7 @@ public class BuyInputNumber : MonoBehaviour
     Inventory myInventory;
 
     [SerializeField] GameObject eqBase;
-    [SerializeField] TMP_Text eqText;    
+    [SerializeField] TMP_Text eqText;
     void Start()
     {
         myInventory = SceneData.Inst.myInventory;

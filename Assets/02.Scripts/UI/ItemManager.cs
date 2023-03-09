@@ -22,20 +22,7 @@ public class ItemManager : MonoBehaviour
     }
     private void Update()
     {
-        DropItem();
-    }
-    protected void DropItem()
-    {
-        TryAction();
         CheckItem();
-    }
-    private void TryAction()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            CheckItem();
-            CanPickUp();
-        }
     }
 
     private void CheckItem()
@@ -43,7 +30,7 @@ public class ItemManager : MonoBehaviour
         Collider[] _target = Physics.OverlapSphere(transform.position, itemRange, InteractionLayerMask);
         if (_target.Length == 0)
         {
-            if (DropButton.activeSelf) ItemInfoDisappear();
+            ItemInfoDisappear();
             return;
         }
         foreach (Collider collider in _target)
@@ -71,13 +58,13 @@ public class ItemManager : MonoBehaviour
     {
         pickupItme = true;
         DropButton.SetActive(true);
-        dropText.text = hitInfo.transform.GetComponent<ItemPickUp>().item.itemName /*+"\n" +"<color=yellow>" + "(»πµÊ)" + "</color>"*/;
+        dropText.text = hitInfo.transform.GetComponent<ItemPickUp>().item.itemName;
     }
     private void NpcInfoApperar()
     {
         NpcCheck = true;
         DropButton.SetActive(true);
-        dropText.text = "¥Î»≠" /*+ "\n" + "<color=yellow>" + "(ø≠±‚)" + "</color>"*/;
+        dropText.text = "¥Î»≠";
     }
     private void ItemInfoDisappear()
     {

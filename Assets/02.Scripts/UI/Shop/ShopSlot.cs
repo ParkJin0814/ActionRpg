@@ -30,16 +30,12 @@ public class ShopSlot : MonoBehaviour
             myshop.myInputNumber.item = myItem;
             if (myItem.itemType != ItemType.Equipment)
             {
-                myshop.myInputNumber.Call();                
+                myshop.myInputNumber.Call();
             }
             else
             {
                 myshop.myInputNumber.EqCall();
             }
-        }
-        else
-        {
-            //ÀÜ¾×ºÎÁ·
-        }
+        }        
     }
 }

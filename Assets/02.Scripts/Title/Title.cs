@@ -12,7 +12,7 @@ public class Title : MonoBehaviour
     }
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             quitGame.SetActive(true);
         }
