@@ -49,7 +49,6 @@ public class PlayerMovement : BattleSystem
             {
                 Run = Mathf.Lerp(0, 1, Run - 0.2f);
                 runing = false;
-
                 if (myStat.spCool > 0.0f)
                 {
                     myStat.spCool -= Time.deltaTime;
@@ -57,8 +56,6 @@ public class PlayerMovement : BattleSystem
                 }
                 else myStat.SP += Time.deltaTime * 20.0f;
             }
-
-
             myAnim.SetFloat("Run", Run);
             if (myAnim.GetBool("Move"))
             {
@@ -67,7 +64,8 @@ public class PlayerMovement : BattleSystem
                     Vector3 pos = Vector3.forward;
                     pos.x = x;
                     pos.z = y;
-                    float delta = runing ? myStat.MoveSpeed * 1.5f * Time.deltaTime : myStat.MoveSpeed * Time.deltaTime;
+                    float delta = runing ? myStat.MoveSpeed * 1.5f * Time.deltaTime 
+                                         : myStat.MoveSpeed * Time.deltaTime;
                     pos.Normalize();
                     transform.Translate(pos * delta);
 

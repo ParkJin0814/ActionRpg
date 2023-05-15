@@ -85,48 +85,54 @@ public class Player : PlayerMovement
             myAnim.SetTrigger("Rolling");
         }
     }
-    public override void OnDamage(float dmg)
-    {
-        myStat.HP -= dmg;
-        if (Mathf.Approximately(myStat.HP, 0.0f)) ChangeState(STATE.Dead);
-        else myAnim.SetTrigger("Damage");
-    }
+    
     public override bool OnLive()
     {
         if (myState != STATE.Dead) return true;
         return false;
     }
     public override void OnAttack(int a)
-    {
-        //공격별 공격포인트 지정을위한b 공격체크반지름d 와 스킬데미지를위한c
-        int b = 0;
-        int d = 0;
-        float c = 1.0f;
+    {        
+        int attackPostion = 0;
+        int attackRange = 0;
+        float attackDamage = 1.0f;
         switch (a)
         {
             case 0:
-                b = a;
+                attackPostion = a;
                 break;
             case 1:
-                b = a;
+                attackPostion = a;
                 break;
             case 2:
-                d = 1;
-                b = a;
-                c = 1.1f;
+                attackRange = 1;
+                attackPostion = a;
+                attackDamage = 1.1f;
                 break;
             case 3:
-                d = 2;
-                b = 0;
-                c = 1.5f;
+                attackRange = 2;
+                attackPostion = 0;
+                attackDamage = 1.5f;
                 break;
         }
-        Collider[] list = Physics.OverlapSphere(AttackPoint[b].position, AttackPointRange[d], myEnemyMask);
+        Collider[] list = Physics.OverlapSphere
+            (AttackPoint[attackPostion].position
+            , AttackPointRange[attackRange]
+            , myEnemyMask);
         foreach (Collider col in list)
         {
-            col.GetComponent<IBattle>()?.OnDamage(myDamage() * c);
+            col.GetComponent<IBattle>()?
+                .OnDamage(myDamage() * attackDamage);
         }
 
+    }
+    public override void OnDamage(float dmg)
+    {
+        myStat.HP -= dmg;
+        if (Mathf.Approximately(myStat.HP, 0.0f)) 
+            ChangeState(STATE.Dead);
+        else 
+            myAnim.SetTrigger("Damage");
     }
     public void OnPotion()
     {

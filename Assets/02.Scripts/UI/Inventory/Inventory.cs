@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Inventory : Base_Window
 {
@@ -20,13 +21,13 @@ public class Inventory : Base_Window
                 PotionCount.text = slots[i].itemCount.ToString();
         }
     }
+
     public void AcquireItem(Item _item, int _count = 1)
     {
         if (Item.ItemType.Equipment != _item.itemType)
         {
             for (int i = 0; i < slots.Length; i++)
-            {
-                // null 이라면 slots[i].item.itemName 할 때 런타임 에러 나서
+            {                
                 if (slots[i].item == null) continue;
                 if (slots[i].item.itemName != _item.itemName) continue;
                 slots[i].SetSlotCount(_count);
@@ -60,5 +61,5 @@ public class Inventory : Base_Window
             else PotionCount.text = "0";
             return;
         }
-    }
+    }   
 }

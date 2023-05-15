@@ -72,17 +72,15 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         }
     }
 
-    // 해당 슬롯 하나 삭제
+    // 해당 슬롯 비우기
     private void ClearSlot()
     {
         item = null;
         itemCount = 0;
         itemImage.sprite = null;
         SetColor(0);
-
         text_Count.text = "0";
         go_CountImage.SetActive(false);
-
     }
 
     public void OnPointerClick(PointerEventData eventData)

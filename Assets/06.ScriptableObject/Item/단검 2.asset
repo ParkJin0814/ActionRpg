@@ -17,9 +17,6 @@ MonoBehaviour:
   equipmentType: 1
   itemImage: {fileID: 21300000, guid: 86add05857f650b42a52e52de2d6dc3b, type: 3}
   itemPrefab: {fileID: 5694560533298769088, guid: 3b6ca7cab21c72847969fc1fd8c38871, type: 3}
-  weaponPrefab:
-  - {fileID: 271475451801734593, guid: 084c94ad86c9e8642be85e608f91609e, type: 3}
-  - {fileID: 7769310473582601926, guid: 5077a3543055b0c4d96d4780b9effa25, type: 3}
   Value: 40
   Price: 80
-  itemDesc: Ap+40
+  itemDesc: "\uACF5\uACA9\uB825+40"
